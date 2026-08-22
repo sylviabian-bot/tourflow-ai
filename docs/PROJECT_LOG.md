@@ -1,17 +1,17 @@
 # International Engagement Prototype — Project Log
 
-This log records how a Study Tour readiness foundation evolves into a tested international engagement portfolio prototype. Sprint 01 remains the accepted TourFlow Study Tour Delivery foundation. Sprint 02A and the Academic Editorial visual reset are accepted on `main`; Sprint 02B adds the authorised engagement-planning and deterministic executive-briefing layer. The final umbrella name remains unresolved and no genuine AI is implemented.
+This log records how a Study Tour readiness foundation evolves into a tested international engagement portfolio prototype. Sprint 01 remains the accepted TourFlow Study Tour Delivery foundation. Sprint 02A introduced Relationship / Engagement, Sprint 02B added planning and briefing, and Sprint 02C completes the authorised structured non-AI lifecycle through outcomes, commitments and Relationship Memory write-back. The final umbrella name remains unresolved and no genuine AI is implemented.
 
 ## Project status
 
 | Field | Current value |
 | --- | --- |
-| Phase | Sprint 02B — Engagement Planning and Executive Briefing |
+| Phase | Sprint 02C — Outcomes, Commitments and Relationship Memory |
 | Current version | PRD 0.4 — product direction approved |
-| Implementation | Sprint 02A.5 accepted on `main`; Sprint 02B authorised on its review branch |
+| Implementation | Sprint 02B accepted on `main`; Sprint 02C authorised on its review branch |
 | Data approach | Real factual context only when approved; otherwise anonymised, composite, fictional, or synthetic demo data |
 | External services | None approved |
-| Next gate | Review Sprint 02B; authorise Sprint 02C separately before outcomes or commitments |
+| Next gate | Review Sprint 02C; genuine AI remains separately gated for Sprint 03 |
 
 ## Initial assumptions
 
@@ -72,15 +72,18 @@ Use this table for decisions that have been explicitly approved. Do not move a p
 | D-036 | 2026-08-22 | Use deterministic theme matching with an explicit rationale and human confirmation. | Establishes an explainable baseline and avoids implying automated institutional decisions. | AI recommendations; static unexplained assignments | Product owner |
 | D-037 | 2026-08-22 | Compose the first Executive Brief deterministically from structured source records. | Demonstrates workflow value before AI drafting and preserves provenance. | Generated briefing copy; manually duplicated briefing fixture | Product owner |
 | D-038 | 2026-08-22 | Store objective themes explicitly and limit stakeholder assignment status to `suggested / confirmed` in Sprint 02B. | Matching must survive copy changes, and every retained domain state must be represented accurately in the current UI. | Infer themes from wording; retain an unused `invited` state | Product owner |
+| D-039 | 2026-08-22 | Authorise Sprint 02C only for `Outcome → Commitment → Follow-up → Relationship Memory Write-back`. | Completes the structured non-AI institutional engagement loop before genuine AI is considered. | Add AI summarisation; build generic task management | Product owner |
+| D-040 | 2026-08-22 | Retain only `agreement_to_explore` and `interest_confirmed` outcomes as reusable Relationship Signals. | Strategic direction should persist; routine information exchange should not automatically become long-term institutional memory. | Retain every outcome; manual untraceable notes | Product owner |
+| D-041 | 2026-08-22 | Keep completion state local to the engagement provider and expose baseline outcome-derived signals on Relationship Detail. | Demonstrates the rule and interaction without a state library or fake cross-route persistence. | Add global persistence; claim Home and Relationship live-sync | Product owner |
 
 ## Current implementation boundary
 
-Sprint 02B is authorised on `sprint-02b-engagement-planning-briefing`. Its boundary is the existing Relationship / Engagement layer plus deterministic `Objective → Internal Stakeholder → Agenda Activity → Executive Briefing` planning for the Senior Delegation. The accepted Study Tour Delivery workflow remains unchanged. Outcomes capture, commitments, Relationship Memory write-back, genuine AI, persistence, authentication, integrations, analytics, and deployment remain unauthorised.
+Sprint 02C is authorised on `sprint-02c-outcomes-commitments-memory`. Its boundary is the existing Relationship / Engagement planning layer plus objective-linked outcomes, outcome-linked commitments, local completion/reset behaviour, and deterministic Relationship Memory retention. The accepted Study Tour Delivery workflow remains unchanged. Genuine AI, persistence, authentication, integrations, analytics, and deployment remain unauthorised.
 
 ## Unresolved decisions
 
 - final umbrella product name;
-- Sprint 02C implementation scope and authorisation;
+- Sprint 03 genuine AI scope and authorisation;
 - genuine AI implementation and evaluation;
 - external integrations; and
 - database, authentication, and persistence.
@@ -534,6 +537,33 @@ Prove that a completed international engagement can create reusable relationship
 - Strengthened agenda validation so objectives and assignments must belong to the agenda item's engagement, and each substantive item's assignment must trace to one of that item's supported objectives. Meals retain the documented relationship-building exception.
 - Preserved the deterministic Brief composition, talking-point disclosure, shared Program-to-Brief confirmation state, Study Tour Delivery, and all Sprint 02B scope boundaries.
 
+### 2026-08-22 — Sprint 02C Outcomes, Commitments and Relationship Memory
+
+**Domain and traceability**
+
+- Added `EngagementOutcome` with a required source Objective and a small controlled outcome-type set.
+- Added `Commitment` with required Outcome, Engagement and Relationship links plus owner, due date, direction and `open / completed` state.
+- Commitments are not generic tasks: validation enforces `Engagement → Objective → Outcome → Commitment`, including matching engagement and relationship ownership.
+
+**Relationship Memory write-back**
+
+- Added `deriveRelationshipSignalsFromOutcomes` as the deterministic write-back boundary.
+- Only `agreement_to_explore` and `interest_confirmed` are retained because they provide reusable strategic context; routine `information_shared`, `decision` and `no_action` records do not automatically become long-term memory.
+- Relationship Detail combines existing Study Tour memory with baseline Delegation-derived signals and identifies the source engagement and composite-data status.
+
+**Interaction and state boundary**
+
+- Reused the engagement-level React provider for commitment completion IDs; `Complete commitment` updates only the selected commitment and `Reset follow-up demo` restores baseline state.
+- Local completion state is shared within Delegation routes but is not presented as persisted data on Relationship Detail or Home.
+- Home derives a baseline follow-up prompt from actual open Commitment fixtures. It does not claim live synchronisation after a local interaction.
+- The fixed August Study Tour snapshot remains unchanged. Follow-up is explicitly presented as a fictional post-engagement walkthrough using records dated after the Delegation rather than changing global date-relative rules.
+
+**Visual and scope decisions**
+
+- Added one restrained `Follow-up` section to local navigation; no global Outcomes, Commitments or Tasks destination was introduced.
+- Follow-up uses objective-led outcomes, editorial commitment rows and a documented Relationship Memory impact section rather than cards, Kanban or sales language.
+- The Executive Brief remains pre-engagement, Study Tour Delivery remains isolated, and no AI, persistence, authentication, integration, analytics or deployment work was added.
+
 ## Problems and solutions
 
 | ID | Date | Problem | Impact | Root cause | Solution | Verification |
@@ -568,6 +598,9 @@ Prove that a completed international engagement can create reusable relationship
 | 2026-08-22 | Sprint 02B review fix | Structured-theme, participation-state, and agenda-traceability tests | Pass | Vitest: 3 files, 37 tests passed, including title-independent matching and three mismatched agenda-record regressions. |
 | 2026-08-22 | Sprint 02B review fix | ESLint, TypeScript, and production build | Pass | `pnpm lint`, `pnpm typecheck`, and `pnpm build` passed; 21 static pages generated. |
 | 2026-08-22 | Sprint 02B review fix | Program / Brief desktop and 390 × 844 interaction QA | Pass | Proposed and confirmed participation labels updated consistently before and after confirmation, confirmation remained synchronised across routes, no overflow or visual regression was observed, and the deterministic non-AI disclosure remained present. |
+| 2026-08-22 | Sprint 02C | Outcome, Commitment, write-back and regression tests | Pass | Vitest: 4 files, 48 tests passed, covering traceability, targeted completion, reset, retention eligibility, generated signal provenance, combined memory, Home follow-up and Study Tour isolation. |
+| 2026-08-22 | Sprint 02C | Desktop and 390 × 844 browser verification | Pass | Relationship, Delegation Overview, Program, Brief, Follow-up, Home and Study Tour Delivery loaded without overflow or error UI; complete/reset worked and traceability remained visible. |
+| 2026-08-22 | Sprint 02C | ESLint, TypeScript and production build | Pass | `pnpm lint`, `pnpm typecheck` and `pnpm build` passed; 22 static pages generated. |
 
 ## Lessons learned
 

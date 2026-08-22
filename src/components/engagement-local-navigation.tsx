@@ -10,6 +10,7 @@ export function EngagementLocalNavigation({ engagementId }: { engagementId: stri
     { href: base, label: "Overview" },
     { href: `${base}/program`, label: "Program" },
     { href: `${base}/brief`, label: "Brief" },
+    { href: `${base}/follow-up`, label: "Follow-up" },
   ];
   return (
     <nav aria-label="Engagement sections" className="border-b border-[var(--divider)]">

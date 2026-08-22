@@ -2,6 +2,7 @@ import { daysFromDemoToday } from "./demo-clock";
 import { deriveAttentionItems, getProgramSummary } from "./rules";
 import type {
   CoordinationPrompt,
+  Commitment,
   Engagement,
   EngagementObjective,
   HomeSnapshot,
@@ -184,12 +185,30 @@ export function buildRelationshipSummaries(
 export function deriveHomeCoordinationPrompts(
   engagements: Engagement[],
   studyTourSources: StudyTourCoordinationSources,
+  commitments: Commitment[] = [],
 ): CoordinationPrompt[] {
   const currentEngagements = getCurrentOrUpcomingEngagements(engagements);
   const prompts: CoordinationPrompt[] = [];
 
   for (const engagement of currentEngagements) {
     if (engagement.type === "delegation_visit") {
+      if (engagement.stage === "follow_up") {
+        const openCommitments = commitments.filter(
+          (commitment) => commitment.engagementId === engagement.id && commitment.status === "open",
+        );
+        if (openCommitments.length > 0) {
+          prompts.push({
+            id: `coordination-${engagement.id}-follow-up`,
+            title: "Complete delegation follow-up",
+            context: `${openCommitments.length} open follow-up ${openCommitments.length === 1 ? "commitment" : "commitments"} require ownership or completion.`,
+            href: `/engagements/${engagement.id}/follow-up`,
+            sourceType: "commitment_follow_up",
+            sourceId: engagement.id,
+            count: openCommitments.length,
+          });
+        }
+        continue;
+      }
       const questionCount = engagement.openQuestions?.length ?? 0;
       if (questionCount > 0) {
         prompts.push({
@@ -264,6 +283,7 @@ export function buildHomeSnapshot(
   objectives: EngagementObjective[],
   priorityRelationshipId: string,
   studyTourSources: StudyTourCoordinationSources,
+  commitments: Commitment[] = [],
 ): HomeSnapshot {
   const relationshipSummaries = buildRelationshipSummaries(
     relationships,
@@ -304,6 +324,7 @@ export function buildHomeSnapshot(
     openCoordinationItems: deriveHomeCoordinationPrompts(
       engagements,
       studyTourSources,
+      commitments,
     ),
   };
 }

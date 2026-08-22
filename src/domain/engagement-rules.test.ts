@@ -19,6 +19,7 @@ import {
   programs,
   requirements,
 } from "../data/fixtures";
+import { commitments } from "../data/follow-up-fixtures";
 import {
   buildHomeSnapshot,
   buildRelationshipMemoryState,
@@ -184,8 +185,11 @@ describe("generic Relationship Memory states", () => {
 
 describe("derived Home coordination", () => {
   it("derives the Delegation question count from openQuestions", () => {
+    const planningEngagements = engagements.map((engagement) =>
+      engagement.id === DELEGATION_ENGAGEMENT_ID ? { ...engagement, stage: "planning" as const } : engagement,
+    );
     const prompt = deriveHomeCoordinationPrompts(
-      engagements,
+      planningEngagements,
       studyTourSources,
     ).find((candidate) => candidate.sourceType === "delegation_questions");
 
@@ -199,7 +203,7 @@ describe("derived Home coordination", () => {
   it("omits the Delegation coordination prompt when openQuestions is empty", () => {
     const withoutQuestions = engagements.map((engagement) =>
       engagement.id === DELEGATION_ENGAGEMENT_ID
-        ? { ...engagement, openQuestions: [] }
+        ? { ...engagement, stage: "planning", openQuestions: [] }
         : engagement,
     ) as Engagement[];
     const prompts = deriveHomeCoordinationPrompts(
@@ -212,6 +216,20 @@ describe("derived Home coordination", () => {
         (candidate) => candidate.sourceType === "delegation_questions",
       ),
     ).toBe(false);
+  });
+
+  it("derives Delegation follow-up from baseline open commitments", () => {
+    const prompt = deriveHomeCoordinationPrompts(
+      engagements,
+      studyTourSources,
+      commitments,
+    ).find((candidate) => candidate.sourceType === "commitment_follow_up");
+
+    expect(prompt).toMatchObject({
+      sourceId: DELEGATION_ENGAGEMENT_ID,
+      count: 2,
+      href: `/engagements/${DELEGATION_ENGAGEMENT_ID}/follow-up`,
+    });
   });
 
   it("derives the Study Tour prompt from readiness and attention source records", () => {
@@ -309,6 +327,7 @@ describe("Home and Study Tour compatibility", () => {
       engagementObjectives,
       PRIMARY_RELATIONSHIP_ID,
       studyTourSources,
+      commitments,
     );
 
     expect(snapshot.priorityRelationship.engagements).toHaveLength(3);
