@@ -12,10 +12,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <Navigation variant="desktop" />
         <div className="mt-auto border-t border-white/10 px-6 py-5">
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-300">
-            Fictional data
+            Portfolio prototype
           </p>
           <p className="mt-2 text-xs leading-5 text-slate-400">
-            Portfolio prototype · No live university systems connected
+            Composite demo data · No live university systems connected
           </p>
         </div>
       </aside>
@@ -36,21 +36,21 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
 function Brand({ inverse = false }: { inverse?: boolean }) {
   return (
-    <Link href="/" className="inline-flex items-center gap-3 rounded-sm" aria-label="TourFlow Dashboard">
+    <Link href="/" className="inline-flex items-center gap-3 rounded-sm" aria-label="Global Engagement Home">
       <span
         className={`grid h-9 w-9 place-items-center rounded-lg text-sm font-bold ${
           inverse ? "bg-white text-[#173f5f]" : "bg-[#173f5f] text-white"
         }`}
         aria-hidden="true"
       >
-        TF
+        GE
       </span>
       <span>
         <span className={`block text-base font-semibold tracking-[-0.02em] ${inverse ? "text-white" : "text-slate-950"}`}>
-          TourFlow
+          Global Engagement
         </span>
         <span className={`block text-[10px] font-medium uppercase tracking-[0.14em] ${inverse ? "text-slate-400" : "text-slate-500"}`}>
-          Program operations
+          Temporary product label
         </span>
       </span>
     </Link>

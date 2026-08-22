@@ -6,11 +6,11 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "TourFlow",
-    template: "%s · TourFlow",
+    default: "Global Engagement",
+    template: "%s · Global Engagement",
   },
   description:
-    "A fictional-data operations workspace for international study tour readiness.",
+    "A composite-data operations workspace for international relationships and engagements.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

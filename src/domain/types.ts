@@ -152,3 +152,135 @@ export interface DashboardSnapshot {
   attentionItems: AttentionItem[];
   primaryProgram: ProgramSummary | null;
 }
+
+export const engagementStages = [
+  "enquiry",
+  "scoping",
+  "planning",
+  "scheduled",
+  "in_progress",
+  "follow_up",
+  "completed",
+] as const;
+
+export type EngagementStage = (typeof engagementStages)[number];
+
+export type EngagementType =
+  | "delegation_visit"
+  | "study_tour"
+  | "partner_meeting"
+  | "short_program";
+
+export interface PartnerOrganisation {
+  id: string;
+  name: string;
+  location: string;
+  organisationType: "higher_education";
+  composite: true;
+}
+
+export interface Relationship {
+  id: string;
+  partnerOrganisationId: string;
+  owner: string;
+  summary: string;
+  strategicThemes: string[];
+}
+
+interface EngagementBase {
+  id: string;
+  relationshipId: string;
+  title: string;
+  stage: EngagementStage;
+  startDate: string;
+  endDate: string;
+  summary: string;
+  strategicInterests: string[];
+  composite: true;
+}
+
+export interface StudyTourEngagement extends EngagementBase {
+  type: "study_tour";
+  studyTourProgramId: string;
+}
+
+export interface GeneralEngagement extends EngagementBase {
+  type: Exclude<EngagementType, "study_tour">;
+  delegationSize?: number;
+  sourceEnquiry?: string;
+  openQuestions?: string[];
+}
+
+export type Engagement = StudyTourEngagement | GeneralEngagement;
+
+export interface EngagementObjective {
+  id: string;
+  engagementId: string;
+  title: string;
+  description: string;
+  sourceRelationshipSignalId?: string;
+}
+
+export type RelationshipSignalKind = "outcome" | "strategic_signal";
+
+export interface RelationshipSignal {
+  id: string;
+  relationshipId: string;
+  sourceEngagementId: string;
+  kind: RelationshipSignalKind;
+  title: string;
+  detail: string;
+  recordedDate: string;
+  composite: true;
+}
+
+export interface RelationshipSummary {
+  relationship: Relationship;
+  partner: PartnerOrganisation;
+  engagements: Engagement[];
+  latestEngagement: Engagement | null;
+  nextEngagement: Engagement | null;
+  latestSignal: RelationshipSignal | null;
+}
+
+export interface RelationshipContinuity {
+  signal: RelationshipSignal;
+  sourceEngagement: Engagement;
+  objective: EngagementObjective;
+  currentEngagement: Engagement;
+}
+
+export type RelationshipMemoryState =
+  | {
+      kind: "continuity";
+      signals: RelationshipSignal[];
+      continuities: RelationshipContinuity[];
+    }
+  | {
+      kind: "signals_only";
+      signals: RelationshipSignal[];
+      continuities: [];
+    }
+  | {
+      kind: "empty";
+      signals: [];
+      continuities: [];
+    };
+
+export interface CoordinationPrompt {
+  id: string;
+  title: string;
+  context: string;
+  href: string;
+  sourceType: "delegation_questions" | "study_tour_attention";
+  sourceId: string;
+  count: number;
+}
+
+export interface HomeSnapshot {
+  priorityRelationship: RelationshipSummary;
+  priorityContinuity: RelationshipContinuity | null;
+  currentEngagements: Engagement[];
+  latestRelationshipSignals: RelationshipSignal[];
+  openCoordinationItems: CoordinationPrompt[];
+}
