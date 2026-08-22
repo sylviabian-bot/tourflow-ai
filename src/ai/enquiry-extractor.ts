@@ -2,9 +2,13 @@ import OpenAI from "openai";
 import { zodTextFormat } from "openai/helpers/zod";
 
 import {
-  engagementScopeDraftSchema,
+  engagementScopeExtractionSchema,
   type EngagementScopeDraft,
 } from "./enquiry-schema";
+import {
+  createEngagementScopeDraft,
+  verifyExtractionEvidence,
+} from "./enquiry-provenance";
 import {
   ENQUIRY_EXTRACTION_INSTRUCTIONS,
   ENQUIRY_EXTRACTION_PROMPT_VERSION,
@@ -39,7 +43,7 @@ export class OpenAIEnquiryExtractor implements EnquiryExtractor {
       instructions: ENQUIRY_EXTRACTION_INSTRUCTIONS,
       input: enquiry,
       text: {
-        format: zodTextFormat(engagementScopeDraftSchema, "engagement_scope_draft"),
+        format: zodTextFormat(engagementScopeExtractionSchema, "engagement_scope_extraction"),
       },
     });
 
@@ -47,8 +51,11 @@ export class OpenAIEnquiryExtractor implements EnquiryExtractor {
       throw new Error("The model returned no validated scope draft.");
     }
 
+    verifyExtractionEvidence(enquiry, response.output_parsed);
+    const draft = createEngagementScopeDraft(response.output_parsed);
+
     return {
-      draft: response.output_parsed,
+      draft,
       metadata: {
         responseId: response.id,
         model: response.model,

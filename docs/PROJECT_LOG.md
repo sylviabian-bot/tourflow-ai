@@ -600,6 +600,16 @@ Prove that a completed international engagement can create reusable relationship
 - Missing API configuration, provider failure, invalid structured output, empty text and oversized input are surfaced without fake fallback results.
 - No chat, AI briefing, AI stakeholder/agenda generation, note extraction, prediction, RAG, embeddings, database, authentication, analytics, integration, deployment or second AI feature was introduced.
 
+### 2026-08-22 — Sprint 03 grounding and provenance review fix
+
+- Added a deterministic post-extraction evidence gate: every non-null evidence excerpt for partner, type, dates, size, themes and objectives must occur in the original enquiry after conservative case and whitespace normalisation. Fabricated excerpts reject the whole extraction.
+- Kept the AI extraction immutable and introduced a small `ScopeReviewEdits` overlay for partner, type, date text and delegation size. Confirmed scope uses effective officer-reviewed values while retaining the source draft and evidence.
+- Hardened inferred theme/objective explanations, missing/ambiguous date invariants, date ordering and non-numeric delegation-size handling in runtime validation rather than relying on prompt compliance.
+- Allowed zero grounded objectives. The review UI states that none are defensible, and an incomplete zero-objective scope cannot be officer-confirmed.
+- Removed model-owned objective identifiers from the Structured Output contract. Application code assigns deterministic, unique presentation IDs after validation; these are not canonical domain IDs.
+- Exact partner matching remains outside the model. It runs against the effective reviewed name and returns `ambiguous` for duplicate exact records; fuzzy matching remains deliberately excluded.
+- Unit tests remain deterministic and do not make live OpenAI calls. Live QA status is recorded only from an actual configured request.
+
 ## Problems and solutions
 
 | ID | Date | Problem | Impact | Root cause | Solution | Verification |
@@ -643,6 +653,9 @@ Prove that a completed international engagement can create reusable relationship
 | 2026-08-22 | Sprint 03 | Schema, grounding, confirmation and regression tests | Pass | Vitest: 5 files, 69 tests passed. Tests use deterministic structured fixtures, cover the strict Responses API schema plus missing-key/invalid-input boundaries, and make no live OpenAI request. |
 | 2026-08-22 | Sprint 03 | ESLint, TypeScript and production build | Pass | `pnpm lint`, `pnpm typecheck`, `pnpm test` and `pnpm build` passed; 24 pages plus the server-side enquiry route were generated. |
 | 2026-08-22 | Sprint 03 | Desktop, 390 × 844 and error-path browser verification | Pass | Home, Enquiry Scope, Relationship, Delegation and Study Tour routes had no error UI or horizontal overflow. Source/loading/missing-key states, source preservation, privacy copy and labelled focus were verified. Live success was not tested because `OPENAI_API_KEY` was unavailable. |
+| 2026-08-22 | Sprint 03 grounding/provenance review fix | Evidence, provenance, invariant and regression tests | Pass | Vitest: 5 files, 77 tests passed. Deterministic tests cover exact-source evidence, immutable officer corrections, zero-objective handling, unique draft IDs and duplicate partner resolution; no live OpenAI request is made by the suite. |
+| 2026-08-22 | Sprint 03 grounding/provenance review fix | Desktop and 390 × 844 browser verification | Pass | Missing-key/source preservation, deterministic fixture-backed draft review, visible officer-edit provenance, unresolved matching, confirmed effective values and the disabled zero-objective state were checked without overflow or console errors. The temporary local QA transport was removed before validation and commit. |
+| 2026-08-22 | Sprint 03 grounding/provenance review fix | Real OpenAI request | Not run | `OPENAI_API_KEY` was not available locally. No end-to-end live-integration claim is made. |
 
 ## Lessons learned
 

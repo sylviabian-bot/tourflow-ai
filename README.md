@@ -66,7 +66,9 @@ The product uses two explicit demonstration snapshots. The global operational sn
 
 ## AI status
 
-Genuine AI is implemented only for `Enquiry → Structured Engagement Scope` using the official OpenAI JavaScript SDK and Responses API. The model returns a schema-constrained draft with evidence, grounding state, missing information and clarification questions. An officer must review and confirm it locally; the draft never automatically creates an Engagement or EngagementObjective.
+Genuine AI is implemented only for `Enquiry → Structured Engagement Scope` using the official OpenAI JavaScript SDK and Responses API. The model returns a schema-constrained draft with evidence, grounding state, missing information and clarification questions. Every model-provided evidence excerpt is then deterministically verified as a case-insensitive, whitespace-normalised exact excerpt of the source enquiry before the draft can be shown.
+
+Officer corrections are stored separately from the immutable AI extraction and its original evidence. A corrected value is visibly labelled `Officer edited`, while confirmation uses the effective officer-reviewed value. If the enquiry supports no defensible objective, the draft may contain zero objectives and remains incomplete and unconfirmed until at least one grounded objective is available. The draft never automatically creates an Engagement or EngagementObjective.
 
 Readiness and attention rules, partner matching, stakeholder matching, agenda traceability, briefing composition, outcome retention and Relationship Memory remain deterministic. There is no AI chat, AI briefing, AI stakeholder matching or AI agenda generation.
 
@@ -132,4 +134,4 @@ pnpm build
 
 ## Current limitations
 
-AI output quality depends on the supplied enquiry and must be reviewed by an officer. Evidence excerpts support review but are not a guarantee that every interpretation is correct. Confirmation is local to the demo session and does not write to canonical Engagement records. Stakeholder and commitment interactions also reset on reload. There is no authentication, role model, database, institutional integration or production deployment. Supporting relationships and engagement types remain intentionally light, and the temporary product name is unresolved.
+AI output quality depends on the supplied enquiry and must be reviewed by an officer. Verified source excerpts prove textual provenance, not that a model interpretation is institutionally correct. Confirmation is local to the demo session and does not write to canonical Engagement records. Stakeholder and commitment interactions also reset on reload. There is no authentication, role model, database, institutional integration or production deployment. Supporting relationships and engagement types remain intentionally light, and the temporary product name is unresolved.

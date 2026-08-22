@@ -1,4 +1,5 @@
-import type { EngagementScopeDraft } from "@/ai/enquiry-schema";
+import { createEngagementScopeDraft } from "@/ai/enquiry-provenance";
+import type { EngagementScopeExtraction } from "@/ai/enquiry-schema";
 
 export const SAMPLE_ENQUIRY = `Subject: Proposed senior delegation visit to Sydney
 
@@ -16,7 +17,7 @@ export const INCOMPLETE_ENQUIRY = `Harbour Lantern University would like to expl
 
 export const AMBIGUOUS_PARTNER_ENQUIRY = `Eastern Horizon Institute is considering a partner meeting in November to discuss student mobility.`;
 
-export const VALID_SCOPE_DRAFT: EngagementScopeDraft = {
+export const VALID_SCOPE_EXTRACTION: EngagementScopeExtraction = {
   mentionedOrganisationName: {
     value: "Eastern Horizon University",
     grounding: "explicit",
@@ -50,9 +51,9 @@ export const VALID_SCOPE_DRAFT: EngagementScopeDraft = {
     { value: "Joint Programs", grounding: "inferred", evidenceExcerpt: "future joint postgraduate programs", inferenceExplanation: "The proposed postgraduate collaboration maps to the Joint Programs theme." },
   ],
   objectives: [
-    { id: "objective-ai-business", title: "Explore AI and Business Analytics collaboration", grounding: "inferred", evidenceExcerpt: "interested in artificial intelligence and business analytics", inferenceExplanation: "The stated interests are expressed as a concise discussion objective." },
-    { id: "objective-mobility", title: "Clarify student mobility opportunities", grounding: "inferred", evidenceExcerpt: "understand your student exchange model", inferenceExplanation: "The request to understand exchange is converted into a reviewable objective." },
-    { id: "objective-joint-program", title: "Test joint-program interest", grounding: "inferred", evidenceExcerpt: "opportunities for future joint postgraduate programs", inferenceExplanation: "The stated opportunity is framed as exploratory rather than agreed." },
+    { title: "Explore AI and Business Analytics collaboration", grounding: "inferred", evidenceExcerpt: "interested in artificial intelligence and business analytics", inferenceExplanation: "The stated interests are expressed as a concise discussion objective." },
+    { title: "Clarify student mobility opportunities", grounding: "inferred", evidenceExcerpt: "understand your student exchange model", inferenceExplanation: "The request to understand exchange is converted into a reviewable objective." },
+    { title: "Test joint-program interest", grounding: "inferred", evidenceExcerpt: "opportunities for future joint postgraduate programs", inferenceExplanation: "The stated opportunity is framed as exploratory rather than agreed." },
   ],
   missingInformation: [
     { field: "dates", detail: "Exact visit dates are not confirmed." },
@@ -65,3 +66,5 @@ export const VALID_SCOPE_DRAFT: EngagementScopeDraft = {
     { question: "Which joint postgraduate program models should be prioritised?", relatedFields: ["jointProgramModel"] },
   ],
 };
+
+export const VALID_SCOPE_DRAFT = createEngagementScopeDraft(VALID_SCOPE_EXTRACTION);
