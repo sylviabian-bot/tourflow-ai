@@ -218,6 +218,7 @@ export interface EngagementObjective {
   engagementId: string;
   title: string;
   description: string;
+  themes: string[];
   sourceRelationshipSignalId?: string;
 }
 
@@ -302,7 +303,7 @@ export interface InternalStakeholder {
   synthetic: true;
 }
 
-export type StakeholderAssignmentStatus = "suggested" | "invited" | "confirmed";
+export type StakeholderAssignmentStatus = "suggested" | "confirmed";
 
 export interface StakeholderAssignment {
   id: string;

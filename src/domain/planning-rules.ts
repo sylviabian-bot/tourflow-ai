@@ -12,18 +12,6 @@ import type {
   UniversityCapability,
 } from "./types";
 
-function getObjectiveThemes(objective: EngagementObjective): string[] {
-  const text = `${objective.title} ${objective.description}`.toLowerCase();
-  if (text.includes("mobility")) return ["Student Mobility"];
-  if (text.includes("joint-program") || text.includes("joint program")) {
-    return ["Joint Programs", "Business Analytics"];
-  }
-  if (text.includes("broader") || text.includes("institutional collaboration")) {
-    return ["Institutional Collaboration", "Artificial Intelligence", "Innovation"];
-  }
-  return [];
-}
-
 export function deriveStakeholderAssignments(
   engagement: Engagement,
   objectives: EngagementObjective[],
@@ -36,14 +24,11 @@ export function deriveStakeholderAssignments(
 
   return objectives.flatMap((objective) => {
     if (objective.engagementId !== engagement.id) return [];
-    const objectiveThemes = getObjectiveThemes(objective);
     return stakeholders.flatMap((stakeholder) => {
       const capability = capabilityById.get(stakeholder.capabilityId);
       if (!capability) return [];
-      const matchedTheme = objectiveThemes.find((theme) => capability.themes.includes(theme));
-      if (!matchedTheme || !engagement.strategicInterests.some((interest) =>
-        interest === matchedTheme || matchedTheme === "Institutional Collaboration" || matchedTheme === "Innovation"
-      )) return [];
+      const matchedTheme = objective.themes.find((theme) => capability.themes.includes(theme));
+      if (!matchedTheme) return [];
 
       const id = `assignment-${objective.id}-${stakeholder.id}`;
       return [{
@@ -76,7 +61,7 @@ export function validateAgendaTraceability(
   objectives: EngagementObjective[],
   assignments: StakeholderAssignment[],
 ): string[] {
-  const objectiveIds = new Set(objectives.map((objective) => objective.id));
+  const objectivesById = new Map(objectives.map((objective) => [objective.id, objective]));
   const assignmentsById = new Map(assignments.map((assignment) => [assignment.id, assignment]));
   const errors: string[] = [];
 
@@ -85,22 +70,42 @@ export function validateAgendaTraceability(
       errors.push(`${item.id}: substantive agenda item has no objective`);
     }
     for (const objectiveId of item.objectiveIds) {
-      if (!objectiveIds.has(objectiveId)) errors.push(`${item.id}: unknown objective ${objectiveId}`);
+      const objective = objectivesById.get(objectiveId);
+      if (!objective) errors.push(`${item.id}: unknown objective ${objectiveId}`);
+      else if (objective.engagementId !== item.engagementId) {
+        errors.push(`${item.id}: objective ${objectiveId} belongs to another engagement`);
+      }
     }
     for (const assignmentId of item.stakeholderAssignmentIds) {
       const assignment = assignmentsById.get(assignmentId);
       if (!assignment || assignment.engagementId !== item.engagementId) {
         errors.push(`${item.id}: invalid stakeholder assignment ${assignmentId}`);
+      } else if (item.type !== "meal" && !item.objectiveIds.includes(assignment.objectiveId)) {
+        errors.push(`${item.id}: stakeholder assignment ${assignmentId} is not linked to a supported objective`);
       }
     }
   }
   return errors;
 }
 
+export function getAgendaParticipation(
+  item: AgendaItem,
+  assignments: StakeholderAssignment[],
+): { confirmed: StakeholderAssignment[]; proposed: StakeholderAssignment[] } {
+  const assignmentById = new Map(assignments.map((assignment) => [assignment.id, assignment]));
+  const participants = item.stakeholderAssignmentIds.flatMap((id) => {
+    const assignment = assignmentById.get(id);
+    return assignment?.engagementId === item.engagementId ? [assignment] : [];
+  });
+  return {
+    confirmed: participants.filter((assignment) => assignment.status === "confirmed"),
+    proposed: participants.filter((assignment) => assignment.status === "suggested"),
+  };
+}
+
 function buildTalkingPoint(objective: EngagementObjective): string {
-  const title = objective.title.toLowerCase();
-  if (title.includes("mobility")) return "Clarify preferred mobility models, indicative scale and the information required for a feasibility review.";
-  if (title.includes("joint-program")) return "Clarify the academic level, discipline and collaboration model the partner wants to prioritise.";
+  if (objective.themes.includes("Student Mobility")) return "Clarify preferred mobility models, indicative scale and the information required for a feasibility review.";
+  if (objective.themes.includes("Joint Programs")) return "Clarify the academic level, discipline and collaboration model the partner wants to prioritise.";
   return "Clarify which collaboration models the partner wants to prioritise beyond short-term programs.";
 }
 

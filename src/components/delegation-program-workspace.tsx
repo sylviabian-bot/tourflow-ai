@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 
+import { AgendaParticipation } from "@/components/agenda-participation";
 import { EngagementLocalNavigation } from "@/components/engagement-local-navigation";
 import { SectionHeader } from "@/components/editorial";
 import { DELEGATION_ENGAGEMENT_ID, engagementObjectives, engagements } from "@/data/engagement-fixtures";
@@ -17,7 +18,6 @@ export function DelegationProgramWorkspace() {
   const assignments = deriveStakeholderAssignments(engagement, objectives, universityCapabilities, internalStakeholders, confirmedAssignmentIds);
   const stakeholderById = new Map(internalStakeholders.map((stakeholder) => [stakeholder.id, stakeholder]));
   const capabilityById = new Map(universityCapabilities.map((capability) => [capability.id, capability]));
-  const assignmentById = new Map(assignments.map((assignment) => [assignment.id, assignment]));
   const confirmedCount = assignments.filter((assignment) => assignment.status === "confirmed").length;
 
   return (
@@ -35,12 +35,12 @@ export function DelegationProgramWorkspace() {
         </div>
       </section>
 
-      <section aria-labelledby="program-heading"><SectionHeader id="program-heading" title="MONDAY · 19 OCTOBER" description="Objective-led visit program. Activities remain proposed unless marked confirmed." /><ol className="divide-y divide-[var(--divider)]">{delegationAgendaItems.map((item) => { const itemObjectives = objectives.filter((objective) => item.objectiveIds.includes(objective.id)); const hosts = item.stakeholderAssignmentIds.map((id) => assignmentById.get(id)).filter(Boolean).map((assignment) => stakeholderById.get(assignment!.stakeholderId)!).filter(Boolean); return <li key={item.id} className="grid gap-4 py-6 sm:grid-cols-[7rem_minmax(0,1fr)] sm:gap-8"><div><p className="text-lg font-semibold tabular-nums text-[var(--navy)]">{item.startTime}</p><p className="mt-1 text-xs tabular-nums text-[var(--muted)]">to {item.endTime}</p></div><div><div className="flex flex-wrap items-center gap-3"><h2 className="text-lg font-semibold text-[var(--ink)]">{item.title}</h2><AgendaStatus status={item.status} /></div><p className="mt-1 text-sm text-[var(--muted)]">{item.location}</p><p className="mt-3 max-w-3xl text-sm leading-6 text-[var(--ink)]">{item.purpose}</p>{itemObjectives.length > 0 ? <p className="mt-3 text-xs leading-5 text-[var(--context)]">Supports · {itemObjectives.map((objective) => objective.title).join("; ")}</p> : <p className="mt-3 text-xs text-[var(--muted)]">Relationship-building activity · no standalone objective</p>}<p className="mt-2 text-xs leading-5 text-[var(--muted)]">Hosts · {hosts.map((host) => host.name).join(", ")}</p></div></li>; })}</ol></section>
+      <section aria-labelledby="program-heading"><SectionHeader id="program-heading" title="MONDAY · 19 OCTOBER" description="Objective-led visit program. Activities remain proposed unless marked confirmed." /><ol className="divide-y divide-[var(--divider)]">{delegationAgendaItems.map((item) => { const itemObjectives = objectives.filter((objective) => item.objectiveIds.includes(objective.id)); return <li key={item.id} className="grid gap-4 py-6 sm:grid-cols-[7rem_minmax(0,1fr)] sm:gap-8"><div><p className="text-lg font-semibold tabular-nums text-[var(--navy)]">{item.startTime}</p><p className="mt-1 text-xs tabular-nums text-[var(--muted)]">to {item.endTime}</p></div><div><div className="flex flex-wrap items-center gap-3"><h2 className="text-lg font-semibold text-[var(--ink)]">{item.title}</h2><AgendaStatus status={item.status} /></div><p className="mt-1 text-sm text-[var(--muted)]">{item.location}</p><p className="mt-3 max-w-3xl text-sm leading-6 text-[var(--ink)]">{item.purpose}</p>{itemObjectives.length > 0 ? <p className="mt-3 text-xs leading-5 text-[var(--context)]">Supports · {itemObjectives.map((objective) => objective.title).join("; ")}</p> : <p className="mt-3 text-xs text-[var(--muted)]">Relationship-building activity · no standalone objective</p>}<AgendaParticipation item={item} assignments={assignments} stakeholders={internalStakeholders} /></div></li>; })}</ol></section>
 
       <section className="border-y border-[var(--divider)] py-6"><div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"><div><p className="text-xs text-[var(--muted)]">Brief preparation state</p><p className="mt-1 text-base font-semibold text-[var(--ink)]">{confirmedCount} of {assignments.length} stakeholder assignments confirmed</p></div><Link href={`/engagements/${engagement.id}/brief`} className="text-sm font-semibold text-[var(--navy)] hover:underline">Open executive brief →</Link></div></section>
     </div>
   );
 }
 
-function AssignmentStatus({ status }: { status: "suggested" | "invited" | "confirmed" }) { return <span className="inline-flex items-center gap-2 text-xs text-[var(--ink)]"><span className={`h-2 w-2 rounded-full ${status === "confirmed" ? "bg-[var(--sage)]" : "bg-[var(--ochre)]"}`} aria-hidden="true" />{status === "confirmed" ? "Confirmed" : "Suggested"}</span>; }
+function AssignmentStatus({ status }: { status: "suggested" | "confirmed" }) { return <span className="inline-flex items-center gap-2 text-xs text-[var(--ink)]"><span className={`h-2 w-2 rounded-full ${status === "confirmed" ? "bg-[var(--sage)]" : "bg-[var(--ochre)]"}`} aria-hidden="true" />{status === "confirmed" ? "Confirmed" : "Suggested"}</span>; }
 function AgendaStatus({ status }: { status: "draft" | "proposed" | "confirmed" }) { const colour = status === "confirmed" ? "bg-[var(--sage)]" : status === "proposed" ? "bg-[var(--context)]" : "bg-[var(--ochre)]"; return <span className="inline-flex items-center gap-2 text-xs capitalize text-[var(--ink)]"><span className={`h-2 w-2 rounded-full ${colour}`} aria-hidden="true" />{status}</span>; }

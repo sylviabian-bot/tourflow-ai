@@ -71,6 +71,7 @@ Use this table for decisions that have been explicitly approved. Do not move a p
 | D-035 | 2026-08-22 | Authorise Sprint 02B only for `Objective → Internal Stakeholder → Agenda Activity → Executive Briefing`. | Proves how partner intent becomes coordinated internal action without prematurely implementing follow-up. | Build the full outcomes/commitments loop; add AI now | Product owner |
 | D-036 | 2026-08-22 | Use deterministic theme matching with an explicit rationale and human confirmation. | Establishes an explainable baseline and avoids implying automated institutional decisions. | AI recommendations; static unexplained assignments | Product owner |
 | D-037 | 2026-08-22 | Compose the first Executive Brief deterministically from structured source records. | Demonstrates workflow value before AI drafting and preserves provenance. | Generated briefing copy; manually duplicated briefing fixture | Product owner |
+| D-038 | 2026-08-22 | Store objective themes explicitly and limit stakeholder assignment status to `suggested / confirmed` in Sprint 02B. | Matching must survive copy changes, and every retained domain state must be represented accurately in the current UI. | Infer themes from wording; retain an unused `invited` state | Product owner |
 
 ## Current implementation boundary
 
@@ -525,6 +526,14 @@ Prove that a completed international engagement can create reusable relationship
 - Genuine AI, including AI-assisted scope or briefing generation, is explicitly deferred to Sprint 03.
 - No database, authentication, external integration, analytics, Vercel deployment, or Study Tour expansion was introduced.
 
+### 2026-08-22 — Sprint 02B review fix
+
+- Replaced objective-title parsing with explicit `EngagementObjective.themes` fixture data and direct theme intersection against university capabilities.
+- Removed the unused `invited` assignment state; the implemented human-review workflow now models only `suggested` and `confirmed`.
+- Derived agenda participation from assignment state so suggested people appear as proposed participants and confirmed people appear as confirmed hosts in both Program and Brief.
+- Strengthened agenda validation so objectives and assignments must belong to the agenda item's engagement, and each substantive item's assignment must trace to one of that item's supported objectives. Meals retain the documented relationship-building exception.
+- Preserved the deterministic Brief composition, talking-point disclosure, shared Program-to-Brief confirmation state, Study Tour Delivery, and all Sprint 02B scope boundaries.
+
 ## Problems and solutions
 
 | ID | Date | Problem | Impact | Root cause | Solution | Verification |
@@ -556,6 +565,9 @@ Prove that a completed international engagement can create reusable relationship
 | 2026-08-22 | Sprint 02B | Planning-domain regression tests | Pass | Vitest: 3 files, 32 tests passed, including ten focused planning tests and all existing Sprint 01 / 02A tests. |
 | 2026-08-22 | Sprint 02B | ESLint, TypeScript, and production build | Pass | `pnpm lint`, `pnpm typecheck`, and `pnpm build` passed with the bundled Node runtime; the build generated 21 static pages. |
 | 2026-08-22 | Sprint 02B | Desktop, 390 × 844 mobile, and interaction verification | Pass | Home, Relationship, Delegation Overview, Program, Brief, and Study Tour Delivery loaded without console errors or horizontal overflow; stakeholder confirmation propagated to Brief and Study Tour confirm/reset remained functional. |
+| 2026-08-22 | Sprint 02B review fix | Structured-theme, participation-state, and agenda-traceability tests | Pass | Vitest: 3 files, 37 tests passed, including title-independent matching and three mismatched agenda-record regressions. |
+| 2026-08-22 | Sprint 02B review fix | ESLint, TypeScript, and production build | Pass | `pnpm lint`, `pnpm typecheck`, and `pnpm build` passed; 21 static pages generated. |
+| 2026-08-22 | Sprint 02B review fix | Program / Brief desktop and 390 × 844 interaction QA | Pass | Proposed and confirmed participation labels updated consistently before and after confirmation, confirmation remained synchronised across routes, no overflow or visual regression was observed, and the deterministic non-AI disclosure remained present. |
 
 ## Lessons learned
 

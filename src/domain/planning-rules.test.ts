@@ -19,6 +19,7 @@ import {
   buildExecutiveBrief,
   confirmStakeholderAssignment,
   deriveStakeholderAssignments,
+  getAgendaParticipation,
   validateAgendaTraceability,
 } from "./planning-rules";
 
@@ -43,9 +44,26 @@ const brief = buildExecutiveBrief({
 
 describe("deterministic stakeholder matching", () => {
   it("derives suggestions from engagement objectives and themes", () => {
+    expect(engagementObjectives.every((objective) => objective.themes.length > 0)).toBe(true);
     expect(assignments.some((assignment) => assignment.matchedTheme === "Student Mobility")).toBe(true);
     expect(assignments.some((assignment) => assignment.matchedTheme === "Joint Programs")).toBe(true);
     expect(assignments.every((assignment) => engagementObjectives.some((objective) => objective.id === assignment.objectiveId))).toBe(true);
+  });
+
+  it("does not depend on objective title wording", () => {
+    const renamedObjectives = engagementObjectives.map((objective) => ({
+      ...objective,
+      title: `Renamed objective ${objective.id}`,
+      description: "Copy intentionally contains none of the matching theme labels.",
+    }));
+    const renamedAssignments = deriveStakeholderAssignments(
+      delegation,
+      renamedObjectives,
+      universityCapabilities,
+      internalStakeholders,
+      baselineConfirmedAssignmentIds,
+    );
+    expect(renamedAssignments).toEqual(assignments);
   });
 
   it("never returns a suggestion without an explainable rationale", () => {
@@ -60,6 +78,18 @@ describe("deterministic stakeholder matching", () => {
     expect(updated.objectiveId).toBe(target.objectiveId);
     expect(updated.stakeholderId).toBe(target.stakeholderId);
   });
+
+  it("derives proposed and confirmed agenda participation from assignment state", () => {
+    const item = delegationAgendaItems.find((candidate) => candidate.id === "agenda-ai-session")!;
+    const before = getAgendaParticipation(item, assignments);
+    expect(before.confirmed).toHaveLength(0);
+    expect(before.proposed).toHaveLength(1);
+
+    const updated = confirmStakeholderAssignment(assignments, before.proposed[0].id);
+    const after = getAgendaParticipation(item, updated);
+    expect(after.confirmed).toHaveLength(1);
+    expect(after.proposed).toHaveLength(0);
+  });
 });
 
 describe("agenda traceability", () => {
@@ -69,6 +99,35 @@ describe("agenda traceability", () => {
 
   it("uses stakeholder assignments from the same engagement", () => {
     expect(validateAgendaTraceability(delegationAgendaItems, engagementObjectives, assignments)).toEqual([]);
+  });
+
+  it("rejects an objective belonging to another engagement", () => {
+    const foreignObjective = {
+      ...engagementObjectives[0],
+      id: "objective-foreign",
+      engagementId: STUDY_TOUR_DELIVERY_ENGAGEMENT_ID,
+    };
+    const item = { ...delegationAgendaItems[0], objectiveIds: [foreignObjective.id] };
+    expect(validateAgendaTraceability([item], [...engagementObjectives, foreignObjective], assignments))
+      .toContain(`${item.id}: objective ${foreignObjective.id} belongs to another engagement`);
+  });
+
+  it("rejects a stakeholder assignment belonging to another engagement", () => {
+    const foreignAssignment = {
+      ...assignments[0],
+      id: "assignment-foreign",
+      engagementId: STUDY_TOUR_DELIVERY_ENGAGEMENT_ID,
+    };
+    const item = { ...delegationAgendaItems[0], stakeholderAssignmentIds: [foreignAssignment.id] };
+    expect(validateAgendaTraceability([item], engagementObjectives, [...assignments, foreignAssignment]))
+      .toContain(`${item.id}: invalid stakeholder assignment ${foreignAssignment.id}`);
+  });
+
+  it("rejects a stakeholder assignment not linked to an agenda objective", () => {
+    const mobilityAssignment = assignments.find((assignment) => assignment.objectiveId === "objective-mobility-pathways")!;
+    const item = { ...delegationAgendaItems[0], stakeholderAssignmentIds: [mobilityAssignment.id] };
+    expect(validateAgendaTraceability([item], engagementObjectives, assignments))
+      .toContain(`${item.id}: stakeholder assignment ${mobilityAssignment.id} is not linked to a supported objective`);
   });
 });
 

@@ -189,6 +189,7 @@ export const engagementObjectives: EngagementObjective[] = [
     title: "Explore broader institutional collaboration",
     description:
       "Identify practical areas for collaboration beyond short-term student programs.",
+    themes: ["Institutional Collaboration", "Artificial Intelligence", "Innovation"],
     sourceRelationshipSignalId: PRIOR_COLLABORATION_SIGNAL_ID,
   },
   {
@@ -197,6 +198,7 @@ export const engagementObjectives: EngagementObjective[] = [
     title: "Clarify student mobility opportunities",
     description:
       "Understand the partner's preferred mobility models and the information needed for a future feasibility review.",
+    themes: ["Student Mobility"],
   },
   {
     id: "objective-joint-program-interest",
@@ -204,5 +206,6 @@ export const engagementObjectives: EngagementObjective[] = [
     title: "Test joint-program interest",
     description:
       "Clarify the intended academic level, discipline and desired form of joint-program collaboration.",
+    themes: ["Joint Programs", "Business Analytics"],
   },
 ];
