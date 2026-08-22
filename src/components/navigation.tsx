@@ -15,13 +15,13 @@ export function Navigation({ variant }: { variant: "desktop" | "mobile" }) {
   if (variant === "mobile") {
     return (
       <details className="group relative">
-        <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 text-sm font-semibold text-slate-700 shadow-sm">
+        <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2 rounded border border-[var(--divider)] bg-[var(--surface)] px-3 text-sm font-semibold text-[var(--navy)]">
           Menu
           <span className="text-slate-400 transition group-open:rotate-180" aria-hidden="true">⌄</span>
         </summary>
         <nav
           aria-label="Primary navigation"
-          className="absolute right-0 top-12 w-56 rounded-xl border border-slate-200 bg-white p-2 shadow-xl"
+          className="absolute right-0 top-12 w-56 rounded border border-[var(--divider)] bg-[var(--surface)] p-2 shadow-[0_8px_22px_rgba(32,41,52,0.12)]"
         >
           {navigationItems.map((item) => (
             <NavLink key={item.href} item={item} pathname={pathname} mobile />
@@ -32,7 +32,7 @@ export function Navigation({ variant }: { variant: "desktop" | "mobile" }) {
   }
 
   return (
-    <nav aria-label="Primary navigation" className="flex flex-1 flex-col gap-1 px-3 py-5">
+    <nav aria-label="Primary navigation" className="flex flex-1 flex-col gap-1 px-4 py-6">
       {navigationItems.map((item) => (
         <NavLink key={item.href} item={item} pathname={pathname} />
       ))}
@@ -56,22 +56,16 @@ function NavLink({
     <Link
       href={item.href}
       aria-current={active ? "page" : undefined}
-      className={`flex min-h-11 items-center gap-3 rounded-lg px-3 text-sm font-medium transition ${
+      className={`flex min-h-11 items-center border-l-2 px-3 text-sm transition ${
         mobile
           ? active
-            ? "bg-slate-100 text-slate-950"
-            : "text-slate-600 hover:bg-slate-50 hover:text-slate-950"
+            ? "border-[var(--navy)] bg-[#efede7] font-semibold text-[var(--navy)]"
+            : "border-transparent text-[var(--muted)] hover:bg-[#f3f0ea] hover:text-[var(--ink)]"
           : active
-            ? "bg-white/12 text-white"
-            : "text-slate-300 hover:bg-white/7 hover:text-white"
+            ? "border-[var(--navy)] bg-[#efede7] font-semibold text-[var(--navy)]"
+            : "border-transparent text-[var(--muted)] hover:bg-[#f3f0ea] hover:text-[var(--ink)]"
       }`}
     >
-      <span
-        className={`h-1.5 w-1.5 rounded-full ${
-          active ? (mobile ? "bg-teal-600" : "bg-teal-300") : mobile ? "bg-slate-300" : "bg-slate-600"
-        }`}
-        aria-hidden="true"
-      />
       {item.label}
     </Link>
   );

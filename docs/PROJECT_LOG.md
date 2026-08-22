@@ -434,6 +434,51 @@ Prove that a completed international engagement can create reusable relationship
 
 - No Stakeholder matching, Agenda, Briefing, Commitment, AI, persistence, external integration, deployment, or Sprint 02B work was introduced.
 
+### 2026-08-22 — Sprint 02A.5 Academic Editorial visual reset
+
+**Reason for the reset**
+
+- Product and code review accepted the Sprint 02A workflow but identified that the dark sidebar, rounded cards, pills, shadows, teal panels, and repeated eyebrow labels resembled a generic AI-SaaS or CRM template.
+- The interface needed to communicate higher-education domain credibility independently of any future AI functionality.
+
+**Approved visual direction**
+
+- Adopted `Academic Editorial × Executive Briefing`: approximately 70% editorial composition, 20% university operations UI, and 10% restrained semantic colour.
+- Moved hierarchy to typography, whitespace, alignment, dates, metadata, thin rules, indentation, and chronological reading order.
+- Used a warm paper background, near-white surface, primary ink, university navy, warm divider, muted sage, ochre, burgundy, and blue-grey relationship-context tokens.
+- Retained the system sans-serif stack for operational text and introduced system Georgia only for major page titles; no font or UI dependency was added.
+
+**Navigation and components**
+
+- Replaced the dark full-height SaaS sidebar with a light institutional navigation rail and a restrained text-only temporary brand treatment.
+- Preserved the exact global IA: `Home / Relationships / Engagements`.
+- Added small presentation primitives for section headers, metadata rows/lists, dividers, and timeline items. Business rules remain outside these components.
+- Replaced large status pills with a marker plus readable status text, using sage for completed/ready, blue-grey or navy for scheduled/in-progress, ochre for planning/scoping, and burgundy for attention/blocked states.
+
+**Page decisions**
+
+- Reframed Home as a daily briefing desk with current engagement focus, relationship context, source-derived coordination prompts, and chronological dates rather than KPI cards.
+- Rebuilt Relationship Detail as a partner dossier with a vertical `Study Tour signal → context carried forward → Delegation objective` chronology; signals-only and empty states remain source-backed and honest.
+- Reframed Senior Delegation Overview as an executive briefing with numbered objectives, source context, enquiry, and open questions, without introducing Sprint 02B sections.
+- Restyled TourFlow Study Tour Delivery with compact readiness metrics, divider-led attention and logistics sections, and the existing Confirm requirement / Reset demo interaction unchanged.
+
+**Responsive and accessibility decisions**
+
+- Desktop uses editorial columns where they clarify context; 390 × 844 layouts stack into a single chronological reading order rather than compressing tables or timelines.
+- Preserved semantic headings, ordered lists, labelled progress, text-based statuses, keyboard-operable controls, and a high-contrast navy focus outline.
+- Browser QA covered Home, Relationships, all three Relationship states, Senior Delegation, and Study Tour Delivery on desktop and 390 × 844 with no error overlay, console errors, or horizontal overflow.
+
+**Lessons learned**
+
+- A distinctive institutional product character can come from typographic rhythm and information composition rather than ornamental branding or additional dependencies.
+- Relationship continuity is clearer as an editorial chronology than as adjacent coloured cards connected by a diagram arrow.
+- Removing decorative surfaces makes source context, dates, status, and next actions easier to compare without changing product behaviour.
+
+**Scope control**
+
+- Domain logic, fixtures, routes, deterministic rules, and demo-state behaviour were preserved.
+- No stakeholder matching, agenda, briefing generation, outcomes, commitments, AI, persistence, authentication, integration, analytics, deployment, or Sprint 02B functionality was added.
+
 ## Problems and solutions
 
 | ID | Date | Problem | Impact | Root cause | Solution | Verification |

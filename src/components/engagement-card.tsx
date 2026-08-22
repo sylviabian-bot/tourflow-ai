@@ -14,23 +14,23 @@ export function EngagementCard({
   href: string;
 }) {
   return (
-    <article className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_12px_36px_-30px_rgba(15,23,42,0.5)] sm:p-6">
+    <article className="flex h-full flex-col border-t border-[var(--divider)] py-5 sm:py-6">
       <div className="flex flex-wrap items-center gap-2">
         <StatusBadge tone={engagement.stage}>
           {formatEngagementStage(engagement.stage)}
         </StatusBadge>
-        <span className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+        <span className="text-xs text-[var(--muted)]">
           {formatEngagementType(engagement.type)}
         </span>
       </div>
-      <h2 className="mt-4 text-lg font-semibold leading-7 text-slate-950">
-        <Link href={href} className="rounded-sm hover:text-[#173f5f] hover:underline">
+      <h2 className="mt-4 text-lg font-semibold leading-7 text-[var(--ink)]">
+        <Link href={href} className="rounded-sm hover:text-[var(--navy)] hover:underline">
           {engagement.title}
         </Link>
       </h2>
-      <p className="mt-1 text-sm font-medium text-slate-600">{partner.name}</p>
-      <p className="mt-4 text-sm leading-6 text-slate-600">{engagement.summary}</p>
-      <div className="mt-auto border-t border-slate-100 pt-4 text-xs text-slate-500">
+      <p className="mt-1 text-sm font-medium text-[var(--navy)]">{partner.name}</p>
+      <p className="mt-4 text-sm leading-6 text-[var(--muted)]">{engagement.summary}</p>
+      <div className="mt-auto pt-4 text-xs tabular-nums text-[var(--muted)]">
         {formatDemoDate(engagement.startDate)}–{formatDemoDate(engagement.endDate)}
       </div>
     </article>

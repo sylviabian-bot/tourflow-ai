@@ -32,7 +32,7 @@ export default function EngagementsPage() {
         meta={DEMO_SNAPSHOT_LABEL}
       />
       <CompositeDisclosure />
-      <div className="grid gap-4 lg:grid-cols-2 2xl:grid-cols-3">
+      <div className="grid gap-x-10 lg:grid-cols-2">
         {engagements.map((engagement) => (
           <EngagementCard
             key={engagement.id}
