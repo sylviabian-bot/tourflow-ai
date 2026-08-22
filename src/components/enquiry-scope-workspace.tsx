@@ -9,6 +9,7 @@ import {
 } from "@/ai/enquiry-schema";
 import {
   confirmScope,
+  getDateNormalisationPresentation,
   getEffectiveScopeValues,
   hasReviewEdit,
   resolvePartnerExact,
@@ -177,6 +178,7 @@ function ScopeDraftReview({
 }) {
   const effective = getEffectiveScopeValues(draft, reviewEdits);
   const partnerResolution = resolvePartnerExact(effective.mentionedOrganisationName, partnerOrganisations);
+  const dateNormalisation = getDateNormalisationPresentation(draft, reviewEdits);
   const excluded = new Set(excludedObjectiveIds);
   const includedObjectiveCount = draft.objectives.length - excludedObjectiveIds.length;
 
@@ -201,7 +203,11 @@ function ScopeDraftReview({
 
         <ReviewField label="Dates" grounding={draft.dates.grounding} evidence={draft.dates.evidenceExcerpt} explanation={draft.dates.inferenceExplanation} edited={hasReviewEdit(reviewEdits, "dateText")} originalValue={draft.dates.dateText}>
           <input aria-label="Date description" value={effective.dateText ?? ""} onChange={(event) => setReviewEdits({ ...reviewEdits, dateText: event.target.value || null })} className="w-full max-w-xl rounded border border-[var(--divider)] bg-[var(--surface)] px-3 py-2 text-sm" placeholder="Not provided" />
-          <p className="mt-2 text-xs text-[var(--muted)]">Normalised dates: {draft.dates.normalisedStartDate ?? "not established"} → {draft.dates.normalisedEndDate ?? "not established"}</p>
+          <p className="mt-2 text-xs text-[var(--muted)]">
+            <span className={dateNormalisation.requiresReview ? "font-semibold text-[var(--ochre)]" : ""}>{dateNormalisation.label}</span>
+            {": "}{dateNormalisation.startDate ?? "not established"} → {dateNormalisation.endDate ?? "not established"}
+            {dateNormalisation.requiresReview ? " · re-review required after officer correction" : null}
+          </p>
         </ReviewField>
 
         <ReviewField label="Delegation size" grounding={draft.delegationSize.grounding} evidence={draft.delegationSize.evidenceExcerpt} explanation={draft.delegationSize.inferenceExplanation} edited={hasReviewEdit(reviewEdits, "delegationSize")} originalValue={draft.delegationSize.value}>

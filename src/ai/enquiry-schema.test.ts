@@ -26,6 +26,7 @@ import {
 import {
   ScopeConfirmationError,
   confirmScope,
+  getDateNormalisationPresentation,
   getEffectiveScopeValues,
   resolvePartnerExact,
 } from "./enquiry-rules";
@@ -196,6 +197,31 @@ describe("application review boundaries", () => {
     expect(confirmed.effective.mentionedOrganisationName).toBe("Harbour Lantern University");
     expect(confirmed.sourceDraft.mentionedOrganisationName.value).toBe("Eastern Horizon University");
     expect(confirmed.reviewEdits).toEqual({ mentionedOrganisationName: "Harbour Lantern University" });
+  });
+
+  it("labels normalised dates as original AI provenance after an officer date correction", () => {
+    const datedDraft = structuredClone(VALID_SCOPE_DRAFT);
+    datedDraft.dates = {
+      ...datedDraft.dates,
+      dateText: "19–20 October 2026",
+      normalisedStartDate: "2026-10-19",
+      normalisedEndDate: "2026-10-20",
+      grounding: "explicit",
+    };
+
+    expect(getDateNormalisationPresentation(datedDraft, {})).toEqual({
+      label: "Normalised dates",
+      startDate: "2026-10-19",
+      endDate: "2026-10-20",
+      requiresReview: false,
+    });
+    expect(getDateNormalisationPresentation(datedDraft, { dateText: "5–6 November 2026" })).toEqual({
+      label: "Original AI normalisation",
+      startDate: "2026-10-19",
+      endDate: "2026-10-20",
+      requiresReview: true,
+    });
+    expect(datedDraft.dates.dateText).toBe("19–20 October 2026");
   });
 
   it("does not confirm an incomplete scope with zero included objectives", () => {

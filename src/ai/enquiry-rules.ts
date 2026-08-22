@@ -16,6 +16,13 @@ export interface EffectiveScopeValues {
   delegationSize: number | null;
 }
 
+export interface DateNormalisationPresentation {
+  label: "Normalised dates" | "Original AI normalisation";
+  startDate: string | null;
+  endDate: string | null;
+  requiresReview: boolean;
+}
+
 export type PartnerResolution =
   | { status: "matched"; partner: PartnerOrganisation }
   | { status: "unresolved"; mentionedName: string | null }
@@ -91,6 +98,19 @@ export function hasReviewEdit(
   field: keyof ScopeReviewEdits,
 ): boolean {
   return hasEdit(reviewEdits, field);
+}
+
+export function getDateNormalisationPresentation(
+  draft: EngagementScopeDraft,
+  reviewEdits: ScopeReviewEdits,
+): DateNormalisationPresentation {
+  const edited = hasReviewEdit(reviewEdits, "dateText");
+  return {
+    label: edited ? "Original AI normalisation" : "Normalised dates",
+    startDate: draft.dates.normalisedStartDate,
+    endDate: draft.dates.normalisedEndDate,
+    requiresReview: edited,
+  };
 }
 
 function hasEdit(reviewEdits: ScopeReviewEdits, field: keyof ScopeReviewEdits) {
