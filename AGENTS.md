@@ -4,13 +4,14 @@
 
 These instructions apply to the entire repository.
 
-TourFlow AI is a portfolio product: a polished, realistic prototype of an operations workspace for university staff coordinating international study tours and short-term mobility programs. It should demonstrate product judgment and operational understanding without pretending to be a production student-management or travel-risk system.
+TourFlow is a portfolio product: a polished, realistic prototype of an operations workspace for university staff coordinating international study tours and short-term mobility programs. The repository remains `tourflow-ai`, but the V1 user-facing product name is `TourFlow`. The `TourFlow AI` name is reserved for a later version with genuine AI-assisted functionality.
 
 ## Current phase gate
 
-- The product owner has approved the V1 product direction and information architecture recorded in `docs/PRODUCT_REQUIREMENTS.md`.
-- Application implementation is still not authorised. Do not scaffold the application, install dependencies, or create application code until a separate implementation instruction is given after this documentation-only commit.
-- Until that instruction, changes remain limited to product, decision, research, and project-planning documentation.
+- The product owner has approved the V1 product direction, information architecture, and Sprint 01 implementation recorded in `docs/PRODUCT_REQUIREMENTS.md`.
+- Sprint 01 is limited to the technical foundation, typed domain model, fictional fixtures, deterministic business rules, application shell, minimal destination pages, and portfolio-triage Dashboard.
+- Do not implement the full Programs, Participants, Readiness, or Itinerary workflows in Sprint 01.
+- Do not deploy to Vercel during Sprint 01.
 - Do not interpret a request to improve the PRD as approval to start implementation.
 
 ## Sources of truth
@@ -42,6 +43,7 @@ When requirements conflict, stop and record the conflict rather than silently ch
 - Do not include secrets, API keys, passwords, private URLs, access tokens, or production environment values in source control.
 - Document status should be represented as metadata in V1; do not store or imitate passport scans or other sensitive documents.
 - Risk and attention indicators in the prototype must be explainable, deterministic, and clearly presented as operational prompts—not legal, medical, compliance, or travel-safety determinations.
+- Never describe deterministic rules as AI. Use the user-facing name `TourFlow` throughout V1.
 
 ## Architecture and dependencies
 
@@ -49,6 +51,8 @@ When requirements conflict, stop and record the conflict rather than silently ch
 - Do not select a framework, scaffold the app, or add dependencies until implementation is approved.
 - Once approved, keep data fixtures separate from presentation logic and derive summary counts from the fixtures rather than duplicating values.
 - Use clear domain names such as program, participant, requirement, attention item, and itinerary entry.
+- Keep lifecycle and readiness independent: `LifecycleStage` describes where a program is in its journey, while `ReadinessState` describes whether action is required.
+- Derive all date-relative behaviour from the fixed `DEMO_TODAY = 2026-08-22` reference date, never from the viewer's system clock.
 - Avoid premature abstractions, microservices, unnecessary state libraries, and speculative extensibility.
 - Do not add authentication, a production database, external AI APIs, analytics, storage, or other external services without first documenting the need and discussing it with the product owner.
 - Explain major architectural decisions in `docs/PROJECT_LOG.md`, including the alternatives considered and why the decision fits V1.
@@ -86,3 +90,13 @@ When requirements conflict, stop and record the conflict rather than silently ch
 - Do not commit build output, local environment files, secrets, or real personal data.
 - Review the diff before committing or pushing.
 - Do not deploy or configure Vercel until the V1 prototype passes the agreed QA gate and deployment is explicitly requested.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
