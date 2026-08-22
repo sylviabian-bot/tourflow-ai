@@ -1,17 +1,17 @@
-# TourFlow / International Engagement Pivot — Project Log
+# International Engagement Prototype — Project Log
 
-This log records how TourFlow evolves from an operational problem into a tested portfolio prototype. Sprint 01 remains the accepted Study Tour readiness foundation. The broader international engagement direction is approved in principle, but the final umbrella name remains unresolved and no Sprint 02 or AI implementation is authorised. The repository and current application have not been renamed.
+This log records how a Study Tour readiness foundation evolves into a tested international engagement portfolio prototype. Sprint 01 remains the accepted TourFlow Study Tour Delivery foundation. Sprint 02A Relationship + Engagement Core is authorised and implemented on its review branch; the final umbrella name remains unresolved and no genuine AI is implemented.
 
 ## Project status
 
 | Field | Current value |
 | --- | --- |
-| Phase | Product pivot finalisation and evidence policy — documentation only |
+| Phase | Sprint 02A — Relationship + Engagement Core implementation |
 | Current version | PRD 0.4 — product direction approved |
-| Implementation | Sprint 01 accepted on `main`; Sprint 02 not authorised |
+| Implementation | Sprint 01 accepted on `main`; Sprint 02A implemented for review; Sprint 02B not authorised |
 | Data approach | Real factual context only when approved; otherwise anonymised, composite, fictional, or synthetic demo data |
 | External services | None approved |
-| Next gate | Separate Sprint 02 instruction after final umbrella and composite-partner naming decisions as needed |
+| Next gate | Review and merge Sprint 02A; authorise Sprint 02B separately if the relationship-memory proof is accepted |
 
 ## Initial assumptions
 
@@ -63,16 +63,19 @@ Use this table for decisions that have been explicitly approved. Do not move a p
 | D-027 | 2026-08-22 | Adopt a real-world evidence policy separating factual professional experience, anonymised/composite cases, and fictional/synthetic demo records. | Protects confidentiality and truthfulness while allowing genuine domain experience to inform the portfolio. | Use only invented context; attach fictional records to recognisable institutions | Product owner |
 | D-028 | 2026-08-22 | Use one anonymised/composite Chinese higher education Partner Relationship containing an earlier Study Tour and later Senior Delegation engagement. | Demonstrates continuity across engagements without implying invented events occurred at a real institution. | Two disconnected scenarios; a real institution with fictional history | Product owner |
 | D-029 | 2026-08-22 | Keep Sprint 02 implementation closed until a separate instruction. | Maintains the product-strategy gate and prevents documentation approval from triggering a refactor. | Begin migration immediately after PR #2 revision | Product owner |
+| D-030 | 2026-08-22 | Authorise Sprint 02A only for Relationship + Engagement Core on `sprint-02a-relationship-engagement-core`. | Proves relationship-memory continuity without prematurely implementing the full PRD 0.4 workflow. | Implement all delegation planning features; remain documentation-only | Product owner |
+| D-031 | 2026-08-22 | Defer a full `Commitment` object to Sprint 02B. | A previous engagement signal linked to a current objective is sufficient for the Sprint 02A proof. | Add speculative commitment fixtures and UI now | Product owner |
+| D-032 | 2026-08-22 | Use a completed 2025 composite Study Tour as the relationship-memory source while preserving the accepted 2026 Study Tour Delivery snapshot as a separate engagement. | Keeps the causal history chronologically valid without changing `DEMO_TODAY` or regressing the Sprint 01 readiness demo. | Pretend the not-yet-departed 2026 Study Tour already produced outcomes; change the fixed demo clock | Product owner |
+| D-033 | 2026-08-22 | Use `Eastern Horizon University` as the fictional/composite public-facing partner name for Sprint 02A. | Provides a credible but non-real institution identity and supports the approved evidence policy. | Use a real university name; leave the deep scenario unnamed | Product owner |
 
 ## Current implementation boundary
 
-Sprint 01 is accepted on `main` and remains the current application baseline. Branch `product-pivot-global-engagement` is restricted to `docs/PRODUCT_REQUIREMENTS.md`, `docs/PROJECT_LOG.md`, and `docs/PIVOT_ANALYSIS.md`. No application refactor, rename, dependency, fixture change, database, authentication, analytics, AI API, external service, or Vercel configuration is authorised. Sprint 02 cannot begin until a separate instruction explicitly authorises it.
+Sprint 02A is authorised on `sprint-02a-relationship-engagement-core`. Its boundary is the Relationship / Engagement domain layer, `Home / Relationships / Engagements` IA, the connected composite relationship-memory demonstration, Senior Delegation Overview, and compatibility access to Study Tour Delivery. Stakeholder matching, agenda, briefing, outcomes capture, commitments, genuine AI, persistence, authentication, integrations, analytics, and deployment remain unauthorised.
 
 ## Unresolved decisions
 
 - final umbrella product name;
-- exact public-facing name of the anonymised/composite partner;
-- Sprint 02 implementation scope and authorisation;
+- Sprint 02B implementation scope and authorisation;
 - genuine AI implementation and evaluation;
 - external integrations; and
 - database, authentication, and persistence.
@@ -338,12 +341,84 @@ Finalise PRD 0.4 before PR #2 review by converting the accepted pivot proposals 
 - Domain authenticity is grounded in genuine professional experience and workflow knowledge, not invented records attached to real organisations.
 - Sprint 02 and genuine AI implementation remain unauthorised.
 
+### 2026-08-22 — Sprint 02A Relationship + Engagement Core
+
+**Objective**
+
+Prove that a completed international engagement can create reusable relationship context that visibly informs an objective in a later engagement, without implementing the full PRD 0.4 workflow.
+
+**Architecture and domain decisions**
+
+- Added `PartnerOrganisation`, `Relationship`, `Engagement`, `EngagementType`, `EngagementStage`, `EngagementObjective`, and `RelationshipSignal` as the minimum coherent Sprint 02A domain layer.
+- Modelled `Engagement` as a discriminated union. Only `StudyTourEngagement` contains `studyTourProgramId`; Delegation records cannot inherit participant-readiness fields.
+- Kept `EngagementStage` independent from Study Tour `LifecycleStage` and `ReadinessState`.
+- Deferred a full `Commitment` object because the Sprint 02A success test ends at the current objective.
+- Added `engagement-rules.ts` for relationship history, memory, objective source-context validation, Home summaries, and relationship summaries instead of deriving them in UI components.
+- Added a compatibility relationship from the 2026 Study Tour engagement to the stable Sprint 01 `Program` through `studyTourProgramId` rather than rewriting readiness rules.
+
+**Fixture strategy**
+
+- Introduced fictional/composite `Eastern Horizon University` as the deeply represented Chinese higher education partner.
+- Used a completed September 2025 Study Tour as the chronological source of a composite outcome and strategic signal.
+- Preserved the accepted September 2026, 24-participant Study Tour Delivery fixture and fixed `DEMO_TODAY = 2026-08-22` as a separate scheduled engagement in the same relationship.
+- Added a later October 2026 Senior Delegation Visit with eight synthetic representatives and four strategic interests.
+- Added two lighter composite relationships plus Partner Meeting and Short Program records for credible portfolio variation.
+
+**UI and migration decisions**
+
+- Replaced global `Dashboard / Programs / Participants` navigation with `Home / Relationships / Engagements`; legacy Programs and Participants routes remain available for compatibility but are not promoted globally.
+- Used `Global Engagement` as an explicitly temporary shell identity and retained `TourFlow` only on Study Tour Delivery.
+- Made Relationship Detail the primary Sprint 02A screen, with a restrained `Previous signal → Relevant now` memory panel and mobile-first stacked history cards.
+- Implemented Senior Delegation Overview only: stage, partner, dates, delegation size, interests, source enquiry, open questions, and objectives.
+- Displayed the causal source on the broader-collaboration objective and linked it back to Relationship Memory.
+- Created a Study Tour Delivery route that reuses the stable participant, requirement, milestone, itinerary, readiness, attention, confirm, and reset rules.
+
+**Validation**
+
+- ESLint: passed.
+- TypeScript no-emit check: passed.
+- Vitest: 2 files and 13 tests passed, including all Sprint 01 tests.
+- Next.js production build: passed; 19 static pages generated.
+- Browser verification: Home, primary Relationship, Delegation Overview, and Study Tour Delivery loaded without console warnings, error overlays, or horizontal overflow.
+- Responsive verification: primary routes passed at a 390 × 844 viewport; Relationship Memory and engagement history remain sequential and readable rather than becoming a compressed table.
+- Interaction verification: `Confirm requirement` changed the primary Study Tour from 6 to 5 outstanding requirements and 2 to 1 blocked participants; `Reset demo` restored 6 and 2.
+- Accessibility checks: semantic headings and lists retained, mobile navigation opened correctly, status labels include text, and keyboard focus displayed a visible blue outline.
+
+**Issues encountered**
+
+- The workspace shell again required the bundled Node path before pnpm commands could run; the implementation itself had no TypeScript failure.
+- The optional `agent-browser` CLI was unavailable, so equivalent browser, responsive, console, overlay, interaction, and focus checks were completed with the installed in-app browser control.
+- A single historical Study Tour could not be both completed and retain the accepted pre-departure snapshot on the fixed demo date. The solution was to model a completed 2025 Study Tour as the memory source and preserve the 2026 delivery workflow as a separate engagement in the same relationship.
+
+**Lessons learned**
+
+- Relationship memory becomes understandable when the UI names both the source engagement and the current objective; a timeline alone is insufficient.
+- A compatibility adapter preserves trusted vertical rules while a new aggregate is introduced above them.
+- Chronological fixture coherence matters to portfolio credibility and should not be sacrificed to force two scenarios into one record.
+- The smallest useful cross-engagement model does not yet require stakeholders, agenda items, briefing records, outcomes capture, or commitments.
+
+**Deliberately deferred to Sprint 02B**
+
+- objective-to-stakeholder matching;
+- objective-linked agenda design;
+- briefing preparation;
+- post-engagement outcome capture;
+- commitments, owners, due dates, and follow-up;
+- any genuine AI assistance; and
+- persistence, authentication, external integrations, analytics, and deployment.
+
+**Outcome**
+
+- A first-time reviewer can follow `Previous Study Tour → strategic signal → Relationship Memory → Senior Delegation → sourced objective` directly in the interface.
+- Sprint 01 Study Tour Delivery remains demonstrable and its rules are unchanged.
+
 ## Problems and solutions
 
 | ID | Date | Problem | Impact | Root cause | Solution | Verification |
 | --- | --- | --- | --- | --- | --- | --- |
 | P-001 | 2026-08-22 | The workspace shell did not expose Node.js on `PATH`, and pnpm initially withheld the native resolver build step. | The first dependency install could not complete reliably. | This Codex workspace uses a bundled Node runtime and pnpm's explicit build approval. | Used the configured bundled Node path for project commands and allowed only `unrs-resolver` in `pnpm-workspace.yaml`. | Clean install completed and every project check ran with the pinned toolchain. |
 | P-002 | 2026-08-22 | The newest TypeScript 7 and ESLint 10 releases did not satisfy the peer ranges of the current Next.js lint ecosystem. | Installation produced compatibility warnings that could make the baseline brittle. | Tool releases were newer than the supported peer ranges of `eslint-config-next` and related plugins. | Pinned TypeScript 6.0.3 and ESLint 9.39.5 while keeping Next.js, React, Tailwind, and Vitest current. | Peer compatibility check and all lint, type, test, and build commands passed. |
+| P-003 | 2026-08-22 | The accepted 2026 pre-departure Study Tour could not truthfully serve as a completed historical engagement on the fixed August 2026 demo date. | Treating it as historical would undermine the relationship-memory story and fixture credibility. | The pivot connected two scenarios that originally had incompatible lifecycle timing. | Added a completed 2025 composite Study Tour for relationship memory and adapted the unchanged 2026 Study Tour Delivery as a separate engagement. | Domain tests validate the shared relationship, prior source context, and preserved delivery metrics. |
 
 ## Testing record
 
@@ -361,6 +436,10 @@ Finalise PRD 0.4 before PR #2 review by converting the accepted pivot proposals 
 | 2026-08-22 | Proposed PRD 0.4 | Documentation completeness and terminology audit | Pass | Required PRD, project-log, pivot-analysis, migration, IA, MVP, AI-ranking, naming, and approval-gate sections are present. |
 | 2026-08-22 | Approved PRD 0.4 | Evidence-policy and scenario audit | Pass | Real, anonymised/composite, and fictional/synthetic use is explicit; the connected demo uses a composite partner and no real organisation is attached to invented events. |
 | 2026-08-22 | Approved PRD 0.4 | Documentation-only scope audit | Pass | Only PRD, Pivot Analysis, and Project Log changed; application code, fixtures, dependencies, repository naming, and Vercel configuration remain unchanged. |
+| 2026-08-22 | Sprint 02A | Relationship-memory and status-separation tests | Pass | Vitest: 2 files, 13 tests passed, including the original Sprint 01 suite. |
+| 2026-08-22 | Sprint 02A | ESLint and TypeScript | Pass | `pnpm lint` and `pnpm typecheck` exited successfully with the bundled Node runtime on `PATH`. |
+| 2026-08-22 | Sprint 02A | Production build | Pass | `pnpm build` compiled successfully and generated 19 static pages. |
+| 2026-08-22 | Sprint 02A | Desktop, mobile, interaction, and accessibility verification | Pass | Core routes loaded without browser errors or overflow; mobile checked at 390 × 844; confirm/reset metrics reconciled; focus outline visible. |
 
 ## Lessons learned
 
@@ -377,6 +456,8 @@ Record concise lessons that should influence later decisions.
 | 2026-08-22 | Shared domain objects should not erase operational differences between engagement types. | Use a small Engagement core plus explicit type-specific delivery extensions. |
 | 2026-08-22 | The best first AI feature has a bounded source, structured output, and explicit approval point. | Prioritise enquiry structuring before briefing generation, recommendation, or generic chat. |
 | 2026-08-22 | Domain authenticity should come from genuine professional experience and workflow knowledge, not by attaching fictional product records to real organisations. | Use factual claims only when supportable; otherwise disclose anonymised, composite, fictional, or synthetic scenarios. |
+| 2026-08-22 | A relationship timeline does not prove continuity unless source context is attached to a current decision. | Show the prior signal directly beside the current objective and link both to their source records. |
+| 2026-08-22 | A new aggregate can be introduced safely above a trusted vertical through a narrow compatibility key. | Keep Study Tour rules stable and adapt them into Engagement instead of rewriting them. |
 
 ## Future improvements backlog
 
@@ -391,7 +472,7 @@ Do not treat this list as approved scope.
 | Live travel-advisory integration | Surface destination changes | V2 | Source reliability, update cadence, escalation policy |
 | AI-assisted status summary | Reduce manual reporting | V2 | Human review, approved data boundaries, evaluation criteria |
 | Post-program feedback | Close the program lifecycle | V2 | Survey design and outcome reporting |
-| Relationship and Engagement layer | Coordinate partner intent, university action, outcomes, and commitments | Sprint 02, pending separate authorisation | Approved direction; final implementation scope still requires a separate instruction |
+| Stakeholder and agenda coordination | Turn current objectives into coordinated university action | Sprint 02B, pending separate authorisation | Requires approved stakeholder, capability, agenda, outcome, and commitment boundaries |
 | Structured engagement briefing | Reduce repeated briefing assembly | Sprint 02, pending separate authorisation | Deterministic assembly first; AI draft later with provenance and review |
 | Enquiry-to-scope AI | Convert unstructured partner requests into reviewable structure | Future AI phase | Approved schema, source grounding, field confirmation, evaluation set, and AI service decision |
 
@@ -424,4 +505,4 @@ Before Sprint 02 implementation, confirm that:
 - [x] the connected scenarios use an anonymised/composite partner and synthetic people;
 - [x] the Sprint 01 migration/reuse map is approved in principle;
 - [x] Enquiry → Structured Engagement Scope is approved as the first future AI use case, while AI implementation remains deferred; and
-- [ ] a separate instruction explicitly authorises Sprint 02 implementation.
+- [x] a separate instruction explicitly authorises Sprint 02A Relationship + Engagement Core implementation.

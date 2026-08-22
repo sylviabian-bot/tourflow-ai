@@ -1,31 +1,52 @@
-# TourFlow
+# Global Engagement — temporary product label
 
-TourFlow is a portfolio prototype for university and education professionals who coordinate international study tours and short-term mobility programs. It helps a coordinator answer one operational question quickly: **which program is not ready, why, and what should happen next?**
+This repository contains an independently developed portfolio prototype informed by hands-on international education partnership and program-coordination experience. The product explores how structured workflows could help university international offices retain relationship context between engagements.
 
-The repository remains named `tourflow-ai`, but the V1 product is intentionally called **TourFlow**. Its attention and readiness logic is deterministic and is not presented as AI. The user-facing name **TourFlow AI** is reserved for a later version with genuine, evaluated AI assistance.
+`Global Engagement` is a neutral temporary shell label, not the final umbrella product name. The repository remains `tourflow-ai`, and **TourFlow** is retained only as the label for the Study Tour Delivery workflow.
 
 ## The problem
 
-Pre-departure readiness is often spread across participant records, document metadata, confirmations, travel details, and milestone trackers. That fragmentation makes it difficult to see which requirement is holding up a participant or program. TourFlow brings those signals into a focused portfolio-triage view without trying to replace every university system.
+Relationship history, engagement planning and delivery work are often distributed across CRM records, email, spreadsheets, calendars, documents and individual memory. Those systems may store information, but an officer still needs to understand what happened previously, what signal resulted and why that context matters to the next engagement.
 
-## Sprint 01 scope
+Sprint 02A demonstrates one focused chain:
 
-The implemented foundation includes:
+```text
+Previous Study Tour
+  → outcome / strategic signal
+  → Relationship Memory
+  → later Senior Delegation
+  → objective informed by that history
+```
 
-- a responsive application shell with Dashboard, Programs, and Participants destinations;
-- a portfolio Dashboard centred on “What needs your attention today?”;
-- three fictional programs and 72 synthetic participant identities;
-- independently modelled lifecycle and readiness states;
-- derived readiness percentages, outstanding requirement counts, participant states, departure timing, milestones, and attention items;
-- deterministic, explainable attention rules;
-- a resettable travel-insurance interaction that updates the participant, attention queue, outstanding count, and program readiness metric from one source-state change; and
-- minimal Programs, Participants, and program-context pages for navigation continuity.
+It does not attempt to replace a CRM, mobility platform or institutional system of record.
 
-All date-relative logic uses the fixed reference date `DEMO_TODAY = 2026-08-22`. The interface labels this as `Demo snapshot · 22 Aug 2026`, so the prototype remains reproducible for future reviewers.
+## Implemented scope
 
-## Fictional data and privacy
+- responsive global navigation: `Home / Relationships / Engagements`;
+- a focused Home view for current relationship and engagement coordination;
+- a small Relationships list with one deeply represented composite relationship;
+- a Relationship Detail view connecting engagement history, prior signals and the current objective;
+- an Engagements list spanning Study Tour, Senior Delegation, Partner Meeting and Short Program types;
+- a Senior Delegation Overview with proposed dates, eight synthetic representatives, strategic interests, source enquiry, open questions and objectives;
+- a visible source link from one Delegation objective to the prior Study Tour signal;
+- a compatibility layer that preserves the accepted 24-participant TourFlow Study Tour Delivery workflow; and
+- deterministic `Confirm requirement` and `Reset demo` behaviour with derived readiness, attention and aggregate updates.
 
-Every program, person, institution, requirement, and operational record in this prototype is fictional. No real student information, credentials, API keys, or university-system data is used. The fixtures should not be interpreted as an institutional policy or compliance standard.
+Stakeholder matching, agenda building, briefing, outcomes capture and commitments are deliberately deferred to Sprint 02B.
+
+## Demo data and evidence policy
+
+This is an independently developed portfolio prototype informed by real international education partnership experience. Demo records are fictional, synthetic, anonymised or composite unless explicitly stated otherwise.
+
+The primary public-facing partner, **Eastern Horizon University**, is a fictional/composite institution. Its engagements, people, outcomes, signals, enquiry and dates are product-demo records, not a historical claim about a real organisation.
+
+No real student personal information, confidential university data or production institutional systems are used.
+
+The fixed reference date is `DEMO_TODAY = 2026-08-22`, displayed as `Demo snapshot · 22 Aug 2026`, so date-relative behaviour remains reproducible.
+
+## AI status
+
+There is no genuine AI in the implemented prototype. Readiness and attention behaviour is deterministic and explainable. `Enquiry → Structured Engagement Scope` is the approved first future AI feature, but it has not been implemented.
 
 ## Technology
 
@@ -33,25 +54,26 @@ Every program, person, institution, requirement, and operational record in this 
 - React 19
 - TypeScript
 - Tailwind CSS 4
-- Vitest for focused domain-rule tests
-- ESLint with the Next.js configuration
+- Vitest
+- ESLint
 
-No authentication, database, analytics service, external AI API, state-management library, component library, or chart library is included. The only interactive demo state is held locally in React and resets on page reload.
+No authentication, database, analytics service, external AI API, state-management library, component library or chart library is included. Interactive demo state is local to React and resets on reload.
 
 ## Project structure
 
 ```text
 src/
-  app/          App Router pages and global styles
-  components/   Application shell and reusable Dashboard UI
-  data/         Fictional source fixtures
-  domain/       Typed models, fixed demo clock, presentation helpers, and rules
+  app/          App Router pages
+  components/   Shell and product UI
+  data/         Composite engagement fixtures and synthetic Study Tour fixtures
+  domain/       Typed models, fixed demo clock and deterministic rules
 docs/
   PRODUCT_REQUIREMENTS.md
   PROJECT_LOG.md
+  PIVOT_ANALYSIS.md
 ```
 
-Fixture records are the source of truth. Aggregate values shown in the interface are calculated by deterministic functions in `src/domain` rather than copied into fixture data.
+Source fixture records remain separate from deterministic rules and UI components. Study Tour `LifecycleStage` and `ReadinessState` remain distinct from the generic `EngagementStage`.
 
 ## Run locally
 
@@ -75,4 +97,4 @@ pnpm build
 
 ## Current limitations
 
-Sprint 01 is deliberately narrow. Full program, participant, readiness, and itinerary workflows are not implemented. State is not persisted, there is no authentication or role model, and nothing connects to an external service. Deployment is also deferred; this sprint is intended for pull-request review before any Vercel release.
+State is not persisted and there is no authentication, role model, external integration or production deployment. Supporting relationships and engagement types are intentionally light. The temporary product name remains unresolved, and Sprint 02B has not started.

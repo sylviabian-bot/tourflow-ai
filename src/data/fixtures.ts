@@ -9,7 +9,7 @@ import type {
 export const programs: Program[] = [
   {
     id: "shanghai-sydney-innovation",
-    name: "Shanghai Business School – Sydney Innovation Study Tour",
+    name: "Eastern Horizon University – Sydney Innovation Study Tour",
     destination: "Sydney, Australia",
     startDate: "2026-09-12",
     endDate: "2026-09-21",

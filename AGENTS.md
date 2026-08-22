@@ -1,17 +1,18 @@
-# TourFlow AI Repository Instructions
+# tourflow-ai Repository Instructions
 
 ## Scope
 
 These instructions apply to the entire repository.
 
-TourFlow is a portfolio product: a polished, realistic prototype of an operations workspace for university staff coordinating international study tours and short-term mobility programs. The repository remains `tourflow-ai`, but the V1 user-facing product name is `TourFlow`. The `TourFlow AI` name is reserved for a later version with genuine AI-assisted functionality.
+This repository contains an independent portfolio prototype for university international engagement operations. The broader concept connects Partner Relationships with Engagements; `TourFlow` is reserved for the type-specific Study Tour Delivery workflow. The repository remains `tourflow-ai`, while the temporary shell label `Global Engagement` is not a final product name.
 
 ## Current phase gate
 
-- The product owner has approved the V1 product direction, information architecture, and Sprint 01 implementation recorded in `docs/PRODUCT_REQUIREMENTS.md`.
-- Sprint 01 is limited to the technical foundation, typed domain model, fictional fixtures, deterministic business rules, application shell, minimal destination pages, and portfolio-triage Dashboard.
-- Do not implement the full Programs, Participants, Readiness, or Itinerary workflows in Sprint 01.
-- Do not deploy to Vercel during Sprint 01.
+- Sprint 02A is authorised only for the Relationship / Engagement core recorded in `docs/PRODUCT_REQUIREMENTS.md` and `docs/PROJECT_LOG.md`.
+- Prove the traceable loop `Previous Engagement → Outcome / Strategic Signal → Relationship Memory → Current Engagement → Objective`.
+- Preserve the Sprint 01 Study Tour rules and resettable delivery interaction through a compatibility layer.
+- Do not implement stakeholder matching, agenda building, briefing, post-engagement outcomes, or commitments until Sprint 02B is separately authorised.
+- Do not add genuine AI, authentication, persistence, analytics, external integrations, or deploy to Vercel during Sprint 02A.
 - Do not interpret a request to improve the PRD as approval to start implementation.
 
 ## Sources of truth
@@ -37,20 +38,21 @@ When requirements conflict, stop and record the conflict rather than silently ch
 
 ## Data, privacy, and safety
 
-- Use realistic fictional data only.
+- Use realistic fictional, synthetic, anonymised, or composite data only in product records.
 - Never add real student personal information, passport details, health information, emergency contacts, university credentials, or operational records.
 - Fictional data must be recognisable as demo data and must not copy a real person’s identity.
 - Do not include secrets, API keys, passwords, private URLs, access tokens, or production environment values in source control.
 - Document status should be represented as metadata in V1; do not store or imitate passport scans or other sensitive documents.
 - Risk and attention indicators in the prototype must be explainable, deterministic, and clearly presented as operational prompts—not legal, medical, compliance, or travel-safety determinations.
-- Never describe deterministic rules as AI. Use the user-facing name `TourFlow` throughout V1.
+- Never describe deterministic rules as AI. Use `TourFlow` only for Study Tour Delivery, not as the umbrella product name.
 
 ## Architecture and dependencies
 
 - Prefer a simple, maintainable architecture that is proportionate to a portfolio prototype.
 - Do not select a framework, scaffold the app, or add dependencies until implementation is approved.
 - Once approved, keep data fixtures separate from presentation logic and derive summary counts from the fixtures rather than duplicating values.
-- Use clear domain names such as program, participant, requirement, attention item, and itinerary entry.
+- Use clear domain names such as relationship, engagement, objective, relationship signal, program, participant, requirement, attention item, and itinerary entry.
+- Keep `EngagementStage` separate from Study Tour `LifecycleStage` and `ReadinessState`.
 - Keep lifecycle and readiness independent: `LifecycleStage` describes where a program is in its journey, while `ReadinessState` describes whether action is required.
 - Derive all date-relative behaviour from the fixed `DEMO_TODAY = 2026-08-22` reference date, never from the viewer's system clock.
 - Avoid premature abstractions, microservices, unnecessary state libraries, and speculative extensibility.

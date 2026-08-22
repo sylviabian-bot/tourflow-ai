@@ -4,9 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const navigationItems = [
-  { href: "/", label: "Dashboard" },
-  { href: "/programs", label: "Programs" },
-  { href: "/participants", label: "Participants" },
+  { href: "/", label: "Home" },
+  { href: "/relationships", label: "Relationships" },
+  { href: "/engagements", label: "Engagements" },
 ] as const;
 
 export function Navigation({ variant }: { variant: "desktop" | "mobile" }) {
