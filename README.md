@@ -22,6 +22,11 @@ Previous Study Tour
   → objective-linked outcomes
   → owned and dated commitments
   → deterministic Relationship Memory write-back
+
+New partner enquiry
+  → genuine AI structured scope draft
+  → field-level evidence and uncertainty review
+  → officer-confirmed local scope
 ```
 
 It does not attempt to replace a CRM, mobility platform or institutional system of record.
@@ -43,8 +48,9 @@ It does not attempt to replace a CRM, mobility platform or institutional system 
 - deterministic retention of strategically reusable outcomes in Relationship Memory;
 - a compatibility layer that preserves the accepted 24-participant TourFlow Study Tour Delivery workflow; and
 - deterministic `Confirm requirement` and `Reset demo` behaviour with derived readiness, attention and aggregate updates.
+- AI-assisted enquiry structuring with evidence-grounded fields, missing-information prompts, exact partner resolution and mandatory officer confirmation.
 
-Sprint 02C completes the structured non-AI engagement lifecycle. Genuine AI remains deferred to Sprint 03.
+Sprint 02C completed the structured non-AI engagement lifecycle. Sprint 03 adds one bounded genuine AI capability without changing canonical Engagement records.
 
 ## Demo data and evidence policy
 
@@ -60,7 +66,11 @@ The product uses two explicit demonstration snapshots. The global operational sn
 
 ## AI status
 
-There is no genuine AI in the implemented prototype. Readiness and attention behaviour is deterministic and explainable. `Enquiry → Structured Engagement Scope` is the approved first future AI feature, but it has not been implemented.
+Genuine AI is implemented only for `Enquiry → Structured Engagement Scope` using the official OpenAI JavaScript SDK and Responses API. The model returns a schema-constrained draft with evidence, grounding state, missing information and clarification questions. Every model-provided evidence excerpt is then deterministically verified as a case-insensitive, whitespace-normalised exact excerpt of the source enquiry before the draft can be shown.
+
+Officer corrections are stored separately from the immutable AI extraction and its original evidence. A corrected value is visibly labelled `Officer edited`, while confirmation uses the effective officer-reviewed value. If the enquiry supports no defensible objective, the draft may contain zero objectives and remains incomplete and unconfirmed until at least one grounded objective is available. The draft never automatically creates an Engagement or EngagementObjective.
+
+Readiness and attention rules, partner matching, stakeholder matching, agenda traceability, briefing composition, outcome retention and Relationship Memory remain deterministic. There is no AI chat, AI briefing, AI stakeholder matching or AI agenda generation.
 
 ## Technology
 
@@ -68,15 +78,18 @@ There is no genuine AI in the implemented prototype. Readiness and attention beh
 - React 19
 - TypeScript
 - Tailwind CSS 4
+- OpenAI JavaScript SDK
+- Zod
 - Vitest
 - ESLint
 
-No authentication, database, analytics service, external AI API, state-management library, component library or chart library is included. Interactive demo state is local to React and resets on reload.
+No authentication, database, analytics service, state-management library, component library or chart library is included. OpenAI is called only from a server-side Next.js route. Interactive review state is local to React and resets on reload.
 
 ## Project structure
 
 ```text
 src/
+  ai/           Enquiry schema, versioned prompt, extractor and deterministic review rules
   app/          App Router pages
   components/   Shell and product UI
   data/         Composite engagement fixtures and synthetic Study Tour fixtures
@@ -95,8 +108,18 @@ Requirements: Node.js 20.9 or later and pnpm 11.
 
 ```bash
 pnpm install
+cp .env.example .env.local
 pnpm dev
 ```
+
+Configure the server-only environment values in `.env.local`:
+
+```text
+OPENAI_API_KEY=
+OPENAI_MODEL=gpt-5.6-terra
+```
+
+Supply your own OpenAI API key as the local `OPENAI_API_KEY` value. Never use a `NEXT_PUBLIC_*` variable for the key. ChatGPT subscriptions and OpenAI API billing are separate; this repository does not imply that a ChatGPT plan provides API credit.
 
 Open [http://localhost:3000](http://localhost:3000).
 
@@ -111,4 +134,4 @@ pnpm build
 
 ## Current limitations
 
-Stakeholder confirmation and commitment completion state are local to the shared engagement layout and reset on reload. Future post-engagement outcomes are not merged into the 22 Aug Home or Relationship Detail baseline. The Follow-up scenario deterministically previews which eligible outcomes would become Relationship Memory, without claiming cross-route persistence. There is no authentication, role model, database, external integration or production deployment. Supporting relationships and engagement types remain intentionally light, and the temporary product name is unresolved.
+AI output quality depends on the supplied enquiry and must be reviewed by an officer. Verified source excerpts prove textual provenance, not that a model interpretation is institutionally correct. Confirmation is local to the demo session and does not write to canonical Engagement records. Stakeholder and commitment interactions also reset on reload. There is no authentication, role model, database, institutional integration or production deployment. Supporting relationships and engagement types remain intentionally light, and the temporary product name is unresolved.

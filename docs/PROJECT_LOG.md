@@ -1,17 +1,17 @@
 # International Engagement Prototype — Project Log
 
-This log records how a Study Tour readiness foundation evolves into a tested international engagement portfolio prototype. Sprint 01 remains the accepted TourFlow Study Tour Delivery foundation. Sprint 02A introduced Relationship / Engagement, Sprint 02B added planning and briefing, and Sprint 02C completes the authorised structured non-AI lifecycle through outcomes, commitments and Relationship Memory write-back. The final umbrella name remains unresolved and no genuine AI is implemented.
+This log records how a Study Tour readiness foundation evolves into a tested international engagement portfolio prototype. Sprint 01 remains the accepted TourFlow Study Tour Delivery foundation. Sprint 02A introduced Relationship / Engagement, Sprint 02B added planning and briefing, Sprint 02C completed the structured non-AI lifecycle, and Sprint 03 introduces a bounded genuine AI enquiry-structuring workflow. The final umbrella name remains unresolved.
 
 ## Project status
 
 | Field | Current value |
 | --- | --- |
-| Phase | Sprint 02C — Outcomes, Commitments and Relationship Memory |
+| Phase | Sprint 03 — AI-Assisted Enquiry Structuring |
 | Current version | PRD 0.4 — product direction approved |
-| Implementation | Sprint 02B accepted on `main`; Sprint 02C authorised on its review branch |
+| Implementation | Sprint 02C accepted on `main`; Sprint 03 authorised on its review branch |
 | Data approach | Real factual context only when approved; otherwise anonymised, composite, fictional, or synthetic demo data |
 | External services | None approved |
-| Next gate | Review Sprint 02C; genuine AI remains separately gated for Sprint 03 |
+| Next gate | Review Sprint 03; no further AI feature is authorised |
 
 ## Initial assumptions
 
@@ -76,6 +76,9 @@ Use this table for decisions that have been explicitly approved. Do not move a p
 | D-040 | 2026-08-22 | Retain only `agreement_to_explore` and `interest_confirmed` outcomes as reusable Relationship Signals. | Strategic direction should persist; routine information exchange should not automatically become long-term institutional memory. | Retain every outcome; manual untraceable notes | Product owner |
 | D-041 | 2026-08-22 | Keep completion state local to the engagement provider and demonstrate outcome-derived signals inside an explicit post-engagement scenario. | Demonstrates the rule and interaction without a state library, fake cross-route persistence, or future records leaking into the operational baseline. | Add global persistence; expose future signals on baseline Relationship Detail | Product owner |
 | D-042 | 2026-08-22 | Separate the global operational snapshot (`22 Aug 2026`) from the post-engagement Follow-up scenario (`21 Oct 2026`). | Preserves the accepted Study Tour clock while demonstrating a complete future follow-up loop honestly. | Change `DEMO_TODAY`; treat October outcomes as August records | Product owner |
+| D-043 | 2026-08-22 | Use `Enquiry → Structured Scope Draft → Evidence Review → Human Confirmation` as the first genuine AI workflow. | AI is valuable for ambiguity in unstructured input while deterministic rules remain stronger for structured institutional workflow. | Generic chat; AI briefing; AI stakeholder matching | Product owner |
+| D-044 | 2026-08-22 | Use the official OpenAI SDK, Responses API, `gpt-5.6-terra` default and Zod Structured Outputs behind a server-only route. | Provides a small, current, schema-validated transport boundary without an AI framework or client-side secret exposure. | Vercel AI SDK; multi-provider abstraction; browser-direct API calls | Product owner |
+| D-045 | 2026-08-22 | Keep AI extraction separate from deterministic partner resolution and canonical Engagement state. | The model may structure evidence but cannot silently claim institutional records or create operational state. | Give internal partner records to the model; auto-create Engagements | Product owner |
 
 ## Current implementation boundary
 
@@ -567,6 +570,46 @@ Prove that a completed international engagement can create reusable relationship
 - Follow-up uses objective-led outcomes, editorial commitment rows and a documented Relationship Memory impact section rather than cards, Kanban or sales language.
 - The Executive Brief remains pre-engagement, Study Tour Delivery remains isolated, and no AI, persistence, authentication, integration, analytics or deployment work was added.
 
+### 2026-08-22 — Sprint 03 AI-assisted enquiry structuring
+
+**Why this AI feature**
+
+- Incoming partner enquiries are unstructured, incomplete and linguistically variable; this is a bounded ambiguity problem where semantic extraction adds value.
+- Once records are structured, readiness, partner resolution, stakeholder matching, agenda traceability, briefing composition and Relationship Memory remain deterministic and explainable.
+- The model is therefore a structuring assistant, not an institutional decision-maker.
+
+**AI and schema architecture**
+
+- Added an isolated `src/ai` boundary containing a versioned prompt, Zod Structured Output schema, official OpenAI Responses API transport and deterministic application rules.
+- The default server-side model is configurable through `OPENAI_MODEL` with `gpt-5.6-terra` as the fallback. `OPENAI_API_KEY` remains server-only and `.env.local` is ignored.
+- The Next.js route validates type, emptiness and the 8,000-character input cap before constructing the extractor. It never logs enquiry content or returns raw provider errors.
+- Unit tests use fixture drafts and never require or call the live OpenAI API.
+
+**Grounding and human review**
+
+- Each important field records `explicit`, `inferred`, `missing` or `ambiguous` grounding plus a short evidence excerpt; inferred fields also require an explanation.
+- Partial dates remain source text with null normalised dates, and non-numeric delegation descriptions remain null rather than invented.
+- Objective proposals require evidence and can be excluded before confirmation.
+- Exact partner resolution runs after extraction against application fixtures; the model receives no internal partner records and cannot claim a relationship match.
+- Confirmation creates only a local `ConfirmedEngagementScope`. It does not create or update canonical Engagement, Objective, Stakeholder or Agenda records.
+
+**UI, failure and scope decisions**
+
+- Added `Scope a new enquiry` from Home and Engagements without adding a global AI destination.
+- The workflow presents source, honest analysing/error states, an evidence-led editorial draft and an explicit officer-confirmed summary.
+- Missing API configuration, provider failure, invalid structured output, empty text and oversized input are surfaced without fake fallback results.
+- No chat, AI briefing, AI stakeholder/agenda generation, note extraction, prediction, RAG, embeddings, database, authentication, analytics, integration, deployment or second AI feature was introduced.
+
+### 2026-08-22 — Sprint 03 grounding and provenance review fix
+
+- Added a deterministic post-extraction evidence gate: every non-null evidence excerpt for partner, type, dates, size, themes and objectives must occur in the original enquiry after conservative case and whitespace normalisation. Fabricated excerpts reject the whole extraction.
+- Kept the AI extraction immutable and introduced a small `ScopeReviewEdits` overlay for partner, type, date text and delegation size. Confirmed scope uses effective officer-reviewed values while retaining the source draft and evidence.
+- Hardened inferred theme/objective explanations, missing/ambiguous date invariants, date ordering and non-numeric delegation-size handling in runtime validation rather than relying on prompt compliance.
+- Allowed zero grounded objectives. The review UI states that none are defensible, and an incomplete zero-objective scope cannot be officer-confirmed.
+- Removed model-owned objective identifiers from the Structured Output contract. Application code assigns deterministic, unique presentation IDs after validation; these are not canonical domain IDs.
+- Exact partner matching remains outside the model. It runs against the effective reviewed name and returns `ambiguous` for duplicate exact records; fuzzy matching remains deliberately excluded.
+- Unit tests remain deterministic and do not make live OpenAI calls. Live QA status is recorded only from an actual configured request.
+
 ## Problems and solutions
 
 | ID | Date | Problem | Impact | Root cause | Solution | Verification |
@@ -607,6 +650,12 @@ Prove that a completed international engagement can create reusable relationship
 | 2026-08-22 | Sprint 02C temporal review fix | Dual-snapshot, Home gating and retention-traceability tests | Pass | Vitest: 4 files, 53 tests passed; the 22 Aug baseline remains planning-only, 21 Oct is isolated to Follow-up, and orphaned/mismatched Outcomes cannot generate Relationship Signals. |
 | 2026-08-22 | Sprint 02C temporal review fix | ESLint, TypeScript and production build | Pass | `pnpm lint`, `pnpm typecheck`, `pnpm test` and `pnpm build` passed; 22 static pages generated. |
 | 2026-08-22 | Sprint 02C temporal review fix | Desktop and 390 × 844 browser verification | Pass | Seven core routes had no page errors or horizontal overflow; Home, Relationship Detail and Follow-up respected their scenario dates, and commitment complete/reset remained functional. |
+| 2026-08-22 | Sprint 03 | Schema, grounding, confirmation and regression tests | Pass | Vitest: 5 files, 69 tests passed. Tests use deterministic structured fixtures, cover the strict Responses API schema plus missing-key/invalid-input boundaries, and make no live OpenAI request. |
+| 2026-08-22 | Sprint 03 | ESLint, TypeScript and production build | Pass | `pnpm lint`, `pnpm typecheck`, `pnpm test` and `pnpm build` passed; 24 pages plus the server-side enquiry route were generated. |
+| 2026-08-22 | Sprint 03 | Desktop, 390 × 844 and error-path browser verification | Pass | Home, Enquiry Scope, Relationship, Delegation and Study Tour routes had no error UI or horizontal overflow. Source/loading/missing-key states, source preservation, privacy copy and labelled focus were verified. Live success was not tested because `OPENAI_API_KEY` was unavailable. |
+| 2026-08-22 | Sprint 03 grounding/provenance review fix | Evidence, provenance, invariant and regression tests | Pass | Vitest: 5 files, 77 tests passed. Deterministic tests cover exact-source evidence, immutable officer corrections, zero-objective handling, unique draft IDs and duplicate partner resolution; no live OpenAI request is made by the suite. |
+| 2026-08-22 | Sprint 03 grounding/provenance review fix | Desktop and 390 × 844 browser verification | Pass | Missing-key/source preservation, deterministic fixture-backed draft review, visible officer-edit provenance, unresolved matching, confirmed effective values and the disabled zero-objective state were checked without overflow or console errors. The temporary local QA transport was removed before validation and commit. |
+| 2026-08-22 | Sprint 03 grounding/provenance review fix | Real OpenAI request | Not run | `OPENAI_API_KEY` was not available locally. No end-to-end live-integration claim is made. |
 
 ## Lessons learned
 
