@@ -156,7 +156,7 @@ export const relationshipSignals: RelationshipSignal[] = [
     title: "Study Tour outcome",
     detail:
       "Strong student and academic engagement with Business Analytics and innovation programming identified an opportunity for broader institutional collaboration.",
-    recordedDate: "2025-09-24",
+    recordedDate: "2025-09-23",
     composite: true,
   },
   {

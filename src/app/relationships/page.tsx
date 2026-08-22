@@ -55,10 +55,10 @@ export default function RelationshipsPage() {
                 <dd className="mt-1 font-medium text-slate-900">{summary.nextEngagement?.title ?? "Not scheduled"}</dd>
               </div>
             </dl>
-            {summary.openSignal ? (
+            {summary.latestSignal ? (
               <div className="mt-5 border-l-2 border-teal-600 pl-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-teal-800">Open relationship signal</p>
-                <p className="mt-1 text-sm leading-6 text-slate-700">{summary.openSignal.detail}</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-teal-800">Latest relationship context</p>
+                <p className="mt-1 text-sm leading-6 text-slate-700">{summary.latestSignal.detail}</p>
               </div>
             ) : null}
           </article>

@@ -240,17 +240,47 @@ export interface RelationshipSummary {
   engagements: Engagement[];
   latestEngagement: Engagement | null;
   nextEngagement: Engagement | null;
-  openSignal: RelationshipSignal | null;
+  latestSignal: RelationshipSignal | null;
+}
+
+export interface RelationshipContinuity {
+  signal: RelationshipSignal;
+  sourceEngagement: Engagement;
+  objective: EngagementObjective;
+  currentEngagement: Engagement;
+}
+
+export type RelationshipMemoryState =
+  | {
+      kind: "continuity";
+      signals: RelationshipSignal[];
+      continuities: RelationshipContinuity[];
+    }
+  | {
+      kind: "signals_only";
+      signals: RelationshipSignal[];
+      continuities: [];
+    }
+  | {
+      kind: "empty";
+      signals: [];
+      continuities: [];
+    };
+
+export interface CoordinationPrompt {
+  id: string;
+  title: string;
+  context: string;
+  href: string;
+  sourceType: "delegation_questions" | "study_tour_attention";
+  sourceId: string;
+  count: number;
 }
 
 export interface HomeSnapshot {
   priorityRelationship: RelationshipSummary;
+  priorityContinuity: RelationshipContinuity | null;
   currentEngagements: Engagement[];
   latestRelationshipSignals: RelationshipSignal[];
-  openCoordinationItems: Array<{
-    id: string;
-    title: string;
-    context: string;
-    href: string;
-  }>;
+  openCoordinationItems: CoordinationPrompt[];
 }

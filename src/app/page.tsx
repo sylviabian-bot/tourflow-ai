@@ -4,17 +4,23 @@ import { CompositeDisclosure } from "@/components/composite-disclosure";
 import { EngagementCard } from "@/components/engagement-card";
 import { StatusBadge } from "@/components/status-badge";
 import {
-  DELEGATION_ENGAGEMENT_ID,
   PRIMARY_RELATIONSHIP_ID,
-  STUDY_TOUR_DELIVERY_ENGAGEMENT_ID,
+  engagementObjectives,
   engagements,
   partnerOrganisations,
   relationshipSignals,
   relationships,
 } from "@/data/engagement-fixtures";
+import {
+  itineraryEntries,
+  milestones,
+  participants,
+  programs,
+  requirements,
+} from "@/data/fixtures";
 import { DEMO_SNAPSHOT_LABEL } from "@/domain/demo-clock";
 import { buildHomeSnapshot } from "@/domain/engagement-rules";
-import { formatEngagementStage } from "@/domain/presentation";
+import { formatEngagementStage, formatEngagementType } from "@/domain/presentation";
 
 export default function HomePage() {
   const snapshot = buildHomeSnapshot(
@@ -22,7 +28,9 @@ export default function HomePage() {
     partnerOrganisations,
     engagements,
     relationshipSignals,
+    engagementObjectives,
     PRIMARY_RELATIONSHIP_ID,
+    { programs, participants, requirements, milestones, itineraryEntries },
   );
   const partnerByRelationship = new Map(
     relationships.map((relationship) => [
@@ -32,10 +40,12 @@ export default function HomePage() {
       )!,
     ]),
   );
-  const delegation = engagements.find(
-    (engagement) => engagement.id === DELEGATION_ENGAGEMENT_ID,
-  )!;
-  const priorSignal = snapshot.priorityRelationship.openSignal!;
+  const continuity = snapshot.priorityContinuity;
+  const currentEngagement =
+    continuity?.currentEngagement ?? snapshot.priorityRelationship.nextEngagement;
+  const latestSignal =
+    continuity?.signal ?? snapshot.priorityRelationship.latestSignal;
+  const studyTourProgramIds = new Set(programs.map((program) => program.id));
 
   return (
     <div className="space-y-8">
@@ -55,28 +65,37 @@ export default function HomePage() {
           <div className="p-6 sm:p-8">
             <div className="flex flex-wrap items-center gap-3">
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal-700">Relationship requiring coordination</p>
-              <StatusBadge tone={delegation.stage}>{formatEngagementStage(delegation.stage)}</StatusBadge>
+              {currentEngagement ? (
+                <StatusBadge tone={currentEngagement.stage}>
+                  {formatEngagementStage(currentEngagement.stage)}
+                </StatusBadge>
+              ) : null}
             </div>
             <h2 id="priority-relationship-heading" className="mt-4 text-2xl font-semibold tracking-[-0.025em] text-slate-950 sm:text-3xl">{snapshot.priorityRelationship.partner.name}</h2>
             <p className="mt-2 text-sm text-slate-600">{snapshot.priorityRelationship.partner.location} · Owner {snapshot.priorityRelationship.relationship.owner}</p>
             <p className="mt-5 max-w-2xl text-sm leading-6 text-slate-600">{snapshot.priorityRelationship.relationship.summary}</p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Link href={`/relationships/${PRIMARY_RELATIONSHIP_ID}`} className="inline-flex min-h-11 items-center rounded-lg bg-[#173f5f] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#0e2f49]">Review relationship</Link>
-              <Link href={`/engagements/${DELEGATION_ENGAGEMENT_ID}`} className="inline-flex min-h-11 items-center rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-[#173f5f] shadow-sm hover:bg-slate-50">Open delegation</Link>
+              {currentEngagement ? (
+                <Link href={`/engagements/${currentEngagement.id}`} className="inline-flex min-h-11 items-center rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-[#173f5f] shadow-sm hover:bg-slate-50">Open engagement</Link>
+              ) : null}
             </div>
           </div>
           <div className="border-t border-slate-200 bg-slate-50/80 p-6 sm:p-8 lg:border-l lg:border-t-0">
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Latest relationship context</p>
-            <p className="mt-3 text-base font-semibold leading-6 text-slate-950">{priorSignal.title}</p>
-            <p className="mt-2 text-sm leading-6 text-slate-600">{priorSignal.detail}</p>
-            <div className="mt-5 border-l-2 border-teal-600 pl-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-teal-800">Relevant now</p>
-              <p className="mt-1 text-sm leading-6 text-slate-700">This prior signal informs the current delegation objective to explore broader institutional collaboration.</p>
-            </div>
+            <p className="mt-3 text-base font-semibold leading-6 text-slate-950">{latestSignal?.title ?? "No relationship context recorded"}</p>
+            <p className="mt-2 text-sm leading-6 text-slate-600">{latestSignal?.detail ?? "No reusable signal is available for the current engagement."}</p>
+            {continuity ? (
+              <div className="mt-5 border-l-2 border-teal-600 pl-4">
+                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-teal-800">Relevant now</p>
+                <p className="mt-1 text-sm leading-6 text-slate-700">This prior signal informs the current objective: {continuity.objective.title}.</p>
+              </div>
+            ) : null}
           </div>
         </div>
       </section>
 
+      {continuity ? (
       <section aria-labelledby="continuity-heading">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
@@ -87,10 +106,10 @@ export default function HomePage() {
         </div>
         <ol className="mt-4 grid gap-3 md:grid-cols-4" aria-label="Relationship memory flow">
           {[
-            ["1", "Previous Study Tour", "Completed innovation and Business Analytics program"],
-            ["2", "Strategic signal", "Opportunity to extend beyond short-term programs"],
+            ["1", `Previous ${formatEngagementType(continuity.sourceEngagement.type)}`, continuity.sourceEngagement.title],
+            ["2", "Strategic signal", continuity.signal.title],
             ["3", "Relationship Memory", "Reusable context retained with the partner"],
-            ["4", "Delegation objective", "Explore broader institutional collaboration"],
+            ["4", "Current objective", continuity.objective.title],
           ].map(([number, title, copy]) => (
             <li key={number} className="rounded-xl border border-slate-200 bg-white p-5">
               <p className="text-xs font-semibold text-teal-700">Step {number}</p>
@@ -100,6 +119,7 @@ export default function HomePage() {
           ))}
         </ol>
       </section>
+      ) : null}
 
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1.2fr)_minmax(20rem,0.8fr)]">
         <section aria-labelledby="upcoming-engagements-heading">
@@ -109,7 +129,7 @@ export default function HomePage() {
           </div>
           <div className="mt-4 grid gap-4 md:grid-cols-2">
             {snapshot.currentEngagements.slice(0, 2).map((engagement) => (
-              <EngagementCard key={engagement.id} engagement={engagement} partner={partnerByRelationship.get(engagement.relationshipId)!} href={engagement.id === STUDY_TOUR_DELIVERY_ENGAGEMENT_ID ? `/engagements/${engagement.id}/delivery` : `/engagements/${engagement.id}`} />
+              <EngagementCard key={engagement.id} engagement={engagement} partner={partnerByRelationship.get(engagement.relationshipId)!} href={engagement.type === "study_tour" && studyTourProgramIds.has(engagement.studyTourProgramId) ? `/engagements/${engagement.id}/delivery` : `/engagements/${engagement.id}`} />
             ))}
           </div>
         </section>

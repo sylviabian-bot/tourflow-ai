@@ -412,6 +412,28 @@ Prove that a completed international engagement can create reusable relationship
 - A first-time reviewer can follow `Previous Study Tour → strategic signal → Relationship Memory → Senior Delegation → sourced objective` directly in the interface.
 - Sprint 01 Study Tour Delivery remains demonstrable and its rules are unchanged.
 
+### 2026-08-22 — Sprint 02A review-fix pass
+
+**Review findings and decisions**
+
+- Removed the primary-demo constants and Delegation-specific narrative from generic Relationship Detail derivation.
+- Added explicit relationship-memory states: linked continuity, signals without a linked later objective, and no recorded signals. Each state now renders only fixture-backed context.
+- Renamed the misleading `openSignal` summary field to `latestSignal`; open/completed follow-up semantics remain deferred to the future `Commitment` model.
+- Replaced hard-coded Home coordination copy with deterministic prompts derived from Delegation `openQuestions` and the existing Study Tour readiness and attention rules.
+- Defined current/upcoming engagements by both non-completed stage and an end date on or after fixed `DEMO_TODAY`, preventing stale non-completed records from appearing.
+
+**Regression and manual QA**
+
+- Expanded the focused suite to 22 passing tests across Sprint 01 and Sprint 02A, including supporting-relationship memory states, latest-signal ordering, source-derived Home prompts, and past-engagement exclusion.
+- Verified Eastern Horizon University renders the linked 2025 Study Tour signal and 2026 Senior Delegation objective.
+- Verified Sakura Coast Institute renders its recorded signal without inventing a Delegation or linked objective.
+- Verified Straits Meridian University renders an honest empty state with no fabricated history.
+- Rechecked all three relationship pages at desktop and 390 × 844 mobile widths with no console errors or horizontal overflow.
+
+**Scope control**
+
+- No Stakeholder matching, Agenda, Briefing, Commitment, AI, persistence, external integration, deployment, or Sprint 02B work was introduced.
+
 ## Problems and solutions
 
 | ID | Date | Problem | Impact | Root cause | Solution | Verification |
