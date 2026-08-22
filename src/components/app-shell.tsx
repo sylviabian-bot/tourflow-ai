@@ -4,29 +4,29 @@ import { Navigation } from "./navigation";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-[#f6f8fa]">
-      <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 flex-col border-r border-slate-200 bg-[#112f47] text-white lg:flex">
-        <div className="border-b border-white/10 px-6 py-6">
-          <Brand inverse />
+    <div className="min-h-screen bg-[var(--paper)]">
+      <aside className="fixed inset-y-0 left-0 z-30 hidden w-60 flex-col border-r border-[var(--divider)] bg-[var(--surface)] lg:flex">
+        <div className="border-b border-[var(--divider)] px-6 py-7">
+          <Brand />
         </div>
         <Navigation variant="desktop" />
-        <div className="mt-auto border-t border-white/10 px-6 py-5">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-300">
+        <div className="mt-auto border-t border-[var(--divider)] px-6 py-5">
+          <p className="text-xs font-semibold tracking-[0.08em] text-[var(--navy)]">
             Portfolio prototype
           </p>
-          <p className="mt-2 text-xs leading-5 text-slate-400">
+          <p className="mt-2 text-xs leading-5 text-[var(--muted)]">
             Composite demo data · No live university systems connected
           </p>
         </div>
       </aside>
 
-      <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-slate-200 bg-white/95 px-4 backdrop-blur lg:hidden">
+      <header className="sticky top-0 z-30 flex min-h-16 items-center justify-between border-b border-[var(--divider)] bg-[var(--surface)] px-4 lg:hidden">
         <Brand />
         <Navigation variant="mobile" />
       </header>
 
-      <main className="lg:pl-64">
-        <div className="mx-auto max-w-[1480px] px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-9">
+      <main className="lg:pl-60">
+        <div className="mx-auto max-w-[1320px] px-4 py-7 sm:px-7 sm:py-10 lg:px-12 lg:py-12">
           {children}
         </div>
       </main>
@@ -34,23 +34,15 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   );
 }
 
-function Brand({ inverse = false }: { inverse?: boolean }) {
+function Brand() {
   return (
-    <Link href="/" className="inline-flex items-center gap-3 rounded-sm" aria-label="Global Engagement Home">
-      <span
-        className={`grid h-9 w-9 place-items-center rounded-lg text-sm font-bold ${
-          inverse ? "bg-white text-[#173f5f]" : "bg-[#173f5f] text-white"
-        }`}
-        aria-hidden="true"
-      >
-        GE
-      </span>
+    <Link href="/" className="inline-block rounded-sm" aria-label="Global Engagement Home">
       <span>
-        <span className={`block text-base font-semibold tracking-[-0.02em] ${inverse ? "text-white" : "text-slate-950"}`}>
-          Global Engagement
+        <span className="block text-sm font-semibold tracking-[0.08em] text-[var(--navy)]">
+          GLOBAL ENGAGEMENT
         </span>
-        <span className={`block text-[10px] font-medium uppercase tracking-[0.14em] ${inverse ? "text-slate-400" : "text-slate-500"}`}>
-          Temporary product label
+        <span className="mt-1 block text-[11px] text-[var(--muted)]">
+          International Office Workspace
         </span>
       </span>
     </Link>
