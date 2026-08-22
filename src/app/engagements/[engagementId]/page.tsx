@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { CompositeDisclosure } from "@/components/composite-disclosure";
+import { EngagementLocalNavigation } from "@/components/engagement-local-navigation";
 import { MetadataList, MetadataRow, SectionHeader } from "@/components/editorial";
 import { StatusBadge } from "@/components/status-badge";
 import { engagementObjectives, engagements, partnerOrganisations, relationshipSignals, relationships } from "@/data/engagement-fixtures";
@@ -27,6 +28,8 @@ export default async function EngagementPage({ params }: EngagementPageProps) {
       <header className="border-b border-[var(--divider)] pb-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"><div className="max-w-4xl"><p className="text-xs font-medium tracking-[0.08em] text-[var(--navy)]">{formatEngagementType(engagement.type).toUpperCase()}</p><h1 className="editorial-title mt-2 text-4xl text-[var(--ink)] sm:text-5xl">{engagement.title}</h1><div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm"><Link href={`/relationships/${relationship.id}`} className="font-semibold text-[var(--navy)] hover:underline">{partner.name}</Link><span className="text-[var(--muted)]">{formatDemoDate(engagement.startDate)}–{formatDemoDate(engagement.endDate)}</span><StatusBadge tone={engagement.stage}>{formatEngagementStage(engagement.stage)}</StatusBadge></div></div><CompositeDisclosure /></div>
       </header>
+
+      {engagement.type === "delegation_visit" ? <EngagementLocalNavigation engagementId={engagement.id} /> : null}
 
       <section aria-labelledby="purpose-heading"><SectionHeader id="purpose-heading" title="PURPOSE / SUMMARY" /><p className="mt-6 max-w-4xl text-lg leading-8 text-[var(--ink)]">{engagement.summary}</p></section>
 
