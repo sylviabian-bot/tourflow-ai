@@ -1,534 +1,709 @@
-# TourFlow — Product Requirements Document
+# International Engagement Operating Layer — Product Requirements
 
-**Status:** V1 product direction approved; Sprint 01 implementation authorised
+**Status:** Product direction and evidence policy approved; Sprint 02 implementation not authorised
 
-**Version:** 0.3
+**Version:** 0.4
 
 **Date:** 22 August 2026
 
-**Phase:** Sprint 01 — foundation and Dashboard
-**Working product type:** Fictional-data portfolio prototype
+**Phase:** Product pivot finalisation and implementation gate
+
+**Repository:** `tourflow-ai` — unchanged
+
+**Current application name:** `TourFlow` — unchanged in this documentation phase
 
 ## 1. Product vision
 
-TourFlow is an operations workspace for university and education professionals who coordinate international study tours and short-term mobility programs.
+The approved direction is an international engagement operating layer for university teams that coordinate partner relationships, delegation visits, study tours, short programs, strategic meetings, and other international engagement activity.
 
-Its purpose is to give a coordinator one clear view of each program’s operational readiness: who is participating, what requirements remain incomplete, what needs attention before departure, and how the itinerary fits together.
+The product should help an officer connect information that may already exist across CRM, email, spreadsheets, calendars, agreements, faculty contacts, briefing papers, meeting notes, mobility platforms, and participant systems.
 
-The V1 product is deliberately narrow. It is not intended to replace a student information system, travel-management platform, document repository, learning-management system, or institutional risk process. It demonstrates how fragmented operational information could be organised into a credible coordinator workflow.
+It is accountable to one central question:
 
-V1 is accountable to one product question:
+> Can an international engagement professional turn partner intent into coordinated university action, then turn the completed engagement into useful institutional relationship memory?
 
-> When a coordinator opens TourFlow today, can they quickly identify which program is not ready, understand why, and know what to do next?
+### Approved positioning
 
-### Product naming
+Generic CRM products store relationships and activities. Mobility products administer participants, travel, agreements, and program processes. This concept should focus on the coordination and decision layer between those systems:
 
-- The repository name remains `tourflow-ai`.
-- The V1 user-facing product name is `TourFlow`.
-- V1 must not imply that deterministic readiness or attention rules are AI.
-- The user-facing name `TourFlow AI` is reserved for a later version that contains genuine, reviewable AI-assisted functionality.
+```text
+Partner intent
+  → Engagement scope
+  → Objectives
+  → Internal stakeholders and agenda activities
+  → Outcomes
+  → Commitments
+  → Relationship memory
+```
 
-### Portfolio objective
+This positioning is defensible only if the product makes that chain visible and operational. “Better UX,” “AI-powered,” “all in one,” contact records, activity history, notes, and generic tasks are not sufficient differentiation.
 
-The prototype should demonstrate:
+### System boundary
 
-- understanding of international education operations;
-- product discovery and prioritisation;
-- workflow and information design;
-- practical, explainable automation thinking;
-- attention to stakeholder and student experience; and
-- disciplined use of technology without unnecessary backend or AI complexity.
+The product should complement rather than replace:
+
+- CRM and partner master-data systems;
+- student information and mobility platforms;
+- agreement repositories and approval workflows;
+- travel-management and duty-of-care systems;
+- enterprise calendars, email, document management, and staff directories; and
+- institutional policy, governance, and risk processes.
+
+Where such systems are referenced in the prototype, their data is represented as fictional fixture context rather than a live integration.
 
 ### Product principles
 
-1. **Operational clarity over feature volume.** Every screen should help a coordinator answer a real question or take a clear next step.
-2. **Readiness, not surveillance.** The product highlights missing operational requirements without scoring a student’s personal worth or making sensitive judgments.
-3. **Explainable attention signals.** Every alert must show why it exists, what is affected, and the suggested follow-up.
-4. **Program context first.** Student, document, itinerary, and risk information should remain connected to the relevant program and departure timeline.
-5. **Prototype honesty.** Fictional data and demo-only state must be clear. The product must not imply live university integrations, verified compliance, or AI capabilities that do not exist.
+1. **Intent before administration.** Start with what the partner and institution are trying to achieve, not with a blank task list.
+2. **Traceability over volume.** Show how objectives connect to stakeholders, activities, outcomes, and commitments.
+3. **Relationship memory from completed work.** Engagement outcomes should improve future preparation rather than remain isolated meeting notes.
+4. **Type-specific delivery.** Shared engagement concepts are universal; participant readiness is not.
+5. **System-of-record humility.** Reference CRM, mobility, and agreement context without pretending to replace their governance or scale.
+6. **Explainable automation.** Use deterministic rules where they are sufficient and identify every future AI-assisted output as a draft requiring review.
+7. **Prototype honesty.** Use synthetic data, fixed dates, and explicit mock boundaries.
 
-### Core status model
+## 2. Approved product and naming strategy
 
-Lifecycle and readiness are independent concepts and must never be used interchangeably.
+The final umbrella product name remains unresolved. The repository and current application must not be renamed during this documentation phase.
 
-`LifecycleStage` describes where a program is in its operating journey:
+### Approved naming direction
 
-| Value | Meaning |
+- A future naming exercise will select the umbrella product name.
+- **TourFlow** is preserved as the future name of the specialised Study Tour Delivery module or workflow.
+- **Copilot** must not be used as the user-facing umbrella name until genuine AI functionality exists.
+- `TourFlow AI` must not become the umbrella name: “Tour” is too narrow for delegation and partnership work, while “AI” would overstate the current functionality.
+- Genuine AI remains deferred until the structured non-AI workflow has been implemented and reviewed.
+
+The final umbrella name is unresolved and is not a Sprint 02 implementation task unless separately approved.
+
+## 3. Portfolio positioning and real-world evidence policy
+
+### Portfolio narrative
+
+This is a current, independently developed product prototype. Its workflow expertise is informed by prior hands-on experience developing and coordinating Australia–China international education partnerships and programs.
+
+Approved portfolio positioning:
+
+> This independent product prototype is informed by hands-on experience developing and coordinating Australia–China international education partnerships and programs. The product itself is a current exploration of how AI-enabled and structured workflows could improve international engagement operations.
+
+The documentation and future portfolio must not imply that this software was historically deployed, used in production, commissioned by a former employer, or connected to an institution unless that fact is separately true and approved for disclosure.
+
+| Real professional foundation | Current prototype work |
 | --- | --- |
-| `planning` | Program structure, suppliers, dates, or approvals are still being prepared. |
-| `applications` | Participant applications or selection are in progress. |
-| `pre_departure` | The cohort is being prepared for departure. |
-| `on_tour` | The program is currently operating. |
-| `completed` | The program has concluded. |
+| domain experience in international education | the software product and interface |
+| partnership and program coordination experience | product architecture and domain model |
+| stakeholder and cross-cultural work | AI-enabled workflow concepts |
+| operational pain points encountered in international education | demo records and interactions |
+| factual, non-confidential experience explicitly approved for disclosure | synthetic, fictional, anonymised, or composite scenarios unless explicitly documented otherwise |
 
-`ReadinessState` describes whether a program or participant requires action:
+### A. Real professional experience
 
-| Value | Meaning |
-| --- | --- |
-| `ready` | All readiness-critical requirements represented in V1 are approved or complete. |
-| `needs_attention` | One or more requirements need coordinator follow-up but do not meet a blocked rule. |
-| `blocked` | A critical unresolved requirement prevents the represented readiness outcome. |
+Real institution names may be used only when:
 
-A program may be in `planning` and still have a `needs_attention` readiness state; similarly, a `pre_departure` program can be either `ready`, `needs_attention`, or `blocked`. UI labels, fixture fields, filters, and tests must preserve this separation.
+- the relationship or project genuinely existed;
+- the statement is factually accurate and supportable by genuine professional experience;
+- the information is not confidential;
+- no private student, staff, commercial, or institutional information is disclosed; and
+- no outcome, commitment, agreement, activity, metric, or relationship history is invented.
 
-### Fixed demo clock
+Real-world experience may explain how the product problem was identified. A safe general statement is:
 
-The reproducible reference date for V1 is:
+> The product concept is informed by real experience coordinating Australia–China international education partnerships, study tours, short programs, student mobility and institutional collaboration.
 
-```text
-DEMO_TODAY = 2026-08-22
-```
+### B. Anonymised or composite case studies
 
-All date-relative calculations—including days until departure, overdue status, milestone urgency, and attention priority—must derive from this value rather than the viewer's real system date.
+Use an anonymised or composite case when the workflow is useful but the underlying relationship, organisation, people, operational data, or commercial context should not be disclosed. A composite case may combine patterns learned from multiple real projects, but it must not be presented as a literal historical record.
 
-The application should display unobtrusive context such as `Demo snapshot · 22 Aug 2026` so reviewers understand the time basis without mistaking it for live data.
+Preferred disclosure:
 
-## 2. Target users
+> Composite demonstration informed by real international education partnership workflows. Institution names, people, dates and operational records may be anonymised or fictionalised.
 
-### Primary user
+### C. Fictional product demo records
 
-**Study Tour / Global Mobility Coordinator**
+Any invented delegation, engagement, participant, contact, meeting, outcome, commitment, agreement, itinerary, budget, requirement, email, briefing, or timeline must be treated explicitly as fictional, synthetic, or composite.
 
-Responsible for coordinating one or more short-term international programs across academic staff, students, travel arrangements, university requirements, and pre-departure deadlines.
+A real university name must not be attached to an invented relationship history, delegation, commitment, outcome, agreement, or activity in a way that could imply the event occurred. Real names and fictional product records must never be combined merely to make a demo appear more authentic.
+
+### Recommended future public disclosure
+
+> This is an independently developed portfolio prototype informed by real international education partnership experience. Demo records are fictional, synthetic or anonymised unless explicitly stated otherwise.
+
+> No real student personal information, confidential university data or production institutional systems are used.
+
+## 4. Target users
+
+### Primary persona
+
+**International Relations Officer / Global Engagement Coordinator**
+
+Coordinates inbound and outbound institutional engagements across external partners, senior visitors, faculties, professional units, executives, and program teams.
 
 Typical responsibilities include:
 
-- maintaining program and participant records;
-- tracking application and pre-departure requirements;
-- following up incomplete documentation;
-- preparing participant and travel information for relevant teams;
-- coordinating academic leads and trip leaders;
-- maintaining itinerary, accommodation, and transport details;
-- identifying issues before departure; and
-- communicating program readiness to internal stakeholders.
+- interpreting partner enquiries and clarifying purpose;
+- understanding the institutional history of a relationship;
+- identifying relevant internal university stakeholders and capabilities;
+- turning objectives into a feasible visit or engagement program;
+- preparing internal briefings;
+- coordinating guests, hosts, agenda, and logistics;
+- capturing outcomes and decisions; and
+- ensuring commitments are owned and followed through.
 
-### Secondary users represented, but not separately supported in V1
+### Secondary personas
 
-- **Program Manager / Team Lead:** needs a portfolio-level view of program readiness and emerging issues.
-- **Academic Lead / Trip Leader:** needs confidence that the participant list, itinerary, and pre-departure actions are current.
-- **Student Participant:** completes requirements and receives communications, but a student-facing portal is out of scope for V1.
-- **Risk, insurance, finance, or faculty approvers:** may consume information from the coordinator, but approval workflows and institutional integrations are out of scope for V1.
-
-## 3. Core user problems
-
-1. Coordinators cannot quickly see which programs are on track and which require intervention.
-2. Participant requirements are often tracked across separate spreadsheets, forms, email threads, and portals.
-3. An outstanding-requirements list lacks context unless the coordinator can also see the due date, program departure date, owner, reason, and next action.
-4. Participant status, program milestones, and itinerary details become disconnected, creating avoidable follow-up and duplicated checking.
-5. Managers and academic leads ask for status summaries that coordinators must assemble manually.
-6. Important issues can remain hidden until close to departure because operational data is organised by system rather than by urgency and program readiness.
-
-## 4. Current workflow problems
-
-A representative current-state workflow is:
-
-1. Program details are approved and recorded in one system or document.
-2. Applications and participant details are collected elsewhere.
-3. Passport, visa, insurance, consent, emergency-contact, and pre-departure completion are tracked in separate columns, forms, folders, or email threads.
-4. Travel, accommodation, and daily activities are maintained in another itinerary document.
-5. The coordinator manually compares these sources to identify missing requirements.
-6. Follow-ups occur by email, with limited visibility of whether the overall program is becoming more or less ready.
-7. A manager or trip leader requests a summary, causing another manual reconciliation.
-
-The operational cost is not only time. Fragmentation makes it difficult to prioritise work, explain why something needs attention, and create a reliable shared understanding before departure.
-
-## 5. Product value proposition
-
-**TourFlow turns fragmented study-tour coordination data into a single, explainable readiness workflow.**
-
-For a coordinator, the product should make three questions easy to answer:
-
-1. What needs my attention today?
-2. Is this program ready for its next milestone or departure?
-3. Which participant requirement or itinerary detail is creating the issue?
-
-For a hiring reviewer, the prototype should show a credible vertical workflow rather than a generic dashboard with education-themed labels.
-
-## 6. Primary user journey
-
-### Scenario
-
-A coordinator starts the day with several active programs at different stages. One program departs soon and has unresolved participant requirements.
-
-### Journey
-
-1. **Triage the portfolio.** The coordinator opens Dashboard and sees upcoming departures, readiness summaries, and a short prioritised attention queue.
-2. **Enter the relevant program.** The coordinator selects the program with the closest departure and highest-impact unresolved items.
-3. **Understand program readiness.** Program Overview shows dates, destination, program stage, key contacts, participant totals, milestone status, and readiness summary.
-4. **Find affected participants.** In Readiness or Participants, the coordinator filters to participants marked `Needs attention` or `Blocked`.
-5. **Diagnose the issue.** The coordinator opens a participant record and sees the specific requirement, current status, due date, reason for the flag, and suggested next step.
-6. **Demonstrate resolution.** The coordinator selects `Confirm requirement` for one fictional travel-insurance requirement. Its status changes from `Action required` to `Approved`; derived readiness counts and attention items update consistently, and the baseline can be restored with `Reset demo`.
-7. **Check operational context.** The coordinator reviews the day-by-day Itinerary, including transport and accommodation references, to confirm the program plan is coherent.
-8. **Return to the readiness view.** The coordinator can explain the program’s current state and remaining work without manually reconciling separate screens.
-
-### Journey success condition
-
-Within three minutes, a first-time viewer should be able to identify the most urgent program, explain the reason for one attention item, locate the affected participant requirement, and understand the relevant itinerary context.
-
-## 7. Approved V1 information architecture
-
-This structure was approved by the product owner on 22 August 2026. Approval of the information architecture does not authorise application implementation.
-
-### Global navigation
-
-| Area | Purpose | Included in V1 |
+| Persona | Need represented in the concept | MVP treatment |
 | --- | --- | --- |
-| Dashboard | Portfolio triage: upcoming departures, readiness, milestones, and priority attention items | Yes |
-| Programs | Browse active and completed programs; enter a program workspace | Yes |
-| Participants | Search and review fictional participants across programs, including their participant type | Yes |
+| International Partnerships Officer | Relationship history, agreements context, strategic themes, opportunities, and commitments | Represented through the Relationship workspace |
+| Study Tour Coordinator | Participant requirements, readiness, itinerary, logistics, and attention | Preserved through TourFlow Study Tour Delivery |
+| International Programs / Short Programs Coordinator | Engagement planning plus program delivery | Shared workflow represented; dedicated delivery extension deferred |
+| Faculty or professional-unit stakeholder | Clear objective, role, agenda contribution, and follow-up ownership | Represented as an assigned internal stakeholder |
+| Academic lead / executive host | Briefing, agenda, partner context, talking points, outcomes | Read-only use case represented in briefing and outcomes views |
+| Team lead | Portfolio priorities, open commitments, and engagement progress | Represented on Home; management analytics deferred |
 
-### Program workspace
+External partner contacts, delegation guests, and student participants appear as fictional records but are not primary users of the next MVP.
 
-| Area | Purpose | Included in V1 |
-| --- | --- | --- |
-| Overview | Program identity, stage, dates, destination, leads, participant totals, milestones, and readiness | Yes |
-| Readiness | Participant requirements, document metadata, due dates, and attention items in one operational view | Yes |
-| Itinerary | Day-by-day activities with transport and accommodation context | Yes |
+## 5. Core user problems
 
-### Deliberate IA decisions
+1. Partner intent arrives in unstructured emails or conversations and must be manually converted into a workable scope.
+2. Relationship history exists across systems and individual memory, making preparation dependent on who happens to know the partner.
+3. Stated partner interests do not automatically identify the correct internal faculties, centres, leaders, or professional teams.
+4. Visit agendas can become collections of meetings without a visible connection to strategic objectives.
+5. Briefing papers require repeated reconciliation of partner context, attendees, prior commitments, objectives, talking points, and logistics.
+6. Meeting notes do not consistently become explicit outcomes, owners, due dates, and follow-up.
+7. Completed engagements often fail to update the institution’s usable relationship memory.
+8. Study Tour delivery requires participant readiness and logistics that are irrelevant to senior delegations and must remain type-specific.
 
-- **Documents are not a top-level V1 destination.** Document metadata is meaningful only in the context of a participant requirement or program readiness check.
-- **Risk & Attention Alerts are not a generic standalone “AI centre.”** They appear on Dashboard and Program Readiness, where a coordinator can understand and act on them.
-- **Accommodation and Transport are not standalone modules.** Their essential details appear within program overview and itinerary entries.
-- **Communications and Feedback are excluded from V1.** They would add new workflows without strengthening the core readiness demonstration.
+## 6. Current workflow problem
 
-### Approved route model (implementation-agnostic)
+A representative international delegation workflow is:
+
+1. A partner sends an enquiry describing proposed dates, visitors, and broad interests.
+2. An officer searches CRM, email, agreement files, shared drives, and colleagues’ knowledge for relationship context.
+3. The officer identifies missing information and asks clarification questions.
+4. Potential internal hosts are identified through personal networks or manual searching.
+5. The agenda is assembled across calendars, email threads, documents, and spreadsheets.
+6. A briefing paper is created by copying information from several sources.
+7. The visit occurs and notes are captured inconsistently.
+8. Decisions and commitments are followed up in email or task trackers.
+9. The next officer may not be able to reconstruct what the engagement achieved.
+
+Existing systems may store each component, but the officer must still perform the cognitive work of connecting intent, context, institutional capability, activity design, outcomes, and next action.
+
+## 7. Product value proposition
+
+**The product turns partner intent into an objective-led engagement plan and turns engagement results into reusable relationship context.**
+
+It should help the user answer:
+
+1. Who is this partner and what is the relevant institutional history?
+2. What are they asking for, and what information is still missing?
+3. What objectives should this engagement advance?
+4. Which internal stakeholders and capabilities should be involved, and why?
+5. Which agenda activity advances each objective?
+6. What context does the internal team need before the engagement?
+7. What outcome or commitment resulted from each important discussion?
+8. What should be remembered for the next engagement?
+
+### Why not simply configure a CRM or mobility platform?
+
+A CRM remains better for canonical partner/contact records, communication history, permissions, deduplication, enterprise workflow, and integrations. A mobility platform remains better for applications, agreements, student portals, regulated data, travel registration, approvals, and reporting.
+
+The approved product direction earns a separate portfolio role by demonstrating a purpose-built workflow from partner intent through university coordination to relationship memory, with type-specific delivery only where needed. It should be presented as a workflow concept that could sit above or beside systems of record, not as a procurement claim that universities need another database.
+
+## 8. Central product model
+
+### Top-level structure
 
 ```text
-Dashboard
-Programs
-  Program detail
-    Overview
-    Readiness
-    Itinerary
-Participants
-  Participant detail
+PartnerOrganisation
+  → Relationship
+      → Engagement
+          → Objectives
+          → Stakeholder assignments
+          → Agenda items
+          → Outcomes
+          → Commitments
 ```
 
-## 8. MVP feature scope
+An `Engagement` may represent:
 
-### 8.1 Dashboard
+- delegation visit;
+- study tour;
+- short program;
+- partner meeting;
+- government or industry visit; or
+- strategic partnership activity.
 
-The dashboard should provide a prioritised operational snapshot, not a collection of decorative metrics.
+A Study Tour engagement additionally owns a `StudyTourDelivery` extension containing participants, requirements, readiness, attention items, itinerary, accommodation, and transport context.
 
-Required capabilities:
+### Smallest coherent domain model
 
-- display active programs and days until departure;
-- show participant readiness totals derived from fictional records;
-- show upcoming program milestones;
-- present a concise attention queue ordered by impact and time sensitivity;
-- link each summary or attention item to the relevant program or participant context; and
-- make the primary action for the day visually obvious.
+| Domain object | Definition | Key relationships |
+| --- | --- | --- |
+| `PartnerOrganisation` | A fictional external institution, government body, or industry organisation | Has a Relationship and Contacts |
+| `Relationship` | The university-specific strategic context with a partner | Belongs to one partner; has themes, engagements, and open commitments |
+| `Contact` | A relevant external relationship contact | Belongs to a partner; may be an engagement guest |
+| `Engagement` | A bounded interaction or program with a purpose, owner, dates, and type | Belongs to a Relationship; owns objectives, assignments, agenda, outcomes, and milestones |
+| `EngagementType` | Discriminator controlling relevant workflow | Determines whether Study Tour Delivery is available |
+| `EngagementObjective` | A desired engagement result linked to a theme and success signal | Links to stakeholder assignments, agenda items, and outcomes |
+| `StakeholderAssignment` | An internal host or external guest assigned to an engagement role or objective | Links a person/capability to an Engagement and Objective |
+| `AgendaItem` | An objective-linked engagement activity or discussion | Belongs to an Engagement; links to objectives and outcomes |
+| `Outcome` | A decision, learning, or agreed direction resulting from an engagement | Links to objectives and optionally an agenda item |
+| `Commitment` | An owned, dated follow-up that persists in relationship context | Links to outcome, engagement, relationship, and owner |
+| `Milestone` | A dated operational checkpoint | Belongs to an Engagement; may affect attention |
+| `AttentionItem` | A derived, explainable prompt from a source record | References an Engagement and source object |
 
-### 8.2 Programs
+### Concepts deliberately not added as standalone MVP objects
 
-Required capabilities:
+- **Briefing:** a derived workspace assembled from structured relationship and engagement records.
+- **Agreement:** reference metadata or link only; lifecycle management remains in the source system.
+- **StrategicTheme:** controlled tags are sufficient for the prototype.
+- **Capability directory:** a small fictional fixture powers stakeholder matching; it is not an enterprise directory product.
+- **Generic Task:** commitments and milestones cover the distinctive workflow. A universal task object would pull the MVP toward generic work management.
+- **ExternalGuest:** represented through contacts and stakeholder assignments; it does not need a separate top-level aggregate.
 
-- browse a realistic set of programs at different lifecycle stages;
-- search or filter by status, destination, or departure timeframe;
-- distinguish stages such as `Planning`, `Applications`, `Pre-departure`, `On tour`, and `Completed`;
-- open a program workspace; and
-- show empty results clearly when no program matches a filter.
+### Status semantics
 
-### 8.3 Program Overview
+Generic `EngagementStage` is approved in principle as:
 
-Required capabilities:
+```text
+enquiry → scoping → planning → scheduled → in_progress → follow_up → completed
+```
 
-- display program name, destination, dates, lifecycle stage, academic lead, coordinator, and participant count;
-- show key milestones and their current state;
-- summarise participant readiness using derived counts;
-- surface the highest-priority unresolved items; and
-- provide clear navigation to Readiness and Itinerary.
+Study Tour lifecycle and readiness remain separate, type-specific concepts. The existing values `applications`, `pre_departure`, `on_tour`, `ready`, `needs_attention`, and `blocked` must not be applied to delegation visits.
 
-### 8.4 Participants and participant detail
+## 9. Signature workflow
 
-Required capabilities:
+The approved signature workflow is:
 
-- show a fictional participant roster with program, readiness state, and next outstanding requirement;
-- search and filter participants by program and readiness;
-- open a participant detail view;
-- show participant type, using `Student` for the initial V1 records while leaving room for future staff or chaperone types;
-- show only the minimum fictional profile information needed to explain the workflow;
-- show requirement history/status without displaying simulated passport numbers, medical details, private addresses, or realistic identity documents; and
-- link back to the participant’s program context.
+### Partner Intent → Scope → Objectives → Stakeholders / Agenda → Outcomes → Commitments → Relationship Memory
 
-### 8.5 Documents and readiness requirements
+1. **Review incoming enquiry.** See the original fictional request and its source.
+2. **Structure scope.** Confirm partner, engagement type, dates, delegation size, interests, objectives, missing information, and clarification questions.
+3. **Review relationship context.** Understand prior engagements, strategic themes, contacts, agreement references, prior outcomes, and open commitments.
+4. **Coordinate stakeholders.** Link each objective to relevant fictional internal capabilities and assigned hosts.
+5. **Design the agenda.** Link every substantive agenda item to one or more objectives.
+6. **Prepare the briefing.** Assemble partner context, delegation profile, objectives, hosts, prior commitments, talking points, agenda, and open issues from structured records.
+7. **Capture outcomes.** Record what was discussed, decided, or learned and link it to the relevant objective/activity.
+8. **Create commitments.** Assign an owner and due date for follow-up.
+9. **Update relationship memory.** Surface the outcome and open commitment in future relationship and engagement preparation.
 
-V1 represents document and task status as metadata; it does not upload, download, preview, or store sensitive files.
+### Continuity of institutional intent across engagements
 
-Example requirement types may include:
+The product is not differentiated simply because it contains contacts, engagement history, notes, tasks, timelines, dashboards, or AI. Its strongest product test is whether a user can answer:
 
-- passport validity confirmed;
-- visa evidence confirmed where applicable;
-- travel or insurance acknowledgement;
-- emergency contact confirmed;
-- participant agreement or consent;
-- pre-departure briefing completed; and
-- flight details confirmed where relevant.
+1. What happened in a previous engagement?
+2. What strategic signal, outcome, or commitment resulted?
+3. Why is that context relevant now?
+4. Which objective in the current engagement follows from that history?
+5. Which internal university stakeholder or activity supports that objective?
+6. What happened during the current engagement?
+7. What commitment should carry into future relationship planning?
 
-Required capabilities:
+The workflow is successful only if a reviewer can trace a prior engagement signal into a current objective, through a stakeholder or agenda activity, to an outcome and commitment that updates relationship memory.
 
-- show requirement, owner, status, due date, and last update;
-- use a consistent status model such as `Not started`, `Submitted`, `Under review`, `Approved`, and `Action required`;
-- distinguish a late item from an item that is blocked for another reason;
-- derive participant readiness from transparent rules; and
-- limit status editing to the approved, clearly labelled, resettable demo interaction.
+## 10. Approved information architecture
 
-Aggregate metrics must use the term `Outstanding Requirements`, not `Missing Documents`. A requirement may represent a document, confirmation, task, briefing, or travel detail. Document status remains one subtype of requirement metadata.
+The smallest credible global navigation is:
 
-### 8.6 Risk & Attention Alerts
+```text
+Home
+Relationships
+Engagements
+```
 
-V1 uses deterministic operational rules, not AI inference.
+### Global areas
 
-An attention item must include:
+| Area | Purpose |
+| --- | --- |
+| Home | Prioritise engagements, missing coordination inputs, milestones, and open commitments |
+| Relationships | Understand partner context, history, themes, and relationship-level commitments |
+| Engagements | Scope, plan, deliver, and follow up a bounded engagement |
 
-- severity or priority;
-- affected program and, when relevant, participant;
-- plain-language reason;
-- due date or departure context;
-- recommended next step; and
-- link to the source record.
+### Relationship workspace
 
-Example triggers:
+| Area | Purpose |
+| --- | --- |
+| Overview | Partner profile, relationship summary, themes, key contacts, agreement references, and open commitments |
+| Engagement history | Previous and current engagements, outcomes, and relationship timeline |
 
-- a required item is overdue;
-- a passport-validity confirmation remains unresolved close to departure;
-- the pre-departure briefing is incomplete after its due date;
-- an itinerary day lacks confirmed accommodation or transport context; or
-- a program milestone is approaching while participant readiness remains below the agreed threshold.
+### Engagement workspace
 
-The interface must not claim that an alert is an institutional risk decision, legal determination, medical assessment, or live government travel advisory.
+| Area | Purpose |
+| --- | --- |
+| Overview | Enquiry source, scope, objectives, stage, dates, owner, partner, guests, and open questions |
+| Plan | Objective-to-stakeholder and objective-to-agenda coordination |
+| Briefing | Structured pre-engagement view assembled from approved records |
+| Outcomes | Decisions, learnings, commitments, owners, and follow-up |
+| Delivery — Study Tour only | Type-specific Participants, Readiness, and Itinerary workflow |
 
-### 8.7 Itinerary
+### IA decisions
 
-Required capabilities:
+- Do not create a global Tasks / Commitments destination in the next MVP. Commitments appear in Home, Relationship, and Engagement context.
+- Do not create separate global Contacts, Agreements, Guests, Logistics, Briefing, Documents, or AI destinations.
+- Do not show Study Tour participant or readiness navigation for delegation visits.
+- Preserve objective links across Plan, Briefing, and Outcomes rather than repeating disconnected notes.
 
-- present itinerary entries in chronological day groups;
-- show local date/time, location, activity type, description, and responsible contact or lead role when useful;
-- include transport and accommodation references within the relevant day;
-- distinguish academic, cultural, travel, free-time, and briefing activities;
-- highlight missing operational details without overstating risk; and
-- remain understandable on a narrow screen without requiring a wide spreadsheet layout.
+## 11. Demo scenarios and relationship-memory strategy
 
-### 8.8 Fictional demo data
+The approved demo strategy uses one anonymised/composite Partner Relationship representing a Chinese higher education institution. The exact public-facing partner name remains unresolved. Both engagements, all people, dates, operational records, outcomes, and commitments must be disclosed as fictional, synthetic, anonymised, or composite; they must not be attached to a real university name as if they were historical facts.
 
-The fixture set must use three programs with deliberately uneven depth:
+Use this disclosure with the demo:
 
-| Program | Role in prototype | Participants | Lifecycle stage | Readiness state | Required depth |
-| --- | --- | ---: | --- | --- | --- |
-| Shanghai Business School – Sydney Innovation Study Tour | Primary demo program | 24 | `pre_departure` | `needs_attention` | Full participant, readiness, attention, logistics, and multi-day itinerary workflow with several unresolved readiness issues |
-| Osaka Global Business Program | Portfolio variation | 18 | `pre_departure` | `ready` | Enough detail to demonstrate a program with no material readiness blockers |
-| Singapore Future Leaders Program | Portfolio variation | 30 | `planning` | `needs_attention` | Enough detail to demonstrate an earlier lifecycle stage and incomplete planning milestones |
+> Composite demonstration informed by real international education partnership workflows. Institution names, people, dates and operational records may be anonymised or fictionalised.
 
-Additional fixture requirements:
+### Scenario A — Earlier Study Tour / short program
 
-- the primary program must include ready, needs-attention, and blocked participant states;
-- the resettable interaction must begin with a travel-insurance requirement in `Action required` and allow the user to select `Confirm requirement`;
-- confirming that requirement must set it to `Approved` and update the participant, the relevant alert, the outstanding-requirement count, and program-level readiness metrics from the same state source;
-- `Reset demo` must restore every affected value to the baseline fixture state;
-- the primary itinerary must span multiple days and integrate accommodation and transport into daily logistics; and
-- all names and records must be clearly synthetic, with no copied real student data.
+**Role in relationship history:** Earlier Engagement
 
-## 9. User stories and acceptance criteria
+**Delivery foundation:** Preserve the accepted 24-participant primary Study Tour workflow from Sprint 01.
 
-### US-01 — Portfolio triage
+The current fixture name may be reframed during an authorised Sprint 02 to comply with this evidence policy. No fixture or application change is made in PRD 0.4.
 
-**As a coordinator, I want to see upcoming programs and unresolved attention items so that I can prioritise today’s work.**
+#### Composite outcome and follow-up
+
+> Strong student and academic engagement with Business Analytics and innovation programming identified an opportunity for broader institutional collaboration.
+
+> Explore opportunities to extend collaboration beyond short-term student programs.
+
+These statements are fictional/composite demo records. They demonstrate how a completed Study Tour can create relationship context; they are not claims about a real institution or historical project.
+
+#### Preserved delivery journey
+
+```text
+Relationship
+  → Engagement
+  → Study Tour Delivery
+      → Participants
+      → Requirements
+      → Readiness
+      → Attention Items
+      → Itinerary and logistics
+  → Composite outcome
+  → Relationship Memory
+```
+
+#### Required proof points
+
+- the existing Study Tour is represented as an Engagement without losing its 24-participant primary workflow;
+- all deterministic readiness and attention rules continue to pass;
+- lifecycle and readiness remain independent;
+- `Confirm requirement` and `Reset demo` continue to drive affected aggregates from one source state;
+- accommodation and transport remain in itinerary/logistics context; and
+- the fictional/composite outcome becomes relationship context for the later engagement.
+
+### Scenario B — Later Senior Delegation Visit
+
+**Role in relationship history:** Later Engagement
+
+**Delegation:** 8 synthetic senior representatives
+
+**Strategic interests:** Artificial Intelligence, Business Analytics, Student Mobility, and Joint Programs
+
+The later engagement must visibly use the earlier Study Tour outcome and follow-up. For example, the prior signal about extending collaboration beyond short-term programs should inform a current objective concerning joint programs or broader institutional collaboration.
+
+#### Delegation journey
+
+```text
+Relationship Memory from Study Tour
+  → Incoming delegation enquiry
+  → Structured engagement scope
+  → Objectives informed by prior context
+  → Internal stakeholder coordination
+  → Objective-linked agenda
+  → Structured briefing
+  → Delegation visit
+  → Outcomes
+  → Commitments
+  → Updated Relationship Memory
+```
+
+#### Required proof points
+
+- the enquiry is represented in structured fields rather than only as an attached email;
+- the earlier Study Tour outcome is visible and explains at least one current objective;
+- each strategic interest becomes an objective or an explicit unresolved question;
+- assigned internal stakeholders show which objective/capability they support;
+- substantive agenda items link to objectives;
+- the briefing includes the relevant prior Study Tour outcome and open follow-up;
+- at least one new outcome links back to an objective and activity;
+- at least one owned commitment becomes visible at relationship level; and
+- no participant-readiness language is shown for the delegation.
+
+### End-to-end relationship-memory proof
+
+```text
+Study Tour
+→ Outcome
+→ Relationship Memory
+→ Senior Delegation
+→ Objectives
+→ Stakeholders / Agenda
+→ Outcomes
+→ Commitments
+→ Updated Relationship Memory
+```
+
+## 12. Approved next MVP direction
+
+### Primary slice
+
+The approved MVP direction is a delegation-first intent-to-memory loop with Sprint 01 retained as the supporting Study Tour Delivery workflow. This direction does not authorise Sprint 02 implementation.
+
+The next MVP should include:
+
+- Home with a concise engagement/commitment triage view;
+- a Relationships list containing a very small fictional set;
+- one detailed partner Relationship page;
+- an Engagements list containing multiple engagement types for variation;
+- one detailed senior delegation engagement;
+- structured enquiry scope and open questions;
+- engagement objectives and strategic themes;
+- fictional internal stakeholder/capability assignments linked to objectives;
+- objective-linked agenda activities;
+- a deterministic Briefing view assembled from structured records;
+- Outcomes and Commitments;
+- one resettable interaction where recording a fictional outcome/commitment updates relationship context; and
+- a preserved route into the existing Study Tour readiness experience.
+
+### Mock or reference only
+
+- CRM partner/account source;
+- email enquiry source;
+- calendar availability;
+- agreement repository entries;
+- internal people/capability directory;
+- delegation contact details;
+- meeting notes; and
+- mobility/SIS source records.
+
+### V2 or later
+
+- genuine AI assistance;
+- CRM, email, calendar, directory, agreement, mobility, or travel integrations;
+- persistence, authentication, permissions, and audit history;
+- configurable institutional taxonomies and workflows;
+- full contact and relationship-data administration;
+- collaboration, notifications, and approval routing;
+- document generation/export;
+- participant self-service and secure data handling; and
+- reporting across a production engagement portfolio.
+
+### Remove entirely from the concept
+
+- generic sales pipeline and revenue forecasting;
+- marketing campaigns and mass communications;
+- universal task/project-management features;
+- replacement claims for CRM, SIS, mobility, agreement, travel, or risk platforms;
+- generic AI chat;
+- decorative AI summaries;
+- opaque relationship, participant, or risk scores; and
+- AI use for deterministic due-date, readiness, or attention rules.
+
+### Sprint 02 migration note
+
+When separately authorised, Sprint 02 will migrate the existing Study Tour implementation into the broader `Relationship → Engagement` architecture without discarding the accepted vertical workflow.
+
+Sprint 02 must preserve, adapting keys or scenario framing only where required:
+
+- the 24-participant primary Study Tour workflow;
+- participant readiness;
+- requirements and document metadata;
+- deterministic attention rules;
+- itinerary, accommodation, transport, and logistics context;
+- the fixed demo clock;
+- `Confirm requirement`;
+- `Reset demo`; and
+- existing tests where relevant.
+
+Application fixture names and scenario framing may be changed during Sprint 02 to comply with the approved real-world evidence policy. No migration, rename, fixture change, or code refactor occurs in this documentation-only PR.
+
+## 13. Future AI opportunities
+
+No AI API or AI implementation is authorised by PRD 0.4. Genuine AI remains deferred until the structured non-AI workflow has been implemented and reviewed.
+
+| Priority | Candidate | Product judgment |
+| ---: | --- | --- |
+| 1 | Enquiry → structured engagement scope | Approved first future feature: bounded input/output, visible source grounding, useful missing-information detection, and a clear human confirmation gate |
+| 2 | Structured engagement data → briefing draft | High value after relationship and engagement records are credible; requires provenance and review |
+| 3 | Meeting notes → outcomes, commitments, owners, and due dates | Valuable but more generic; nothing updates relationship memory without explicit confirmation |
+| 4 | Relationship history → engagement context summary | Useful once the fixture/history dataset is sufficiently rich and source links remain visible |
+| 5 | Objectives → suggested stakeholders/capabilities | Start with controlled taxonomy and deterministic matching; AI adds value only with governed capability data |
+| 6 | Objectives and constraints → proposed agenda structure | Defer until real constraints and stakeholder data exist |
+| 7 | History and commitments → follow-up priorities | Deterministic owner/due-date rules should be exhausted first |
+
+### Approved first future genuine AI feature
+
+The first feature should transform a fictional incoming enquiry into a proposed structured engagement scope.
+
+Required output:
+
+- proposed engagement type;
+- partner match or unresolved partner;
+- proposed dates and delegation size;
+- stated objectives and strategic themes, grounded to source excerpts;
+- fields marked as missing or ambiguous;
+- clarification questions; and
+- confirmation state for every proposed field.
+
+The officer must review and confirm the structure before it becomes product state. The AI may propose; it may not silently create commitments, invite stakeholders, or assert institutional history.
+
+## 14. User stories and acceptance criteria
+
+### US-01 — Relationship context
+
+**As an International Relations Officer, I want the relevant history and open commitments for a partner so that I can prepare without relying on individual memory.**
 
 Acceptance criteria:
 
-- Dashboard shows all active fictional programs with stage, dates, destination, and days to departure.
-- Lifecycle stage and readiness state are displayed as separate fields and are never substituted for each other.
-- Readiness totals are calculated from the same participant requirement data shown elsewhere.
-- All date-relative values are derived from `DEMO_TODAY`, and the Dashboard displays `Demo snapshot · 22 Aug 2026`.
-- Attention items are ordered by a documented combination of urgency and impact.
-- Selecting an attention item opens the relevant program or participant context.
-- Status is communicated with text/iconography as well as colour.
+- Relationship Overview shows the partner, relationship summary, themes, owner, key contacts, agreement references, and open commitments.
+- Engagement History shows previous engagements with dates, types, outcomes, and status.
+- Relationship summaries are derived from fictional source records, not unsupported AI prose.
+- Selecting an engagement opens its context without losing the relationship connection.
 
-### US-02 — Program discovery
+### US-02 — Structured engagement scope
 
-**As a coordinator, I want to find a program quickly so that I can review its current operational state.**
+**As an officer, I want to convert an incoming request into a structured scope so that missing information and next questions are visible.**
 
 Acceptance criteria:
 
-- Programs can be searched by program name or destination.
-- Programs can be filtered by lifecycle stage.
-- Clearing filters restores the complete program set.
-- A no-results state explains how to recover.
-- Selecting a program opens its Overview.
+- the original fictional enquiry remains visible as source context;
+- type, partner, dates, delegation size, objectives, themes, and missing information are represented separately;
+- stated facts are distinguishable from assumptions or proposed interpretation;
+- clarification questions link to missing or ambiguous fields; and
+- no AI capability is implied in the deterministic/manual MVP.
 
-### US-03 — Program readiness
+### US-03 — Objective-led coordination
 
-**As a coordinator, I want one program-level readiness view so that I do not have to reconcile multiple tracking sheets.**
-
-Acceptance criteria:
-
-- Overview shows program facts, milestones, participant counts, and readiness summary.
-- Readiness counts match the underlying participant records.
-- The view identifies outstanding requirements and their due dates.
-- The highest-priority issue is understandable without opening another screen.
-- Navigation to Readiness and Itinerary is obvious and keyboard accessible.
-
-### US-04 — Participant follow-up
-
-**As a coordinator, I want to identify participants who need follow-up and understand why so that I can take the correct next step.**
+**As an officer, I want objectives connected to internal stakeholders and agenda items so that the engagement plan has an explicit purpose.**
 
 Acceptance criteria:
 
-- Participants can be filtered to `Ready`, `Needs attention`, and `Blocked`.
-- Every non-ready state has at least one visible, specific cause.
-- Participant detail shows requirement status, due date, last update, and suggested next step.
-- No real personal data or realistic sensitive document content is displayed.
-- Returning to the list preserves useful program context and does not strand the user.
+- every primary objective has at least one success signal or unresolved question;
+- stakeholder assignments show role, internal capability, and linked objective;
+- substantive agenda items show linked objectives and an owner;
+- unmatched objectives remain visible rather than receiving fabricated stakeholders; and
+- no invitations or commitments are sent externally.
 
-### US-05 — Explainable attention signals
+### US-04 — Briefing preparation
 
-**As a coordinator, I want each alert to explain its trigger so that I can trust and verify the prompt.**
-
-Acceptance criteria:
-
-- Every attention item identifies its source rule in plain language.
-- Severity is based on documented fixture logic, not random values or opaque AI output.
-- Resolving the underlying requirement removes or changes the corresponding demo alert through the approved deterministic demo-state transition.
-- Alert copy avoids legal, medical, compliance, and safety guarantees.
-- The same alert is represented consistently on Dashboard and Program Readiness.
-
-### US-06 — Itinerary review
-
-**As a coordinator or trip leader, I want to review the program plan by day so that I can spot missing operational details.**
+**As an internal host, I want one structured briefing so that I understand the partner, visitors, objectives, history, agenda, and open issues.**
 
 Acceptance criteria:
 
-- Entries are ordered by local date and time and grouped by day.
-- Each entry shows the minimum useful operational context.
-- Transport and accommodation references are attached to the relevant day or entry.
-- Missing details are clearly labelled rather than silently omitted.
-- Mobile presentation remains chronological and readable.
+- Briefing assembles partner overview, relationship history, guests, objectives, hosts, prior commitments, talking points, agenda, and open issues from source records;
+- each section identifies its source or links back to the relevant record;
+- incomplete information is labelled explicitly; and
+- the MVP does not claim to generate an AI-authored briefing.
 
-### US-07 — Resettable demo-state resolution
+### US-05 — Outcomes and commitments
 
-**As a portfolio reviewer, I want to resolve one fictional issue so that I can see that TourFlow’s summaries reflect the underlying workflow.**
+**As an officer, I want to capture what was achieved and who owns follow-up so that the engagement changes the institutional relationship record.**
 
 Acceptance criteria:
 
-- A user can open a fictional participant whose travel insurance is `Action required` and select `Confirm requirement`.
-- The interface clearly labels the change as demo data.
-- Participant readiness, program summary, and attention queue update from one rule source.
-- The requirement changes to `Approved`, the outstanding-requirement count decreases, the program readiness percentage increases, and the related alert disappears or resolves consistently.
-- `Reset demo` restores the participant requirement, alert, counts, and readiness percentage to the exact baseline state.
-- No account, database, or external service is required.
+- outcomes link to at least one objective and optionally an agenda activity;
+- commitments include an owner, due date, state, and source outcome;
+- a resettable demo interaction adds or confirms one fictional outcome/commitment;
+- the same state change updates Engagement Outcomes, Relationship Overview, and Home commitment triage; and
+- Reset restores the exact fixture baseline.
 
-## 10. Cross-product acceptance criteria
+### US-06 — Study Tour Delivery preservation
 
-The V1 prototype is acceptable only when:
+**As a Study Tour Coordinator, I want the accepted readiness workflow preserved so that the broader model does not weaken delivery operations.**
 
-- all displayed people and records are fictional;
-- the primary user journey can be completed without dead ends;
-- every navigation item leads to meaningful content;
-- aggregate counts reconcile with the underlying fixtures;
-- lifecycle and readiness use independent typed fields and labels;
-- all date-relative values derive from `DEMO_TODAY = 2026-08-22` rather than the system clock;
-- aggregate requirement metrics use `Outstanding Requirements` and include all requirement types, not only documents;
-- loading, empty, and error states are handled where applicable;
-- layout is usable at representative desktop and mobile widths;
-- keyboard focus is visible and interactive elements have accessible names;
-- headings are hierarchical and status is not communicated by colour alone;
-- no external API, authentication provider, production database, analytics tool, or AI service is required;
-- automated checks for core business rules pass;
-- a production build passes using the approved implementation stack; and
-- the README and project log accurately describe what the prototype does and does not do.
+Acceptance criteria:
 
-## 11. Out-of-scope features for V1
+- a Study Tour is an Engagement with an explicit Study Tour Delivery extension;
+- all 72 synthetic Sprint 01 participant records remain internally consistent;
+- existing readiness, outstanding requirement, date, attention, and aggregate tests continue to pass;
+- delegation engagements do not display Study Tour participant/readiness concepts; and
+- the current confirm/reset interaction remains available and explainable.
 
-- authentication, roles, permissions, or single sign-on;
-- production database, cloud storage, or live multi-user persistence;
-- real student data or integrations with student information systems;
-- file upload, document OCR, passport scanning, or sensitive file previews;
-- automated email, SMS, or in-app student communications;
-- live booking, payments, budgets, procurement, or expense reconciliation;
-- live flight, hotel, mapping, weather, government advisory, or International SOS integrations;
-- formal institutional approval workflows or electronic signatures;
-- a student-facing portal or mobile app;
-- AI chat, generative recommendations, predictive risk scoring, or external AI APIs;
-- standalone Accommodation, Transport, Communications, or Feedback modules;
-- comprehensive post-program evaluation and reporting; and
-- claims of legal, policy, insurance, medical, accessibility-certification, or travel-risk compliance.
+## 15. Cross-product acceptance criteria
 
-## 12. Potential V2 features
+The approved pivot direction is acceptable in an eventual MVP only when:
 
-V2 should be considered only after V1’s coordinator workflow is reviewed.
+- a first-time reviewer can explain the product’s relationship-to-engagement model within one minute;
+- the reviewer can trace one objective through stakeholder, agenda, outcome, and commitment records;
+- the resulting commitment is visible in future relationship context;
+- the product remains useful without AI branding or external services;
+- a generic delegation never inherits student-readiness concepts;
+- a Study Tour retains the accepted Sprint 01 readiness workflow;
+- engagement stage, Study Tour lifecycle, and Study Tour readiness remain independent typed concepts;
+- every scenario and record is clearly classified as factual professional context, anonymised/composite, or fictional/synthetic;
+- real institution names appear only with accurate, non-confidential, supportable facts and never with invented events or outcomes;
+- no copy implies that the prototype was historically deployed or used in production;
+- aggregate values are derived from source fixtures;
+- all date-relative behaviour continues to use the fixed demo clock;
+- no user-facing claim implies live CRM, SIS, mobility, agreement, calendar, email, or travel integration;
+- objective and outcome links remain understandable at desktop and mobile widths;
+- controls have accessible names, visible focus, and non-colour status cues;
+- no external AI API, database, authentication, analytics, or Vercel deployment is added without a later approval; and
+- the current Sprint 01 test/build baseline remains green after any authorised migration.
 
-Possible additions include:
+## 16. Out of scope for the pivot MVP
 
-- Supabase-backed persistence with an explicit data/privacy model;
-- authentication and role-aware views;
-- secure document metadata and controlled storage workflows;
-- communications templates and logged follow-up actions;
-- student self-service requirement completion;
-- configurable institutional readiness rules and approval stages;
-- live travel-advisory or travel-management integrations;
-- accommodation and transport management for complex programs;
-- post-program feedback and outcome reporting;
-- operational exports for trip leaders and emergency planning;
-- audit history; and
-- narrowly scoped AI assistance, such as summarising a program’s explainable attention items or drafting a coordinator follow-up from approved data.
+- repository or application rename without a separate naming decision;
+- application refactor before separate Sprint 02 authorisation;
+- production partner/contact master-data management;
+- email or calendar synchronisation;
+- agreement authoring, approval, signatures, or compliance;
+- student application processing or mobility nomination management;
+- travel registry, live safety/risk feeds, traveller tracking, or duty-of-care operations;
+- real student identity, passport, health, emergency, confidential, or operational institutional data in demo records;
+- authentication, permissions, database, audit history, or collaboration;
+- automated invitations, messages, or stakeholder assignment;
+- AI API, chatbot, autonomous agent, or unreviewed generated content;
+- generic project management, sales pipeline, or marketing automation;
+- predictive relationship, engagement, participant, or safety scoring; and
+- Vercel deployment.
 
-AI should enter only where it improves a validated workflow and where the result can be reviewed by a human. It should not be used to infer sensitive student risk, determine fitness to travel, or replace institutional policy decisions.
-
-## 13. Risks and assumptions
+## 17. Risks and assumptions
 
 | ID | Type | Statement | Response |
 | --- | --- | --- | --- |
-| A-01 | Confirmed direction | The primary portfolio story is coordinator-led pre-departure readiness, not recruitment or participant self-service. | Approved for V1. |
-| A-02 | Confirmed direction | A small number of coherent fictional programs is more persuasive than broad but shallow module coverage. | Use one deep program and two lighter portfolio examples. |
-| A-03 | Confirmed direction | Document metadata is enough to demonstrate V1 workflow without sensitive file handling. | Exclude uploads and previews. |
-| A-04 | Confirmed direction | Deterministic attention rules better demonstrate trust and operational reasoning than simulated AI. | Document each rule and test its output. |
-| A-05 | Confirmed direction | A browser-only, resettable demo state is appropriate for the single approved status-update interaction. | Keep it local, clearly labelled, and fully resettable. |
-| R-01 | Risk | The product could resemble a generic SaaS admin template. | Design around the specific program-readiness journey and realistic linked records. |
-| R-02 | Risk | “Risk alerts” could imply a compliance or safety determination. | Use operational language, show trigger logic, and include clear boundaries. |
-| R-03 | Risk | Fictional student records could still look uncomfortably realistic or expose sensitive fields. | Use minimal synthetic identity data and omit document numbers, health details, and private addresses. |
-| R-04 | Risk | Too many top-level modules could dilute the story and increase build scope. | Use the approved three-item global navigation and contextual program workspace. |
-| R-05 | Risk | Static data may make the product feel like a screenshot rather than a working prototype. | Include purposeful filters, drill-down, derived counts, and the approved resettable state transition. |
-| R-06 | Risk | Institutional processes differ across universities and program types. | Present a configurable conceptual workflow, not a claim of universal policy compliance. |
-| R-07 | Risk | An early technology decision could drive product scope. | Approve PRD and IA before selecting or scaffolding the implementation stack. |
+| A-01 | Approved product hypothesis | International engagement officers experience meaningful coordination work between systems of record. | Validate the two demo journeys with practitioners or hiring reviewers before broad implementation. |
+| A-02 | Approved product hypothesis | Objective-to-outcome traceability is more valuable and distinctive than another relationship timeline. | Make the chain the primary prototype test, not a secondary detail. |
+| A-03 | Confirmed asset | Sprint 01 is a valid Study Tour readiness foundation. | Preserve it as Study Tour Delivery and retain its rules/tests. |
+| A-04 | Approved MVP direction | A delegation-first scenario best demonstrates the broader persona and product differentiation. | Use it as the primary next MVP; keep Study Tour as the supporting vertical. |
+| R-01 | Strategic risk | Relationship pages, contacts, history, and commitments still overlap substantially with CRM. | Avoid system-of-record breadth and prove objective-led coordination and memory feedback. |
+| R-02 | Competitive risk | International-office platforms already manage mobility, partnerships, agreements, workflows, and reporting. | Position this as a workflow concept and acknowledge where those platforms are stronger. |
+| R-03 | Scope risk | Two scenarios can become a large enterprise prototype. | Build one delegation journey deeply and preserve, rather than expand, Study Tour Delivery. |
+| R-04 | Model risk | A universal Engagement model could flatten meaningful differences between visits, meetings, and Study Tours. | Use a shared core plus explicit type-specific extensions. |
+| R-05 | Data risk | Stakeholder matching can look fictitious without a credible internal capability source. | Use a small, explicit synthetic capability directory and show unmatched objectives. |
+| R-06 | AI risk | “Copilot” naming or generated content may imply unsupported accuracy. | Keep the name provisional and AI deferred; require source grounding and confirmation when introduced. |
+| R-07 | Privacy risk | Delegation and relationship records may include sensitive professional or institutional context. | Use minimal synthetic data and define permissions/governance before persistence. |
+| R-08 | Narrative risk | Reframing Sprint 01 could make the existing Dashboard appear disconnected. | Keep it reachable as a named Study Tour Delivery workflow and document the migration story. |
+| R-09 | Evidence risk | A real institution name attached to invented demo history could imply that fictional events occurred. | Apply the approved factual/anonymised/fictional classification and use a composite Partner Relationship for the connected demo. |
 
-## 14. Prototype success measures
+## 18. Approved decisions and implementation gate
 
-These are evaluation criteria for the portfolio prototype, not production analytics:
+The product owner approved the following direction on 22 August 2026:
 
-- A reviewer can explain the product’s user, problem, and value within one minute.
-- A reviewer can complete the primary journey in under three minutes.
-- All summary totals reconcile with underlying fictional records.
-- The reviewer can explain why an attention item exists and what action it suggests.
-- The interface remains credible without relying on “AI” branding or generated copy.
-- The application passes the agreed build, rule tests, accessibility checks, and responsive QA before deployment.
+1. position the broader concept as an **international engagement operating layer**;
+2. use `Relationship → Engagement` as the central product model;
+3. use `Partner Intent → Scope → Objectives → Stakeholders / Agenda → Outcomes → Commitments → Relationship Memory` as the signature workflow;
+4. use `Home / Relationships / Engagements` as the minimal global information architecture;
+5. use a delegation-first primary MVP while preserving Study Tour Delivery as the supporting vertical;
+6. preserve **TourFlow** as the future name of the Study Tour Delivery workflow/module;
+7. do not use **Copilot** as the user-facing umbrella name until genuine AI functionality exists;
+8. defer genuine AI until the structured non-AI workflow has been implemented and reviewed;
+9. use **Enquiry → Structured Engagement Scope** as the first future genuine AI feature; and
+10. require a separate instruction before Sprint 02 implementation.
 
-## 15. Approved V1 decisions and remaining implementation gate
+The real-world evidence policy and anonymised/composite relationship-memory demo strategy are also approved.
 
-The product owner approved these decisions on 22 August 2026:
+### Unresolved decisions
 
-1. **Primary workflow:** Coordinator-led pre-departure readiness is the central V1 workflow.
-2. **Information architecture:** Global navigation is `Dashboard / Programs / Participants`; program navigation is `Overview / Readiness / Itinerary`.
-3. **Terminology:** Product navigation and program views use `Participants` consistently. Participant detail may show `Participant type: Student`.
-4. **Documents:** Document metadata remains inside Readiness rather than becoming a standalone module.
-5. **Attention rules:** Alerts are deterministic, explainable operational prompts and must never be presented as AI predictions.
-6. **Demo interaction:** V1 includes one resettable interaction where `Confirm requirement` changes travel insurance from `Action required` to `Approved` and updates the participant, alert, outstanding-requirement count, and program readiness metrics.
-7. **Fixture strategy:** V1 uses one detailed primary program and two lighter programs that create realistic portfolio variation.
-8. **Logistics:** Accommodation and transport remain integrated into the itinerary and logistics workflow.
-9. **Service boundaries:** V1 does not add authentication, Supabase, a production database, or an external AI API.
-10. **Phase boundary:** Sprint 01 implementation is authorised only for the technical foundation, domain model, application shell, minimal route destinations, and Dashboard. Full product workflows remain deferred.
-11. **Product naming:** V1 uses `TourFlow`; `TourFlow AI` is reserved for a later version with genuine AI assistance.
-12. **Status semantics:** `LifecycleStage` and `ReadinessState` are independent typed concepts and must never be interchanged.
-13. **Requirement language:** Aggregate metrics use `Outstanding Requirements`, with documents represented as one requirement subtype.
-14. **Demo action:** The deterministic action is `Confirm requirement`, producing the transition `Action required → Approved`.
-15. **Demo clock:** All relative dates use `DEMO_TODAY = 2026-08-22`, disclosed in the UI as `Demo snapshot · 22 Aug 2026`.
+- final umbrella product name;
+- exact public-facing name of the composite/anonymised partner;
+- Sprint 02 implementation details and authorisation;
+- genuine AI implementation and evaluation;
+- external integrations; and
+- database, authentication, and persistence.
 
-## 16. Research basis
+No unresolved item authorises implementation. Sprint 02 remains closed until a separate instruction.
 
-The proposed workflow is grounded in current public guidance, while remaining institution-neutral:
+## 19. Supporting analysis
 
-- [Western Sydney University Student Learning Abroad Procedures](https://policies.westernsydney.edu.au/download.php?id=364&version=1) describes compulsory pre-departure activity, updated participant lists, travel registration, risk assessment, program activities, transport, accommodation, communications, emergency planning, and trip-leader responsibilities.
-- [UNSW Preparing for Learning Abroad](https://www.unsw.edu.au/student/opportunities/overseas-study/preparing-for-departure) connects pre-departure completion with travel risk, insurance, emergency assistance, itinerary, passport, visa, and emergency-contact preparation.
-- [University of Newcastle Outbound Global Experience Procedure](https://policies.newcastle.edu.au/document/view-current.php?id=268&version=7) distinguishes program approval, individual student approval, risk assessment, participant readiness, itinerary-related travel requirements, and pre-departure preparation.
-
-These sources support the problem framing; they are not being encoded as universal compliance rules. A future institution-specific version would require formal policy validation and governance.
+Detailed competitive reasoning, implementation impact, migration mapping, IA critique, MVP options, and AI prioritisation are recorded in [`PIVOT_ANALYSIS.md`](./PIVOT_ANALYSIS.md).
