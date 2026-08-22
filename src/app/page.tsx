@@ -12,13 +12,12 @@ import {
   relationships,
 } from "@/data/engagement-fixtures";
 import { itineraryEntries, milestones, participants, programs, requirements } from "@/data/fixtures";
-import { commitments } from "@/data/follow-up-fixtures";
 import { DEMO_SNAPSHOT_LABEL } from "@/domain/demo-clock";
 import { buildHomeSnapshot } from "@/domain/engagement-rules";
 import { formatDemoDate, formatEngagementStage, formatEngagementType } from "@/domain/presentation";
 
 export default function HomePage() {
-  const snapshot = buildHomeSnapshot(relationships, partnerOrganisations, engagements, relationshipSignals, engagementObjectives, PRIMARY_RELATIONSHIP_ID, { programs, participants, requirements, milestones, itineraryEntries }, commitments);
+  const snapshot = buildHomeSnapshot(relationships, partnerOrganisations, engagements, relationshipSignals, engagementObjectives, PRIMARY_RELATIONSHIP_ID, { programs, participants, requirements, milestones, itineraryEntries });
   const continuity = snapshot.priorityContinuity;
   const latestSignal = continuity?.signal ?? snapshot.priorityRelationship.latestSignal;
   const partnerByRelationship = new Map(relationships.map((relationship) => [relationship.id, partnerOrganisations.find((partner) => partner.id === relationship.partnerOrganisationId)!]));

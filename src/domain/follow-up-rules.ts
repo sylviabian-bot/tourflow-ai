@@ -46,13 +46,16 @@ export function getOutcomeRetentionReason(outcome: EngagementOutcome): string | 
 export function deriveRelationshipSignalsFromOutcomes(
   outcomes: EngagementOutcome[],
   engagements: Engagement[],
+  objectives: EngagementObjective[],
 ): RelationshipSignal[] {
   const engagementById = new Map(engagements.map((engagement) => [engagement.id, engagement]));
+  const objectiveById = new Map(objectives.map((objective) => [objective.id, objective]));
 
   return outcomes.flatMap((outcome) => {
     if (!retainedOutcomeTypes.has(outcome.type)) return [];
     const engagement = engagementById.get(outcome.engagementId);
-    if (!engagement) return [];
+    const objective = objectiveById.get(outcome.objectiveId);
+    if (!engagement || !objective || objective.engagementId !== outcome.engagementId) return [];
     return [{
       id: `signal-from-${outcome.id}`,
       relationshipId: engagement.relationshipId,

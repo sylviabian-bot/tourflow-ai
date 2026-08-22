@@ -7,9 +7,7 @@ import { SectionHeader, TimelineItem } from "@/components/editorial";
 import { StatusBadge } from "@/components/status-badge";
 import { engagementObjectives, engagements, partnerOrganisations, relationshipSignals, relationships } from "@/data/engagement-fixtures";
 import { programs } from "@/data/fixtures";
-import { engagementOutcomes } from "@/data/follow-up-fixtures";
 import { buildRelationshipMemoryState, getEngagementsForRelationship } from "@/domain/engagement-rules";
-import { deriveRelationshipSignalsFromOutcomes } from "@/domain/follow-up-rules";
 import { formatDemoDate, formatEngagementStage, formatEngagementType } from "@/domain/presentation";
 
 type RelationshipPageProps = { params: Promise<{ relationshipId: string }> };
@@ -31,12 +29,8 @@ export default async function RelationshipPage({ params }: RelationshipPageProps
   if (!partner) notFound();
 
   const relationshipEngagements = getEngagementsForRelationship(relationship.id, engagements);
-  const generatedSignals = deriveRelationshipSignalsFromOutcomes(engagementOutcomes, engagements);
-  const allRelationshipSignals = [...relationshipSignals, ...generatedSignals];
-  const memoryState = buildRelationshipMemoryState(relationship.id, allRelationshipSignals, engagementObjectives, engagements);
+  const memoryState = buildRelationshipMemoryState(relationship.id, relationshipSignals, engagementObjectives, engagements);
   const sourcedObjectiveIds = new Set(memoryState.continuities.map((continuity) => continuity.objective.id));
-  const continuitySignalIds = new Set(memoryState.continuities.map((continuity) => continuity.signal.id));
-  const retainedSignals = memoryState.signals.filter((signal) => !continuitySignalIds.has(signal.id));
   const availableProgramIds = new Set(programs.map((program) => program.id));
 
   return (
@@ -74,17 +68,6 @@ export default async function RelationshipPage({ params }: RelationshipPageProps
                 </TimelineItem>
               </ol>
             ))}
-            {retainedSignals.length > 0 ? (
-              <div className="border-t border-[var(--divider)] pt-8">
-                <p className="text-xs font-medium tracking-[0.08em] text-[var(--context)]">NEW CONTEXT RETAINED</p>
-                <ol className="mt-6 divide-y divide-[var(--divider)]">
-                  {retainedSignals.map((signal) => {
-                    const source = relationshipEngagements.find((engagement) => engagement.id === signal.sourceEngagementId);
-                    return <li key={signal.id} className="grid gap-4 py-5 sm:grid-cols-[8rem_minmax(0,1fr)_auto] sm:gap-6"><div><p className="text-xs tabular-nums text-[var(--muted)]">{formatDemoDate(signal.recordedDate)}</p><p className="mt-1 text-xs text-[var(--context)]">Retained outcome</p></div><div><h3 className="text-base font-semibold text-[var(--ink)]">{signal.title}</h3><p className="mt-2 max-w-3xl text-sm leading-6 text-[var(--muted)]">{signal.detail}</p><p className="mt-3 text-xs text-[var(--muted)]">Source · {source?.title ?? "Engagement outcome"} · Fictional composite record</p></div>{source ? <Link href={`/engagements/${source.id}/follow-up`} className="text-sm font-semibold text-[var(--navy)] hover:underline">Open follow-up →</Link> : null}</li>;
-                  })}
-                </ol>
-              </div>
-            ) : null}
           </div>
         ) : memoryState.kind === "signals_only" ? (
           <div className="mt-7 divide-y divide-[var(--divider)] border-y border-[var(--divider)]">{memoryState.signals.map((signal) => { const source = relationshipEngagements.find((engagement) => engagement.id === signal.sourceEngagementId); return <article key={signal.id} className="py-6"><p className="text-xs text-[var(--muted)]">Recorded relationship signal</p><h3 className="mt-2 text-base font-semibold text-[var(--ink)]">{signal.title}</h3><p className="mt-2 max-w-3xl text-sm leading-6 text-[var(--muted)]">{signal.detail}</p><p className="mt-3 text-xs text-[var(--context)]">No later engagement objective currently references this signal.</p>{source ? <Link href={`/engagements/${source.id}`} className="mt-3 inline-flex text-sm font-semibold text-[var(--navy)] hover:underline">View source engagement →</Link> : null}</article>; })}</div>

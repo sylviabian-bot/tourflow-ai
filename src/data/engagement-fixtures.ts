@@ -101,11 +101,11 @@ export const engagements: Engagement[] = [
     relationshipId: PRIMARY_RELATIONSHIP_ID,
     type: "delegation_visit",
     title: "Senior Delegation Visit",
-    stage: "follow_up",
+    stage: "planning",
     startDate: "2026-10-19",
     endDate: "2026-10-20",
     summary:
-      "A fictional composite visit by eight synthetic senior representatives exploring the next phase of institutional collaboration.",
+      "A proposed fictional composite visit by eight synthetic senior representatives exploring the next phase of institutional collaboration.",
     strategicInterests: [
       "Artificial Intelligence",
       "Business Analytics",

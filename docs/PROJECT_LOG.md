@@ -74,7 +74,8 @@ Use this table for decisions that have been explicitly approved. Do not move a p
 | D-038 | 2026-08-22 | Store objective themes explicitly and limit stakeholder assignment status to `suggested / confirmed` in Sprint 02B. | Matching must survive copy changes, and every retained domain state must be represented accurately in the current UI. | Infer themes from wording; retain an unused `invited` state | Product owner |
 | D-039 | 2026-08-22 | Authorise Sprint 02C only for `Outcome → Commitment → Follow-up → Relationship Memory Write-back`. | Completes the structured non-AI institutional engagement loop before genuine AI is considered. | Add AI summarisation; build generic task management | Product owner |
 | D-040 | 2026-08-22 | Retain only `agreement_to_explore` and `interest_confirmed` outcomes as reusable Relationship Signals. | Strategic direction should persist; routine information exchange should not automatically become long-term institutional memory. | Retain every outcome; manual untraceable notes | Product owner |
-| D-041 | 2026-08-22 | Keep completion state local to the engagement provider and expose baseline outcome-derived signals on Relationship Detail. | Demonstrates the rule and interaction without a state library or fake cross-route persistence. | Add global persistence; claim Home and Relationship live-sync | Product owner |
+| D-041 | 2026-08-22 | Keep completion state local to the engagement provider and demonstrate outcome-derived signals inside an explicit post-engagement scenario. | Demonstrates the rule and interaction without a state library, fake cross-route persistence, or future records leaking into the operational baseline. | Add global persistence; expose future signals on baseline Relationship Detail | Product owner |
+| D-042 | 2026-08-22 | Separate the global operational snapshot (`22 Aug 2026`) from the post-engagement Follow-up scenario (`21 Oct 2026`). | Preserves the accepted Study Tour clock while demonstrating a complete future follow-up loop honestly. | Change `DEMO_TODAY`; treat October outcomes as August records | Product owner |
 
 ## Current implementation boundary
 
@@ -549,13 +550,15 @@ Prove that a completed international engagement can create reusable relationship
 
 - Added `deriveRelationshipSignalsFromOutcomes` as the deterministic write-back boundary.
 - Only `agreement_to_explore` and `interest_confirmed` are retained because they provide reusable strategic context; routine `information_shared`, `decision` and `no_action` records do not automatically become long-term memory.
-- Relationship Detail combines existing Study Tour memory with baseline Delegation-derived signals and identifies the source engagement and composite-data status.
+- Relationship Detail preserves only context available at the 22 Aug baseline; the Follow-up scenario separately previews Delegation-derived Relationship Signals and identifies their source and composite-data status.
 
 **Interaction and state boundary**
 
 - Reused the engagement-level React provider for commitment completion IDs; `Complete commitment` updates only the selected commitment and `Reset follow-up demo` restores baseline state.
 - Local completion state is shared within Delegation routes but is not presented as persisted data on Relationship Detail or Home.
-- Home derives a baseline follow-up prompt from actual open Commitment fixtures. It does not claim live synchronisation after a local interaction.
+- Home remains temporally honest at the 22 Aug baseline: it derives pre-event Delegation questions and Study Tour readiness, and excludes October follow-up commitments. Generic commitment prompts require both `follow_up` stage and an engagement end date before the applicable snapshot.
+- Added `POST_ENGAGEMENT_SCENARIO_DATE = 2026-10-21` and a visible scenario disclosure. This boundary intentionally demonstrates future state without representing database persistence.
+- Hardened Relationship Memory retention so an eligible Outcome must reference an existing Objective in the same existing Engagement before it can generate a Relationship Signal.
 - The fixed August Study Tour snapshot remains unchanged. Follow-up is explicitly presented as a fictional post-engagement walkthrough using records dated after the Delegation rather than changing global date-relative rules.
 
 **Visual and scope decisions**
@@ -601,6 +604,9 @@ Prove that a completed international engagement can create reusable relationship
 | 2026-08-22 | Sprint 02C | Outcome, Commitment, write-back and regression tests | Pass | Vitest: 4 files, 48 tests passed, covering traceability, targeted completion, reset, retention eligibility, generated signal provenance, combined memory, Home follow-up and Study Tour isolation. |
 | 2026-08-22 | Sprint 02C | Desktop and 390 × 844 browser verification | Pass | Relationship, Delegation Overview, Program, Brief, Follow-up, Home and Study Tour Delivery loaded without overflow or error UI; complete/reset worked and traceability remained visible. |
 | 2026-08-22 | Sprint 02C | ESLint, TypeScript and production build | Pass | `pnpm lint`, `pnpm typecheck` and `pnpm build` passed; 22 static pages generated. |
+| 2026-08-22 | Sprint 02C temporal review fix | Dual-snapshot, Home gating and retention-traceability tests | Pass | Vitest: 4 files, 53 tests passed; the 22 Aug baseline remains planning-only, 21 Oct is isolated to Follow-up, and orphaned/mismatched Outcomes cannot generate Relationship Signals. |
+| 2026-08-22 | Sprint 02C temporal review fix | ESLint, TypeScript and production build | Pass | `pnpm lint`, `pnpm typecheck`, `pnpm test` and `pnpm build` passed; 22 static pages generated. |
+| 2026-08-22 | Sprint 02C temporal review fix | Desktop and 390 × 844 browser verification | Pass | Seven core routes had no page errors or horizontal overflow; Home, Relationship Detail and Follow-up respected their scenario dates, and commitment complete/reset remained functional. |
 
 ## Lessons learned
 

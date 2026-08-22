@@ -20,6 +20,7 @@ import {
   requirements,
 } from "../data/fixtures";
 import { commitments } from "../data/follow-up-fixtures";
+import { POST_ENGAGEMENT_SCENARIO_DATE } from "./follow-up-scenario";
 import {
   buildHomeSnapshot,
   buildRelationshipMemoryState,
@@ -185,11 +186,8 @@ describe("generic Relationship Memory states", () => {
 
 describe("derived Home coordination", () => {
   it("derives the Delegation question count from openQuestions", () => {
-    const planningEngagements = engagements.map((engagement) =>
-      engagement.id === DELEGATION_ENGAGEMENT_ID ? { ...engagement, stage: "planning" as const } : engagement,
-    );
     const prompt = deriveHomeCoordinationPrompts(
-      planningEngagements,
+      engagements,
       studyTourSources,
     ).find((candidate) => candidate.sourceType === "delegation_questions");
 
@@ -218,11 +216,28 @@ describe("derived Home coordination", () => {
     ).toBe(false);
   });
 
-  it("derives Delegation follow-up from baseline open commitments", () => {
+  it("does not expose follow-up commitments before a future Delegation occurs", () => {
+    const futureFollowUp = engagements.map((engagement) =>
+      engagement.id === DELEGATION_ENGAGEMENT_ID ? { ...engagement, stage: "follow_up" as const } : engagement,
+    );
     const prompt = deriveHomeCoordinationPrompts(
-      engagements,
+      futureFollowUp,
       studyTourSources,
       commitments,
+    ).find((candidate) => candidate.sourceType === "commitment_follow_up");
+
+    expect(prompt).toBeUndefined();
+  });
+
+  it("derives Delegation follow-up only after the engagement in an applicable scenario", () => {
+    const followUpEngagements = engagements.map((engagement) =>
+      engagement.id === DELEGATION_ENGAGEMENT_ID ? { ...engagement, stage: "follow_up" as const } : engagement,
+    );
+    const prompt = deriveHomeCoordinationPrompts(
+      followUpEngagements,
+      studyTourSources,
+      commitments,
+      POST_ENGAGEMENT_SCENARIO_DATE,
     ).find((candidate) => candidate.sourceType === "commitment_follow_up");
 
     expect(prompt).toMatchObject({
@@ -327,7 +342,6 @@ describe("Home and Study Tour compatibility", () => {
       engagementObjectives,
       PRIMARY_RELATIONSHIP_ID,
       studyTourSources,
-      commitments,
     );
 
     expect(snapshot.priorityRelationship.engagements).toHaveLength(3);

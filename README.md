@@ -56,6 +56,8 @@ No real student personal information, confidential university data or production
 
 The fixed reference date is `DEMO_TODAY = 2026-08-22`, displayed as `Demo snapshot · 22 Aug 2026`, so date-relative behaviour remains reproducible.
 
+The product uses two explicit demonstration snapshots. The global operational snapshot remains **22 Aug 2026**, when the Senior Delegation is still planning and the Study Tour is in pre-departure delivery. The Follow-up route is an explicitly labelled **Post-engagement scenario · 21 Oct 2026**, demonstrating fictional outcomes, commitments and potential Relationship Memory impact after the 19–20 Oct visit. This is an intentional scenario boundary, not database persistence.
+
 ## AI status
 
 There is no genuine AI in the implemented prototype. Readiness and attention behaviour is deterministic and explainable. `Enquiry → Structured Engagement Scope` is the approved first future AI feature, but it has not been implemented.
@@ -109,4 +111,4 @@ pnpm build
 
 ## Current limitations
 
-Stakeholder confirmation and commitment completion state are local to the shared engagement layout and reset on reload. Baseline outcome-derived Relationship Memory is deterministic, but local completion state is not persisted to Relationship Detail or Home. The post-engagement walkthrough uses fictional records dated after the fixed pre-departure snapshot without changing Study Tour date rules. There is no authentication, role model, database, external integration or production deployment. Supporting relationships and engagement types remain intentionally light, and the temporary product name is unresolved.
+Stakeholder confirmation and commitment completion state are local to the shared engagement layout and reset on reload. Future post-engagement outcomes are not merged into the 22 Aug Home or Relationship Detail baseline. The Follow-up scenario deterministically previews which eligible outcomes would become Relationship Memory, without claiming cross-route persistence. There is no authentication, role model, database, external integration or production deployment. Supporting relationships and engagement types remain intentionally light, and the temporary product name is unresolved.

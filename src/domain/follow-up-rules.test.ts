@@ -13,6 +13,8 @@ import {
   engagementOutcomes,
 } from "../data/follow-up-fixtures";
 import { buildRelationshipMemoryState } from "./engagement-rules";
+import { DEMO_TODAY } from "./demo-clock";
+import { POST_ENGAGEMENT_SCENARIO_DATE } from "./follow-up-scenario";
 import {
   applyCommitmentCompletionState,
   completeCommitment,
@@ -68,7 +70,16 @@ describe("follow-up traceability", () => {
 });
 
 describe("relationship memory write-back", () => {
-  const generatedSignals = deriveRelationshipSignalsFromOutcomes(engagementOutcomes, engagements);
+  const generatedSignals = deriveRelationshipSignalsFromOutcomes(engagementOutcomes, engagements, engagementObjectives);
+
+  it("keeps the global and post-engagement scenario clocks explicit", () => {
+    const delegation = engagements.find((engagement) => engagement.id === DELEGATION_ENGAGEMENT_ID)!;
+    expect(DEMO_TODAY).toBe("2026-08-22");
+    expect(delegation).toMatchObject({ stage: "planning", startDate: "2026-10-19", endDate: "2026-10-20" });
+    expect(POST_ENGAGEMENT_SCENARIO_DATE > delegation.endDate).toBe(true);
+    expect(engagementOutcomes.every((outcome) => outcome.recordedDate <= POST_ENGAGEMENT_SCENARIO_DATE)).toBe(true);
+    expect(commitments.length).toBeGreaterThan(0);
+  });
 
   it("retains only eligible outcome types", () => {
     expect(generatedSignals).toHaveLength(2);
@@ -80,7 +91,18 @@ describe("relationship memory write-back", () => {
     expect(generatedSignals.every((signal) => signal.sourceEngagementId === DELEGATION_ENGAGEMENT_ID)).toBe(true);
   });
 
-  it("combines historical Study Tour memory with later Delegation context", () => {
+  it("does not retain an eligible outcome with a missing objective", () => {
+    const invalid = { ...engagementOutcomes[0], objectiveId: "missing-objective" };
+    expect(deriveRelationshipSignalsFromOutcomes([invalid], engagements, engagementObjectives)).toEqual([]);
+  });
+
+  it("does not retain an eligible outcome whose objective belongs to another engagement", () => {
+    const foreignObjective = { ...engagementObjectives[0], id: "foreign-objective", engagementId: STUDY_TOUR_DELIVERY_ENGAGEMENT_ID };
+    const invalid = { ...engagementOutcomes[0], objectiveId: foreignObjective.id };
+    expect(deriveRelationshipSignalsFromOutcomes([invalid], engagements, [...engagementObjectives, foreignObjective])).toEqual([]);
+  });
+
+  it("can combine historical Study Tour memory with later Delegation context in the future scenario", () => {
     const memory = buildRelationshipMemoryState(
       "relationship-eastern-horizon",
       [...relationshipSignals, ...generatedSignals],
@@ -89,6 +111,17 @@ describe("relationship memory write-back", () => {
     );
     expect(memory.signals.some((signal) => signal.sourceEngagementId === "engagement-study-tour-2025")).toBe(true);
     expect(memory.signals.some((signal) => signal.sourceEngagementId === DELEGATION_ENGAGEMENT_ID)).toBe(true);
+  });
+
+  it("keeps future Delegation signals out of the global relationship baseline", () => {
+    const memory = buildRelationshipMemoryState(
+      "relationship-eastern-horizon",
+      relationshipSignals,
+      engagementObjectives,
+      engagements,
+    );
+    expect(memory.signals.every((signal) => signal.recordedDate <= DEMO_TODAY)).toBe(true);
+    expect(memory.signals.some((signal) => signal.sourceEngagementId === DELEGATION_ENGAGEMENT_ID)).toBe(false);
   });
 
   it("does not add follow-up records to Study Tour Delivery", () => {

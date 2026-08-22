@@ -15,6 +15,7 @@ import {
   deriveRelationshipSignalsFromOutcomes,
   getOutcomeRetentionReason,
 } from "@/domain/follow-up-rules";
+import { POST_ENGAGEMENT_SCENARIO_LABEL } from "@/domain/follow-up-scenario";
 import { formatDemoDate } from "@/domain/presentation";
 import type { Commitment } from "@/domain/types";
 import { useEngagementPlanning } from "./engagement-planning-provider";
@@ -28,7 +29,7 @@ export function EngagementFollowUpWorkspace() {
   const outcomeById = new Map(engagementOutcomes.map((outcome) => [outcome.id, outcome]));
   const { completedCommitmentIds, completeCommitment, resetFollowUp } = useEngagementPlanning();
   const currentCommitments = applyCommitmentCompletionState(commitments, completedCommitmentIds);
-  const generatedSignals = deriveRelationshipSignalsFromOutcomes(engagementOutcomes, engagements);
+  const generatedSignals = deriveRelationshipSignalsFromOutcomes(engagementOutcomes, engagements, engagementObjectives);
   const openCount = currentCommitments.filter((commitment) => commitment.status === "open").length;
 
   return (
@@ -37,8 +38,9 @@ export function EngagementFollowUpWorkspace() {
         <p className="text-xs font-medium tracking-[0.08em] text-[var(--navy)]">POST-ENGAGEMENT FOLLOW-UP</p>
         <h1 className="editorial-title mt-2 text-4xl text-[var(--ink)] sm:text-5xl">{engagement.title}</h1>
         <p className="mt-3 text-sm text-[var(--muted)]">{partner.name} · Composite post-engagement demonstration</p>
+        <p className="mt-3 text-sm font-medium text-[var(--context)]">{POST_ENGAGEMENT_SCENARIO_LABEL}</p>
         <p className="mt-5 max-w-3xl text-sm leading-6 text-[var(--muted)]">
-          Fictional outcomes recorded after the visit show how engagement results become owned follow-up and reusable relationship context.
+          This scenario demonstrates the state after the fictional 19–20 Oct delegation. These future-state records are separate from the main 22 Aug operational snapshot.
         </p>
       </header>
 
@@ -113,13 +115,13 @@ export function EngagementFollowUpWorkspace() {
       </section>
 
       <section aria-labelledby="memory-impact-heading">
-        <SectionHeader id="memory-impact-heading" title="RELATIONSHIP MEMORY IMPACT" description="Only strategically reusable outcomes are retained for future engagement preparation." />
+        <SectionHeader id="memory-impact-heading" title="RELATIONSHIP MEMORY IMPACT" description="Eligible outcomes would be retained as relationship context after this engagement." />
         <ol className="divide-y divide-[var(--divider)]">
           {generatedSignals.map((signal) => {
             const outcome = engagementOutcomes.find((candidate) => `signal-from-${candidate.id}` === signal.id)!;
             return (
               <li key={signal.id} className="grid gap-4 py-6 sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-7">
-                <div><p className="text-xs text-[var(--context)]">Retained context</p><p className="mt-1 text-xs tabular-nums text-[var(--muted)]">{formatDemoDate(signal.recordedDate)}</p></div>
+                <div><p className="text-xs text-[var(--context)]">Would be retained</p><p className="mt-1 text-xs tabular-nums text-[var(--muted)]">{formatDemoDate(signal.recordedDate)}</p></div>
                 <div><h3 className="text-base font-semibold text-[var(--ink)]">{signal.title}</h3><p className="mt-2 max-w-3xl text-sm leading-6 text-[var(--muted)]">{signal.detail}</p><p className="mt-3 text-xs text-[var(--context)]">{getOutcomeRetentionReason(outcome)}</p><p className="mt-2 text-xs text-[var(--muted)]">Source · {engagement.title}</p></div>
               </li>
             );
