@@ -1,17 +1,17 @@
-# TourFlow AI — Product Requirements Document
+# TourFlow — Product Requirements Document
 
-**Status:** V1 product direction approved; implementation not authorised
+**Status:** V1 product direction approved; Sprint 01 implementation authorised
 
-**Version:** 0.2
+**Version:** 0.3
 
 **Date:** 22 August 2026
 
-**Phase:** Product definition; implementation is not approved
+**Phase:** Sprint 01 — foundation and Dashboard
 **Working product type:** Fictional-data portfolio prototype
 
 ## 1. Product vision
 
-TourFlow AI is an operations workspace for university and education professionals who coordinate international study tours and short-term mobility programs.
+TourFlow is an operations workspace for university and education professionals who coordinate international study tours and short-term mobility programs.
 
 Its purpose is to give a coordinator one clear view of each program’s operational readiness: who is participating, what requirements remain incomplete, what needs attention before departure, and how the itinerary fits together.
 
@@ -20,6 +20,13 @@ The V1 product is deliberately narrow. It is not intended to replace a student i
 V1 is accountable to one product question:
 
 > When a coordinator opens TourFlow today, can they quickly identify which program is not ready, understand why, and know what to do next?
+
+### Product naming
+
+- The repository name remains `tourflow-ai`.
+- The V1 user-facing product name is `TourFlow`.
+- V1 must not imply that deterministic readiness or attention rules are AI.
+- The user-facing name `TourFlow AI` is reserved for a later version that contains genuine, reviewable AI-assisted functionality.
 
 ### Portfolio objective
 
@@ -39,6 +46,42 @@ The prototype should demonstrate:
 3. **Explainable attention signals.** Every alert must show why it exists, what is affected, and the suggested follow-up.
 4. **Program context first.** Student, document, itinerary, and risk information should remain connected to the relevant program and departure timeline.
 5. **Prototype honesty.** Fictional data and demo-only state must be clear. The product must not imply live university integrations, verified compliance, or AI capabilities that do not exist.
+
+### Core status model
+
+Lifecycle and readiness are independent concepts and must never be used interchangeably.
+
+`LifecycleStage` describes where a program is in its operating journey:
+
+| Value | Meaning |
+| --- | --- |
+| `planning` | Program structure, suppliers, dates, or approvals are still being prepared. |
+| `applications` | Participant applications or selection are in progress. |
+| `pre_departure` | The cohort is being prepared for departure. |
+| `on_tour` | The program is currently operating. |
+| `completed` | The program has concluded. |
+
+`ReadinessState` describes whether a program or participant requires action:
+
+| Value | Meaning |
+| --- | --- |
+| `ready` | All readiness-critical requirements represented in V1 are approved or complete. |
+| `needs_attention` | One or more requirements need coordinator follow-up but do not meet a blocked rule. |
+| `blocked` | A critical unresolved requirement prevents the represented readiness outcome. |
+
+A program may be in `planning` and still have a `needs_attention` readiness state; similarly, a `pre_departure` program can be either `ready`, `needs_attention`, or `blocked`. UI labels, fixture fields, filters, and tests must preserve this separation.
+
+### Fixed demo clock
+
+The reproducible reference date for V1 is:
+
+```text
+DEMO_TODAY = 2026-08-22
+```
+
+All date-relative calculations—including days until departure, overdue status, milestone urgency, and attention priority—must derive from this value rather than the viewer's real system date.
+
+The application should display unobtrusive context such as `Demo snapshot · 22 Aug 2026` so reviewers understand the time basis without mistaking it for live data.
 
 ## 2. Target users
 
@@ -70,7 +113,7 @@ Typical responsibilities include:
 
 1. Coordinators cannot quickly see which programs are on track and which require intervention.
 2. Participant requirements are often tracked across separate spreadsheets, forms, email threads, and portals.
-3. A “missing document” list lacks context: the coordinator also needs the due date, program departure date, owner, reason, and next action.
+3. An outstanding-requirements list lacks context unless the coordinator can also see the due date, program departure date, owner, reason, and next action.
 4. Participant status, program milestones, and itinerary details become disconnected, creating avoidable follow-up and duplicated checking.
 5. Managers and academic leads ask for status summaries that coordinators must assemble manually.
 6. Important issues can remain hidden until close to departure because operational data is organised by system rather than by urgency and program readiness.
@@ -91,7 +134,7 @@ The operational cost is not only time. Fragmentation makes it difficult to prior
 
 ## 5. Product value proposition
 
-**TourFlow AI turns fragmented study-tour coordination data into a single, explainable readiness workflow.**
+**TourFlow turns fragmented study-tour coordination data into a single, explainable readiness workflow.**
 
 For a coordinator, the product should make three questions easy to answer:
 
@@ -114,7 +157,7 @@ A coordinator starts the day with several active programs at different stages. O
 3. **Understand program readiness.** Program Overview shows dates, destination, program stage, key contacts, participant totals, milestone status, and readiness summary.
 4. **Find affected participants.** In Readiness or Participants, the coordinator filters to participants marked `Needs attention` or `Blocked`.
 5. **Diagnose the issue.** The coordinator opens a participant record and sees the specific requirement, current status, due date, reason for the flag, and suggested next step.
-6. **Demonstrate resolution.** The coordinator updates one fictional requirement in demo mode; derived readiness counts and attention items update consistently and the baseline can be restored with `Reset demo`.
+6. **Demonstrate resolution.** The coordinator selects `Confirm requirement` for one fictional travel-insurance requirement. Its status changes from `Action required` to `Approved`; derived readiness counts and attention items update consistently, and the baseline can be restored with `Reset demo`.
 7. **Check operational context.** The coordinator reviews the day-by-day Itinerary, including transport and accommodation references, to confirm the program plan is coherent.
 8. **Return to the readiness view.** The coordinator can explain the program’s current state and remaining work without manually reconciling separate screens.
 
@@ -231,6 +274,8 @@ Required capabilities:
 - derive participant readiness from transparent rules; and
 - limit status editing to the approved, clearly labelled, resettable demo interaction.
 
+Aggregate metrics must use the term `Outstanding Requirements`, not `Missing Documents`. A requirement may represent a document, confirmation, task, briefing, or travel detail. Document status remains one subtype of requirement metadata.
+
 ### 8.6 Risk & Attention Alerts
 
 V1 uses deterministic operational rules, not AI inference.
@@ -269,17 +314,17 @@ Required capabilities:
 
 The fixture set must use three programs with deliberately uneven depth:
 
-| Program | Role in prototype | Participants | Program state | Required depth |
-| --- | --- | ---: | --- | --- |
-| Shanghai Business School – Sydney Innovation Study Tour | Primary demo program | 24 | Pre-departure | Full participant, readiness, attention, logistics, and multi-day itinerary workflow with several unresolved readiness issues |
-| Osaka Global Business Program | Portfolio variation | 18 | Ready | Enough detail to demonstrate a program with no material readiness blockers |
-| Singapore Future Leaders Program | Portfolio variation | 30 | Planning | Enough detail to demonstrate an earlier lifecycle stage and incomplete planning milestones |
+| Program | Role in prototype | Participants | Lifecycle stage | Readiness state | Required depth |
+| --- | --- | ---: | --- | --- | --- |
+| Shanghai Business School – Sydney Innovation Study Tour | Primary demo program | 24 | `pre_departure` | `needs_attention` | Full participant, readiness, attention, logistics, and multi-day itinerary workflow with several unresolved readiness issues |
+| Osaka Global Business Program | Portfolio variation | 18 | `pre_departure` | `ready` | Enough detail to demonstrate a program with no material readiness blockers |
+| Singapore Future Leaders Program | Portfolio variation | 30 | `planning` | `needs_attention` | Enough detail to demonstrate an earlier lifecycle stage and incomplete planning milestones |
 
 Additional fixture requirements:
 
 - the primary program must include ready, needs-attention, and blocked participant states;
-- the resettable interaction must begin with a missing travel-insurance requirement and allow the user to select `Mark as received`;
-- resolving that requirement must update the participant, the relevant alert, the missing-document count, and program-level readiness metrics from the same state source;
+- the resettable interaction must begin with a travel-insurance requirement in `Action required` and allow the user to select `Confirm requirement`;
+- confirming that requirement must set it to `Approved` and update the participant, the relevant alert, the outstanding-requirement count, and program-level readiness metrics from the same state source;
 - `Reset demo` must restore every affected value to the baseline fixture state;
 - the primary itinerary must span multiple days and integrate accommodation and transport into daily logistics; and
 - all names and records must be clearly synthetic, with no copied real student data.
@@ -293,7 +338,9 @@ Additional fixture requirements:
 Acceptance criteria:
 
 - Dashboard shows all active fictional programs with stage, dates, destination, and days to departure.
+- Lifecycle stage and readiness state are displayed as separate fields and are never substituted for each other.
 - Readiness totals are calculated from the same participant requirement data shown elsewhere.
+- All date-relative values are derived from `DEMO_TODAY`, and the Dashboard displays `Demo snapshot · 22 Aug 2026`.
 - Attention items are ordered by a documented combination of urgency and impact.
 - Selecting an attention item opens the relevant program or participant context.
 - Status is communicated with text/iconography as well as colour.
@@ -342,7 +389,7 @@ Acceptance criteria:
 
 - Every attention item identifies its source rule in plain language.
 - Severity is based on documented fixture logic, not random values or opaque AI output.
-- Resolving the underlying requirement removes or changes the corresponding demo alert if editable demo state is approved.
+- Resolving the underlying requirement removes or changes the corresponding demo alert through the approved deterministic demo-state transition.
 - Alert copy avoids legal, medical, compliance, and safety guarantees.
 - The same alert is represented consistently on Dashboard and Program Readiness.
 
@@ -364,10 +411,10 @@ Acceptance criteria:
 
 Acceptance criteria:
 
-- A user can open a fictional participant whose travel insurance is `Missing` and select `Mark as received`.
+- A user can open a fictional participant whose travel insurance is `Action required` and select `Confirm requirement`.
 - The interface clearly labels the change as demo data.
 - Participant readiness, program summary, and attention queue update from one rule source.
-- The missing-document count decreases, the program readiness percentage increases, and the related alert disappears or resolves consistently.
+- The requirement changes to `Approved`, the outstanding-requirement count decreases, the program readiness percentage increases, and the related alert disappears or resolves consistently.
 - `Reset demo` restores the participant requirement, alert, counts, and readiness percentage to the exact baseline state.
 - No account, database, or external service is required.
 
@@ -379,6 +426,9 @@ The V1 prototype is acceptable only when:
 - the primary user journey can be completed without dead ends;
 - every navigation item leads to meaningful content;
 - aggregate counts reconcile with the underlying fixtures;
+- lifecycle and readiness use independent typed fields and labels;
+- all date-relative values derive from `DEMO_TODAY = 2026-08-22` rather than the system clock;
+- aggregate requirement metrics use `Outstanding Requirements` and include all requirement types, not only documents;
 - loading, empty, and error states are handled where applicable;
 - layout is usable at representative desktop and mobile widths;
 - keyboard focus is visible and interactive elements have accessible names;
@@ -462,11 +512,16 @@ The product owner approved these decisions on 22 August 2026:
 3. **Terminology:** Product navigation and program views use `Participants` consistently. Participant detail may show `Participant type: Student`.
 4. **Documents:** Document metadata remains inside Readiness rather than becoming a standalone module.
 5. **Attention rules:** Alerts are deterministic, explainable operational prompts and must never be presented as AI predictions.
-6. **Demo interaction:** V1 includes one resettable interaction where marking missing travel insurance as received updates the participant, alert, missing-document count, and program readiness metrics.
+6. **Demo interaction:** V1 includes one resettable interaction where `Confirm requirement` changes travel insurance from `Action required` to `Approved` and updates the participant, alert, outstanding-requirement count, and program readiness metrics.
 7. **Fixture strategy:** V1 uses one detailed primary program and two lighter programs that create realistic portfolio variation.
 8. **Logistics:** Accommodation and transport remain integrated into the itinerary and logistics workflow.
 9. **Service boundaries:** V1 does not add authentication, Supabase, a production database, or an external AI API.
-10. **Phase boundary:** These approvals do not authorise application implementation. A separate instruction is required before scaffolding, dependency installation, or application code begins.
+10. **Phase boundary:** Sprint 01 implementation is authorised only for the technical foundation, domain model, application shell, minimal route destinations, and Dashboard. Full product workflows remain deferred.
+11. **Product naming:** V1 uses `TourFlow`; `TourFlow AI` is reserved for a later version with genuine AI assistance.
+12. **Status semantics:** `LifecycleStage` and `ReadinessState` are independent typed concepts and must never be interchanged.
+13. **Requirement language:** Aggregate metrics use `Outstanding Requirements`, with documents represented as one requirement subtype.
+14. **Demo action:** The deterministic action is `Confirm requirement`, producing the transition `Action required → Approved`.
+15. **Demo clock:** All relative dates use `DEMO_TODAY = 2026-08-22`, disclosed in the UI as `Demo snapshot · 22 Aug 2026`.
 
 ## 16. Research basis
 

@@ -1,17 +1,17 @@
-# TourFlow AI — Project Log
+# TourFlow — Project Log
 
-This log records how TourFlow AI evolves from an operational problem into a tested portfolio prototype. It separates confirmed decisions from assumptions and preserves evidence of iteration.
+This log records how TourFlow evolves from an operational problem into a tested portfolio prototype. The repository remains `tourflow-ai`; the `TourFlow AI` user-facing name is reserved for a later version with genuine AI-assisted functionality.
 
 ## Project status
 
 | Field | Current value |
 | --- | --- |
-| Phase | Product direction approved; implementation gate closed |
-| Current version | PRD 0.2 |
-| Implementation | Not started; separate authorisation required |
+| Phase | Sprint 01 — foundation and Dashboard |
+| Current version | PRD 0.3 |
+| Implementation | Sprint 01 authorised on `sprint-01-foundation` |
 | Data approach | Realistic fictional data only |
 | External services | None approved |
-| Next gate | Documentation commit and push, followed by a separate implementation discussion |
+| Next gate | Sprint 01 validation, branch push, and unmerged pull request review |
 
 ## Initial assumptions
 
@@ -39,11 +39,29 @@ Use this table for decisions that have been explicitly approved. Do not move a p
 | D-007 | 2026-08-22 | Use one detailed program and two lighter programs for portfolio variation. | Creates a coherent primary demo without making all fixtures equally expensive. | One program only; three equally deep programs | Product owner |
 | D-008 | 2026-08-22 | Keep accommodation and transport inside itinerary/logistics. | Reflects how daily operational plans are reviewed and avoids unnecessary top-level modules. | Standalone Accommodation and Transport modules | Product owner |
 | D-009 | 2026-08-22 | Exclude authentication, Supabase, production databases, and external AI APIs from V1. | Protects scope and keeps attention on the workflow. | Production-style service architecture in V1 | Product owner |
-| D-010 | 2026-08-22 | Keep implementation closed until a separate instruction. | Allows the approved documentation baseline to be committed and reviewed first. | Begin scaffolding immediately after product approval | Product owner |
+| D-010 | 2026-08-22 | Require a separate instruction before implementation. | Allowed the approved documentation baseline to be committed and reviewed first; this gate was satisfied by the Sprint 01 authorisation. | Begin scaffolding immediately after product approval | Product owner |
+| D-011 | 2026-08-22 | Keep repository name `tourflow-ai`, use `TourFlow` for V1, and reserve `TourFlow AI` for genuine future AI assistance. | Prevents deterministic rules from being marketed as AI while preserving the repository history. | Use `TourFlow AI` in V1; rename the repository | Product owner |
+| D-012 | 2026-08-22 | Model `LifecycleStage` and `ReadinessState` as independent concepts. | A program's operating stage and its need for action answer different questions. | One combined status field | Product owner |
+| D-013 | 2026-08-22 | Use `Outstanding Requirements` for aggregate metrics. | Requirements include documents, confirmations, tasks, briefings, and travel details. | `Missing Documents` | Product owner |
+| D-014 | 2026-08-22 | Use `Confirm requirement` for the travel-insurance demo transition from `Action required` to `Approved`. | The action describes the deterministic state change more clearly than `Mark as received`. | `Mark as received`; generic edit controls | Product owner |
+| D-015 | 2026-08-22 | Fix the demo clock at `DEMO_TODAY = 2026-08-22` and disclose it as `Demo snapshot · 22 Aug 2026`. | Makes days-to-departure, overdue, milestone, and attention calculations reproducible for future reviewers. | Viewer system date; hidden fixed date | Product owner |
+| D-016 | 2026-08-22 | Authorise Sprint 01 on `sprint-01-foundation` for the foundation, domain model, shell, minimal destinations, and Dashboard only. | Starts implementation without expanding into the full product or deploying. | Continue documentation only; implement all V1 workflows at once | Product owner |
 
-## Remaining gate
+## Current implementation boundary
 
-The V1 product direction is approved. Application implementation remains intentionally closed until the product owner gives a separate instruction to discuss or begin the implementation phase. No dependency installation, scaffolding, application code, Supabase, database, authentication, or external AI integration is authorised by the decisions above.
+Sprint 01 implementation is authorised only on `sprint-01-foundation`. It includes the technical foundation, typed domain model, fictional fixtures, deterministic business rules, application shell, minimal route destinations, and portfolio-triage Dashboard. Full Programs, Participants, Readiness, and Itinerary workflows are deferred. Supabase, databases, authentication, analytics, external AI APIs, and Vercel deployment remain out of scope.
+
+## Sprint 01 architecture
+
+| Area | Decision | Reason |
+| --- | --- | --- |
+| Framework | Next.js 16.3.2 App Router with React 19 and TypeScript | Provides a small, Vercel-ready application foundation with file-based routes and static rendering. |
+| Rendering boundary | Keep route pages and most UI as Server Components; use one client Dashboard workspace for the resettable demo state and one client navigation component for active-route behaviour. | Limits client JavaScript while supporting the approved interaction. |
+| Styling | Tailwind CSS 4 with small custom components and no component library. | The shell, badges, progress indicators, menu, and controls are simple enough to implement accessibly without another runtime dependency. |
+| Domain separation | Keep typed records in `src/domain/types.ts`, deterministic calculations in `src/domain/rules.ts`, presentation formatting in `src/domain/presentation.ts`, and source fixtures in `src/data/fixtures.ts`. | Prevents business rules and derived metrics from being embedded in view code or duplicated in fixtures. |
+| Demo state | Hold only the requirement collection in local React state and recalculate the Dashboard snapshot after confirm/reset. | One source-state transition drives participant readiness, alerts, outstanding counts, and program metrics without a state library or backend. |
+| Demo clock | Route all relative-date logic through `src/domain/demo-clock.ts` and `DEMO_TODAY`. | Makes the experience deterministic and reviewable in the future. |
+| Dependencies | Add Vitest for focused rule tests; do not add shadcn/ui, icons, charts, state libraries, services, or analytics. | Testing the domain logic is justified; the other capabilities are not needed for Sprint 01. |
 
 ## Iteration log
 
@@ -142,11 +160,49 @@ Convert the reviewed PRD proposals into an approved, documentation-only V1 basel
 - The product-definition baseline is ready for a documentation-only commit and push.
 - The next product discussion may consider implementation, but implementation is not authorised by this entry.
 
+### 2026-08-22 — Sprint 01 foundation and Dashboard
+
+**Objective**
+
+Build the technical foundation, typed domain model, application shell, and portfolio-triage Dashboard without expanding into the full V1 workflow.
+
+**Inputs**
+
+- Approved naming, lifecycle/readiness, requirement terminology, fixed demo clock, and deterministic interaction decisions D-011 through D-016.
+- The three-program, 72-participant fictional fixture strategy.
+- Sprint boundary excluding persistence, authentication, external services, AI APIs, analytics, and deployment.
+
+**Changes**
+
+- Added a current stable Next.js App Router project with TypeScript and Tailwind CSS.
+- Created typed `Program`, `Participant`, `Requirement`, `AttentionItem`, `Milestone`, and `ItineraryEntry` domain records.
+- Created 72 explicitly synthetic participant records across 24-person, 18-person, and 30-person program cohorts.
+- Implemented deterministic rules for departure timing, participant and program readiness, outstanding requirements, milestones, attention priority, and Dashboard aggregation.
+- Built the responsive TourFlow shell, triage Dashboard, and minimal Programs, Participants, and program-context routes.
+- Implemented the travel-insurance `Confirm requirement` transition and `Reset demo` control using local client state; all affected metrics are recalculated from the changed requirement record.
+- Kept itinerary transport and accommodation records inside the itinerary model and did not create top-level modules.
+
+**Validation**
+
+- ESLint: passed.
+- TypeScript no-emit check: passed.
+- Vitest: 6 focused tests passed.
+- Next.js production build: passed, including static generation of the three program-context routes.
+- Browser verification: Dashboard and program navigation passed at desktop and 390 × 844 mobile viewport sizes; the confirm/reset interaction updated and restored all linked metrics; no page errors were reported.
+- Content audit found no user-facing `TourFlow AI`, fake AI, `Missing Documents`, or `Mark as received` language in the implementation.
+
+**Outcome**
+
+- Sprint 01 now provides a coherent, reproducible operational story rather than a static collection of KPI cards.
+- Custom components were sufficient; no accessible-component dependency was needed.
+- Full editing, persistence, program workspaces, participant workflows, and itinerary workflows remain deferred to a separately approved sprint.
+
 ## Problems and solutions
 
 | ID | Date | Problem | Impact | Root cause | Solution | Verification |
 | --- | --- | --- | --- | --- | --- | --- |
-| — | — | No product or implementation problem recorded yet. | — | — | — | — |
+| P-001 | 2026-08-22 | The workspace shell did not expose Node.js on `PATH`, and pnpm initially withheld the native resolver build step. | The first dependency install could not complete reliably. | This Codex workspace uses a bundled Node runtime and pnpm's explicit build approval. | Used the configured bundled Node path for project commands and allowed only `unrs-resolver` in `pnpm-workspace.yaml`. | Clean install completed and every project check ran with the pinned toolchain. |
+| P-002 | 2026-08-22 | The newest TypeScript 7 and ESLint 10 releases did not satisfy the peer ranges of the current Next.js lint ecosystem. | Installation produced compatibility warnings that could make the baseline brittle. | Tool releases were newer than the supported peer ranges of `eslint-config-next` and related plugins. | Pinned TypeScript 6.0.3 and ESLint 9.39.5 while keeping Next.js, React, Tailwind, and Vitest current. | Peer compatibility check and all lint, type, test, and build commands passed. |
 
 ## Testing record
 
@@ -155,6 +211,10 @@ Convert the reviewed PRD proposals into an approved, documentation-only V1 basel
 | 2026-08-22 | PRD draft 0.1 | Repository scope inspection | Pass | Initial repository contained only `README.md`. |
 | 2026-08-22 | PRD draft 0.1 | Application tests/build | Not applicable | Application implementation has not started. |
 | 2026-08-22 | PRD 0.2 | Documentation scope and terminology audit | Pass | Approved IA, participant terminology, fixture strategy, and phase gate recorded; no application code present. |
+| 2026-08-22 | Sprint 01 | Lifecycle/readiness, fixed-date, readiness, outstanding-count, attention-rule, and aggregate tests | Pass | Vitest: 1 file, 6 tests passed. |
+| 2026-08-22 | Sprint 01 | ESLint and TypeScript | Pass | `pnpm lint` and `pnpm typecheck` exited successfully. |
+| 2026-08-22 | Sprint 01 | Production build | Pass | `pnpm build` completed and statically generated Dashboard, Programs, Participants, and three program routes. |
+| 2026-08-22 | Sprint 01 | Browser and responsive verification | Pass | Desktop and 390 × 844 mobile Dashboard checked; navigation and confirm/reset flow worked; no page errors. |
 
 ## Lessons learned
 
@@ -165,6 +225,8 @@ Record concise lessons that should influence later decisions.
 | 2026-08-22 | Real study-tour operations connect participant readiness, pre-departure activity, itinerary, transport, accommodation, and risk context. | V1 should connect these records inside a program workflow rather than present unrelated dashboard cards. |
 | 2026-08-22 | Institutional processes and approval authorities vary. | The prototype must not claim universal policy compliance. |
 | 2026-08-22 | “AI” is not required to make the first workflow valuable. | Start with transparent rules and add AI only after a validated use case exists. |
+| 2026-08-22 | A single requirement record can support a convincing demo when every visible aggregate is derived from it. | Keep source state narrow and calculations centralised instead of manually synchronising UI counters. |
+| 2026-08-22 | The mobile triage experience works better as stacked decision cards than a compressed desktop table. | Preserve content priority and actions when future screens become responsive. |
 
 ## Future improvements backlog
 
@@ -192,4 +254,4 @@ Before moving from product definition to implementation, confirm that:
 - [x] fictional-data breadth and privacy rules are accepted;
 - [x] success criteria are accepted;
 - [x] major assumptions are accepted for V1 or retained as explicit risks; and
-- [ ] a separate instruction authorises implementation planning or scaffolding.
+- [x] a separate instruction authorises implementation planning or scaffolding.
