@@ -273,7 +273,7 @@ export interface CoordinationPrompt {
   title: string;
   context: string;
   href: string;
-  sourceType: "delegation_questions" | "study_tour_attention";
+  sourceType: "delegation_questions" | "study_tour_attention" | "commitment_follow_up";
   sourceId: string;
   count: number;
 }
@@ -355,4 +355,40 @@ export interface ExecutiveBrief {
     prompt: string;
   }>;
   openQuestions: string[];
+}
+
+export type EngagementOutcomeType =
+  | "agreement_to_explore"
+  | "information_shared"
+  | "interest_confirmed"
+  | "decision"
+  | "no_action";
+
+export interface EngagementOutcome {
+  id: string;
+  engagementId: string;
+  objectiveId: string;
+  title: string;
+  summary: string;
+  recordedDate: string;
+  type: EngagementOutcomeType;
+  composite: true;
+}
+
+export type CommitmentStatus = "open" | "completed";
+export type CommitmentDirection = "our_institution" | "partner" | "shared";
+
+export interface Commitment {
+  id: string;
+  engagementId: string;
+  outcomeId: string;
+  relationshipId: string;
+  description: string;
+  ownerType: "internal_stakeholder" | "partner_contact" | "shared";
+  ownerName: string;
+  ownerContext: string;
+  dueDate: string;
+  status: CommitmentStatus;
+  direction: CommitmentDirection;
+  composite: true;
 }

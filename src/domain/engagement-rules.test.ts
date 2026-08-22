@@ -19,6 +19,8 @@ import {
   programs,
   requirements,
 } from "../data/fixtures";
+import { commitments } from "../data/follow-up-fixtures";
+import { POST_ENGAGEMENT_SCENARIO_DATE } from "./follow-up-scenario";
 import {
   buildHomeSnapshot,
   buildRelationshipMemoryState,
@@ -199,7 +201,7 @@ describe("derived Home coordination", () => {
   it("omits the Delegation coordination prompt when openQuestions is empty", () => {
     const withoutQuestions = engagements.map((engagement) =>
       engagement.id === DELEGATION_ENGAGEMENT_ID
-        ? { ...engagement, openQuestions: [] }
+        ? { ...engagement, stage: "planning", openQuestions: [] }
         : engagement,
     ) as Engagement[];
     const prompts = deriveHomeCoordinationPrompts(
@@ -212,6 +214,37 @@ describe("derived Home coordination", () => {
         (candidate) => candidate.sourceType === "delegation_questions",
       ),
     ).toBe(false);
+  });
+
+  it("does not expose follow-up commitments before a future Delegation occurs", () => {
+    const futureFollowUp = engagements.map((engagement) =>
+      engagement.id === DELEGATION_ENGAGEMENT_ID ? { ...engagement, stage: "follow_up" as const } : engagement,
+    );
+    const prompt = deriveHomeCoordinationPrompts(
+      futureFollowUp,
+      studyTourSources,
+      commitments,
+    ).find((candidate) => candidate.sourceType === "commitment_follow_up");
+
+    expect(prompt).toBeUndefined();
+  });
+
+  it("derives Delegation follow-up only after the engagement in an applicable scenario", () => {
+    const followUpEngagements = engagements.map((engagement) =>
+      engagement.id === DELEGATION_ENGAGEMENT_ID ? { ...engagement, stage: "follow_up" as const } : engagement,
+    );
+    const prompt = deriveHomeCoordinationPrompts(
+      followUpEngagements,
+      studyTourSources,
+      commitments,
+      POST_ENGAGEMENT_SCENARIO_DATE,
+    ).find((candidate) => candidate.sourceType === "commitment_follow_up");
+
+    expect(prompt).toMatchObject({
+      sourceId: DELEGATION_ENGAGEMENT_ID,
+      count: 2,
+      href: `/engagements/${DELEGATION_ENGAGEMENT_ID}/follow-up`,
+    });
   });
 
   it("derives the Study Tour prompt from readiness and attention source records", () => {
