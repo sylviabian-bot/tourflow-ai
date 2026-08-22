@@ -1,17 +1,17 @@
-# TourFlow — Project Log
+# TourFlow / Global Engagement Pivot — Project Log
 
-This log records how TourFlow evolves from an operational problem into a tested portfolio prototype. The repository remains `tourflow-ai`; the `TourFlow AI` user-facing name is reserved for a later version with genuine AI-assisted functionality.
+This log records how TourFlow evolves from an operational problem into a tested portfolio prototype. Sprint 01 remains the accepted Study Tour readiness foundation. `Global Engagement Copilot` is a working pivot concept only: the repository and current application have not been renamed, and no pivot implementation or AI functionality is authorised.
 
 ## Project status
 
 | Field | Current value |
 | --- | --- |
-| Phase | Sprint 01 — foundation and Dashboard |
-| Current version | PRD 0.3 |
-| Implementation | Sprint 01 authorised on `sprint-01-foundation` |
+| Phase | Product pivot / expansion discovery — documentation only |
+| Current version | Proposed PRD 0.4 |
+| Implementation | Sprint 01 accepted and merged through PR #1; pivot implementation not authorised |
 | Data approach | Realistic fictional data only |
 | External services | None approved |
-| Next gate | Sprint 01 validation, branch push, and unmerged pull request review |
+| Next gate | Product-owner review of positioning, naming, domain, IA, MVP, migration, and first future AI use case |
 
 ## Initial assumptions
 
@@ -23,6 +23,10 @@ This log records how TourFlow evolves from an operational problem into a tested 
 | A-04 | Document metadata can demonstrate readiness without file upload or storage. | Confirm no document preview is required for the portfolio story. | Approved |
 | A-05 | Deterministic attention rules are preferable to simulated AI in V1. | Confirm during product review. | Approved |
 | A-06 | A resettable browser-only status change may make the prototype more convincing. | Decide whether the benefit justifies the extra interaction. | Approved |
+| A-07 | International engagement officers have a valuable coordination layer between systems of record. | Validate with practitioners or hiring reviewers. | Proposed for pivot review |
+| A-08 | Objective-to-outcome traceability is a stronger differentiation than contact records or relationship timelines. | Test with the delegation scenario and competitive comparison. | Proposed for pivot review |
+| A-09 | One deep delegation scenario plus the preserved Study Tour vertical is enough to demonstrate the broader concept. | Review scope and narrative coherence before Sprint 02. | Proposed for pivot review |
+| A-10 | `Global Engagement Copilot` should not become the immediate product name while no AI is implemented. | Approve a naming strategy before any application rename. | Proposed for pivot review |
 
 ## Product decisions
 
@@ -46,10 +50,26 @@ Use this table for decisions that have been explicitly approved. Do not move a p
 | D-014 | 2026-08-22 | Use `Confirm requirement` for the travel-insurance demo transition from `Action required` to `Approved`. | The action describes the deterministic state change more clearly than `Mark as received`. | `Mark as received`; generic edit controls | Product owner |
 | D-015 | 2026-08-22 | Fix the demo clock at `DEMO_TODAY = 2026-08-22` and disclose it as `Demo snapshot · 22 Aug 2026`. | Makes days-to-departure, overdue, milestone, and attention calculations reproducible for future reviewers. | Viewer system date; hidden fixed date | Product owner |
 | D-016 | 2026-08-22 | Authorise Sprint 01 on `sprint-01-foundation` for the foundation, domain model, shell, minimal destinations, and Dashboard only. | Starts implementation without expanding into the full product or deploying. | Continue documentation only; implement all V1 workflows at once | Product owner |
+| D-017 | 2026-08-22 | Accept Sprint 01 as a valid Study Tour readiness foundation and merge PR #1 into `main` using squash merge. | Preserves a clean, tested vertical slice and project history before exploring a broader product direction. | Discard or leave Sprint 01 unmerged | Product owner |
+| D-018 | 2026-08-22 | Authorise a documentation-only product pivot / expansion discovery phase that preserves Sprint 01 and prohibits application changes. | Separates strategic validation from implementation and avoids an unreviewed rewrite. | Immediately rename and rebuild the application | Product owner |
+
+## Proposed pivot decisions awaiting approval
+
+These are recommendations, not approved product decisions.
+
+| Proposal ID | Recommendation | Why it is proposed | Approval needed |
+| --- | --- | --- | --- |
+| PD-001 | Position the broader concept as an international engagement operating layer. | Focuses on coordination and decision work between systems of record. | Yes |
+| PD-002 | Use `Relationship → Engagement` as the central model. | Creates the missing layer above Study Tour delivery and supports multiple engagement types. | Yes |
+| PD-003 | Make `Objective → Stakeholder / Agenda → Outcome → Commitment → Relationship Memory` the signature workflow. | Provides workflow-level differentiation from a generic CRM. | Yes |
+| PD-004 | Use `Home / Relationships / Engagements` as the smallest global IA. | Avoids premature Contacts, Agreements, Tasks, Documents, or AI modules. | Yes |
+| PD-005 | Select a new umbrella name later and retain TourFlow for Study Tour Delivery. | “TourFlow” is valuable but too narrow for broader engagement work; “Copilot” currently overstates AI. | Yes |
+| PD-006 | Make the delegation scenario the primary next MVP and preserve Study Tour as the supporting vertical. | Demonstrates the pivot without building two large workflows at equal depth. | Yes |
+| PD-007 | Make Enquiry → structured engagement scope the first future AI feature. | It is bounded, source-groundable, reviewable, and directly improves the new workflow. | Yes |
 
 ## Current implementation boundary
 
-Sprint 01 implementation is authorised only on `sprint-01-foundation`. It includes the technical foundation, typed domain model, fictional fixtures, deterministic business rules, application shell, minimal route destinations, and portfolio-triage Dashboard. Full Programs, Participants, Readiness, and Itinerary workflows are deferred. Supabase, databases, authentication, analytics, external AI APIs, and Vercel deployment remain out of scope.
+Sprint 01 is accepted on `main` and remains the current application baseline. Branch `product-pivot-global-engagement` is restricted to `docs/PRODUCT_REQUIREMENTS.md`, `docs/PROJECT_LOG.md`, and `docs/PIVOT_ANALYSIS.md`. No application refactor, rename, dependency, fixture change, database, authentication, analytics, AI API, external service, or Vercel configuration is authorised. Sprint 02 cannot begin until the proposed pivot decisions are reviewed explicitly.
 
 ## Sprint 01 architecture
 
@@ -197,6 +217,77 @@ Build the technical foundation, typed domain model, application shell, and portf
 - Custom components were sufficient; no accessible-component dependency was needed.
 - Full editing, persistence, program workspaces, participant workflows, and itinerary workflows remain deferred to a separately approved sprint.
 
+### 2026-08-22 — Product pivot / international engagement discovery
+
+**Objective**
+
+Test whether the accepted Study Tour readiness product can become one specialised module within a broader, differentiated international engagement operations concept without wasting Sprint 01 or drifting into a generic CRM.
+
+**Trigger**
+
+- Product review concluded that the original `Programs → Participants → Requirements → Readiness → Itinerary` model is useful but too narrow as an umbrella product.
+- Expanding it through contacts, notes, tasks, and more program pages would overlap substantially with configured CRM and mobility platforms.
+- A broader International Relations / Global Engagement use case was identified around partner intent, stakeholder coordination, engagement design, briefing, outcomes, commitments, and institutional memory.
+
+**What Sprint 01 taught us**
+
+- A narrow operational question creates a stronger portfolio story than a broad feature catalogue.
+- Typed source records and central deterministic rules make the product easier to reframe safely.
+- The existing Study Tour workflow has independent value and should survive as a vertical extension.
+- Honest non-AI automation is more credible than decorative AI claims.
+- One linked state transition is enough to prove that the prototype is a working system rather than a static dashboard.
+
+**Why the original scope was too narrow**
+
+- `Program` assumes delivery is the top-level context and does not express the institutional relationship that precedes and follows an engagement.
+- Participant readiness is central to Study Tours but irrelevant to senior delegations, partner meetings, and government or industry visits.
+- Contact, activity, document, and task expansion alone would not explain why this product should exist beside a generic CRM or mobility platform.
+- The original model does not connect partner objectives to internal university capability, agenda design, outcomes, commitments, and future relationship context.
+
+**What is preserved**
+
+- the accepted technical foundation, responsive shell patterns, and quality scripts;
+- all synthetic Study Tour fixtures;
+- `Participant`, `Requirement`, `ReadinessState`, `AttentionItem`, `Milestone`, and `ItineraryEntry` semantics where they remain valid;
+- fixed-date calculations and deterministic readiness/attention rules;
+- derived Dashboard aggregates;
+- the `Confirm requirement` / `Reset demo` interaction; and
+- the Study Tour coordination story, proposed as TourFlow Study Tour Delivery.
+
+**What is proposed to change**
+
+- add `PartnerOrganisation`, `Relationship`, and `Engagement` above delivery;
+- treat Study Tour as one `EngagementType` with a type-specific delivery extension;
+- introduce objective, stakeholder-assignment, agenda, outcome, and commitment records;
+- reframe Home around engagement and commitment coordination;
+- replace the global `Dashboard / Programs / Participants` IA with `Home / Relationships / Engagements` only after approval;
+- use the delegation journey as the primary next MVP; and
+- choose a new umbrella name later while preserving TourFlow for Study Tour Delivery.
+
+**Unresolved decisions**
+
+- whether the operating-layer positioning is sufficiently defensible;
+- final umbrella product name;
+- exact domain boundaries and engagement stage model;
+- the proposed minimal IA;
+- delegation-first MVP scope;
+- final clearly synthetic institution name for Scenario A;
+- migration and route compatibility approach; and
+- whether Enquiry → structured engagement scope should be the first future AI feature.
+
+**Validation**
+
+- Inspected the merged Sprint 01 documentation, domain types, deterministic rules, fixtures, routes, Dashboard composition, README, and dependency boundary.
+- Compared the proposed boundary with official Salesforce Education Cloud, QS MoveON, and Terra Dotta product descriptions to avoid claiming that relationship records, mobility, agreements, workflows, or travel readiness are unique.
+- Created PRD 0.4 and a separate pivot analysis with an explicit reuse map, migration proposal, IA critique, MVP options, and ranked AI candidates.
+- Confirmed the branch contains documentation changes only; no implementation validation was required because application code and dependencies were not changed.
+
+**Outcome**
+
+- The strongest proposed differentiation is the traceable `Intent → Objective → Stakeholder / Activity → Outcome → Commitment → Relationship Memory` chain.
+- The recommended MVP is one delegation-first end-to-end journey with the existing Study Tour readiness workflow preserved as the supporting vertical.
+- No pivot implementation is authorised; product-owner review is the next gate.
+
 ## Problems and solutions
 
 | ID | Date | Problem | Impact | Root cause | Solution | Verification |
@@ -215,6 +306,9 @@ Build the technical foundation, typed domain model, application shell, and portf
 | 2026-08-22 | Sprint 01 | ESLint and TypeScript | Pass | `pnpm lint` and `pnpm typecheck` exited successfully. |
 | 2026-08-22 | Sprint 01 | Production build | Pass | `pnpm build` completed and statically generated Dashboard, Programs, Participants, and three program routes. |
 | 2026-08-22 | Sprint 01 | Browser and responsive verification | Pass | Desktop and 390 × 844 mobile Dashboard checked; navigation and confirm/reset flow worked; no page errors. |
+| 2026-08-22 | Proposed PRD 0.4 | Pivot scope and reuse audit | Pass | Inspected merged code/docs and mapped every Sprint 01 domain/UI area to keep, modify, reframe, or remove; no application files changed. |
+| 2026-08-22 | Proposed PRD 0.4 | Competitive-boundary review | Pass | Official CRM, international-office, and travel/mobility product material confirms that records, partnership management, mobility, agreements, reporting, and travel readiness cannot be claimed as unique. |
+| 2026-08-22 | Proposed PRD 0.4 | Documentation completeness and terminology audit | Pass | Required PRD, project-log, pivot-analysis, migration, IA, MVP, AI-ranking, naming, and approval-gate sections are present. |
 
 ## Lessons learned
 
@@ -227,6 +321,9 @@ Record concise lessons that should influence later decisions.
 | 2026-08-22 | “AI” is not required to make the first workflow valuable. | Start with transparent rules and add AI only after a validated use case exists. |
 | 2026-08-22 | A single requirement record can support a convincing demo when every visible aggregate is derived from it. | Keep source state narrow and calculations centralised instead of manually synchronising UI counters. |
 | 2026-08-22 | The mobile triage experience works better as stacked decision cards than a compressed desktop table. | Preserve content priority and actions when future screens become responsive. |
+| 2026-08-22 | A relationship timeline is not enough to differentiate the broader concept from a CRM. | Make objective-to-outcome traceability and relationship-memory feedback the primary workflow proof. |
+| 2026-08-22 | Shared domain objects should not erase operational differences between engagement types. | Use a small Engagement core plus explicit type-specific delivery extensions. |
+| 2026-08-22 | The best first AI feature has a bounded source, structured output, and explicit approval point. | Prioritise enquiry structuring before briefing generation, recommendation, or generic chat. |
 
 ## Future improvements backlog
 
@@ -241,6 +338,9 @@ Do not treat this list as approved scope.
 | Live travel-advisory integration | Surface destination changes | V2 | Source reliability, update cadence, escalation policy |
 | AI-assisted status summary | Reduce manual reporting | V2 | Human review, approved data boundaries, evaluation criteria |
 | Post-program feedback | Close the program lifecycle | V2 | Survey design and outcome reporting |
+| Relationship and Engagement layer | Coordinate partner intent, university action, outcomes, and commitments | Proposed Sprint 02 | Requires approval of PRD 0.4, IA, domain migration, and naming strategy |
+| Structured engagement briefing | Reduce repeated briefing assembly | Proposed Sprint 02 | Deterministic assembly first; AI draft later with provenance and review |
+| Enquiry-to-scope AI | Convert unstructured partner requests into reviewable structure | Future AI phase | Approved schema, source grounding, field confirmation, evaluation set, and AI service decision |
 
 ## Review checklist
 
@@ -255,3 +355,20 @@ Before moving from product definition to implementation, confirm that:
 - [x] success criteria are accepted;
 - [x] major assumptions are accepted for V1 or retained as explicit risks; and
 - [x] a separate instruction authorises implementation planning or scaffolding.
+
+## Pivot review checklist
+
+Before Sprint 02 implementation, confirm that:
+
+- [ ] the international engagement operating-layer positioning is approved;
+- [ ] the product has a defensible workflow-level difference from CRM and mobility platforms;
+- [ ] `Relationship → Engagement` is approved as the central model;
+- [ ] the minimal core objects and Study Tour Delivery extension are approved;
+- [ ] the objective-to-outcome signature workflow is approved;
+- [ ] the proposed `Home / Relationships / Engagements` IA is approved;
+- [ ] the delegation-first MVP scope is approved;
+- [ ] the umbrella and Study Tour module naming strategy is approved;
+- [ ] Scenario A uses a clearly synthetic institution and people;
+- [ ] the Sprint 01 migration/reuse map is approved;
+- [ ] the first future AI use case is approved or deliberately deferred; and
+- [ ] a separate instruction explicitly authorises Sprint 02 implementation.
