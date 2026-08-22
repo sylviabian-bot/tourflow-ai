@@ -1,20 +1,20 @@
-# Global Engagement Copilot — Product Requirements Proposal
+# International Engagement Operating Layer — Product Requirements
 
-**Status:** Proposed product pivot for review; implementation not authorised
+**Status:** Product direction and evidence policy approved; Sprint 02 implementation not authorised
 
 **Version:** 0.4
 
 **Date:** 22 August 2026
 
-**Phase:** Product pivot / expansion discovery
+**Phase:** Product pivot finalisation and implementation gate
 
 **Repository:** `tourflow-ai` — unchanged
 
-**Current application name:** `TourFlow` — unchanged pending naming approval
+**Current application name:** `TourFlow` — unchanged in this documentation phase
 
 ## 1. Product vision
 
-The working concept is an international engagement operating layer for university teams that coordinate partner relationships, delegation visits, study tours, short programs, strategic meetings, and other international engagement activity.
+The approved direction is an international engagement operating layer for university teams that coordinate partner relationships, delegation visits, study tours, short programs, strategic meetings, and other international engagement activity.
 
 The product should help an officer connect information that may already exist across CRM, email, spreadsheets, calendars, agreements, faculty contacts, briefing papers, meeting notes, mobility platforms, and participant systems.
 
@@ -22,7 +22,7 @@ It is accountable to one central question:
 
 > Can an international engagement professional turn partner intent into coordinated university action, then turn the completed engagement into useful institutional relationship memory?
 
-### Proposed positioning
+### Approved positioning
 
 Generic CRM products store relationships and activities. Mobility products administer participants, travel, agreements, and program processes. This concept should focus on the coordination and decision layer between those systems:
 
@@ -61,20 +61,75 @@ Where such systems are referenced in the prototype, their data is represented as
 6. **Explainable automation.** Use deterministic rules where they are sufficient and identify every future AI-assisted output as a draft requiring review.
 7. **Prototype honesty.** Use synthetic data, fixed dates, and explicit mock boundaries.
 
-## 2. Product and naming strategy
+## 2. Approved product and naming strategy
 
-`Global Engagement Copilot` is a working concept, not an approved product name. The repository and current application must not be renamed during this documentation phase.
+The final umbrella product name remains unresolved. The repository and current application must not be renamed during this documentation phase.
 
-### Recommendation
+### Approved naming direction
 
-- Select a new umbrella product name after the pivot and MVP are approved.
-- Preserve **TourFlow** as the name of the specialised Study Tour Delivery module or workflow.
-- Do not use “Copilot” as the immediate user-facing name while the product contains no genuine AI assistance.
-- Do not restore `TourFlow AI` as the umbrella name; “Tour” is too narrow for delegation and partnership work, while “AI” would overstate the current functionality.
+- A future naming exercise will select the umbrella product name.
+- **TourFlow** is preserved as the future name of the specialised Study Tour Delivery module or workflow.
+- **Copilot** must not be used as the user-facing umbrella name until genuine AI functionality exists.
+- `TourFlow AI` must not become the umbrella name: “Tour” is too narrow for delegation and partnership work, while “AI” would overstate the current functionality.
+- Genuine AI remains deferred until the structured non-AI workflow has been implemented and reviewed.
 
-The final umbrella name is an unresolved product decision, not a Sprint 02 implementation task.
+The final umbrella name is unresolved and is not a Sprint 02 implementation task unless separately approved.
 
-## 3. Target users
+## 3. Portfolio positioning and real-world evidence policy
+
+### Portfolio narrative
+
+This is a current, independently developed product prototype. Its workflow expertise is informed by prior hands-on experience developing and coordinating Australia–China international education partnerships and programs.
+
+Approved portfolio positioning:
+
+> This independent product prototype is informed by hands-on experience developing and coordinating Australia–China international education partnerships and programs. The product itself is a current exploration of how AI-enabled and structured workflows could improve international engagement operations.
+
+The documentation and future portfolio must not imply that this software was historically deployed, used in production, commissioned by a former employer, or connected to an institution unless that fact is separately true and approved for disclosure.
+
+| Real professional foundation | Current prototype work |
+| --- | --- |
+| domain experience in international education | the software product and interface |
+| partnership and program coordination experience | product architecture and domain model |
+| stakeholder and cross-cultural work | AI-enabled workflow concepts |
+| operational pain points encountered in international education | demo records and interactions |
+| factual, non-confidential experience explicitly approved for disclosure | synthetic, fictional, anonymised, or composite scenarios unless explicitly documented otherwise |
+
+### A. Real professional experience
+
+Real institution names may be used only when:
+
+- the relationship or project genuinely existed;
+- the statement is factually accurate and supportable by genuine professional experience;
+- the information is not confidential;
+- no private student, staff, commercial, or institutional information is disclosed; and
+- no outcome, commitment, agreement, activity, metric, or relationship history is invented.
+
+Real-world experience may explain how the product problem was identified. A safe general statement is:
+
+> The product concept is informed by real experience coordinating Australia–China international education partnerships, study tours, short programs, student mobility and institutional collaboration.
+
+### B. Anonymised or composite case studies
+
+Use an anonymised or composite case when the workflow is useful but the underlying relationship, organisation, people, operational data, or commercial context should not be disclosed. A composite case may combine patterns learned from multiple real projects, but it must not be presented as a literal historical record.
+
+Preferred disclosure:
+
+> Composite demonstration informed by real international education partnership workflows. Institution names, people, dates and operational records may be anonymised or fictionalised.
+
+### C. Fictional product demo records
+
+Any invented delegation, engagement, participant, contact, meeting, outcome, commitment, agreement, itinerary, budget, requirement, email, briefing, or timeline must be treated explicitly as fictional, synthetic, or composite.
+
+A real university name must not be attached to an invented relationship history, delegation, commitment, outcome, agreement, or activity in a way that could imply the event occurred. Real names and fictional product records must never be combined merely to make a demo appear more authentic.
+
+### Recommended future public disclosure
+
+> This is an independently developed portfolio prototype informed by real international education partnership experience. Demo records are fictional, synthetic or anonymised unless explicitly stated otherwise.
+
+> No real student personal information, confidential university data or production institutional systems are used.
+
+## 4. Target users
 
 ### Primary persona
 
@@ -106,7 +161,7 @@ Typical responsibilities include:
 
 External partner contacts, delegation guests, and student participants appear as fictional records but are not primary users of the next MVP.
 
-## 4. Core user problems
+## 5. Core user problems
 
 1. Partner intent arrives in unstructured emails or conversations and must be manually converted into a workable scope.
 2. Relationship history exists across systems and individual memory, making preparation dependent on who happens to know the partner.
@@ -117,7 +172,7 @@ External partner contacts, delegation guests, and student participants appear as
 7. Completed engagements often fail to update the institution’s usable relationship memory.
 8. Study Tour delivery requires participant readiness and logistics that are irrelevant to senior delegations and must remain type-specific.
 
-## 5. Current workflow problem
+## 6. Current workflow problem
 
 A representative international delegation workflow is:
 
@@ -133,7 +188,7 @@ A representative international delegation workflow is:
 
 Existing systems may store each component, but the officer must still perform the cognitive work of connecting intent, context, institutional capability, activity design, outcomes, and next action.
 
-## 6. Product value proposition
+## 7. Product value proposition
 
 **The product turns partner intent into an objective-led engagement plan and turns engagement results into reusable relationship context.**
 
@@ -152,9 +207,9 @@ It should help the user answer:
 
 A CRM remains better for canonical partner/contact records, communication history, permissions, deduplication, enterprise workflow, and integrations. A mobility platform remains better for applications, agreements, student portals, regulated data, travel registration, approvals, and reporting.
 
-The proposed product earns a separate portfolio role by demonstrating a purpose-built workflow from partner intent through university coordination to relationship memory, with type-specific delivery only where needed. It should be presented as a workflow concept that could sit above or beside systems of record, not as a procurement claim that universities need another database.
+The approved product direction earns a separate portfolio role by demonstrating a purpose-built workflow from partner intent through university coordination to relationship memory, with type-specific delivery only where needed. It should be presented as a workflow concept that could sit above or beside systems of record, not as a procurement claim that universities need another database.
 
-## 7. Central product model
+## 8. Central product model
 
 ### Top-level structure
 
@@ -208,7 +263,7 @@ A Study Tour engagement additionally owns a `StudyTourDelivery` extension contai
 
 ### Status semantics
 
-Generic `EngagementStage` is proposed as:
+Generic `EngagementStage` is approved in principle as:
 
 ```text
 enquiry → scoping → planning → scheduled → in_progress → follow_up → completed
@@ -216,11 +271,11 @@ enquiry → scoping → planning → scheduled → in_progress → follow_up →
 
 Study Tour lifecycle and readiness remain separate, type-specific concepts. The existing values `applications`, `pre_departure`, `on_tour`, `ready`, `needs_attention`, and `blocked` must not be applied to delegation visits.
 
-## 8. Signature workflow
+## 9. Signature workflow
 
-The recommended signature workflow is:
+The approved signature workflow is:
 
-### Intent → action → memory
+### Partner Intent → Scope → Objectives → Stakeholders / Agenda → Outcomes → Commitments → Relationship Memory
 
 1. **Review incoming enquiry.** See the original fictional request and its source.
 2. **Structure scope.** Confirm partner, engagement type, dates, delegation size, interests, objectives, missing information, and clarification questions.
@@ -232,9 +287,21 @@ The recommended signature workflow is:
 8. **Create commitments.** Assign an owner and due date for follow-up.
 9. **Update relationship memory.** Surface the outcome and open commitment in future relationship and engagement preparation.
 
-The workflow is successful only if a reviewer can trace at least one objective through an agenda activity to an outcome and commitment.
+### Continuity of institutional intent across engagements
 
-## 9. Proposed information architecture
+The product is not differentiated simply because it contains contacts, engagement history, notes, tasks, timelines, dashboards, or AI. Its strongest product test is whether a user can answer:
+
+1. What happened in a previous engagement?
+2. What strategic signal, outcome, or commitment resulted?
+3. Why is that context relevant now?
+4. Which objective in the current engagement follows from that history?
+5. Which internal university stakeholder or activity supports that objective?
+6. What happened during the current engagement?
+7. What commitment should carry into future relationship planning?
+
+The workflow is successful only if a reviewer can trace a prior engagement signal into a current objective, through a stakeholder or agenda activity, to an outcome and commitment that updates relationship memory.
+
+## 10. Approved information architecture
 
 The smallest credible global navigation is:
 
@@ -276,55 +343,31 @@ Engagements
 - Do not show Study Tour participant or readiness navigation for delegation visits.
 - Preserve objective links across Plan, Briefing, and Outcomes rather than repeating disconnected notes.
 
-## 10. Demo scenarios
+## 11. Demo scenarios and relationship-memory strategy
 
-### Scenario A — International delegation
+The approved demo strategy uses one anonymised/composite Partner Relationship representing a Chinese higher education institution. The exact public-facing partner name remains unresolved. Both engagements, all people, dates, operational records, outcomes, and commitments must be disclosed as fictional, synthetic, anonymised, or composite; they must not be attached to a real university name as if they were historical facts.
 
-**Working scenario:** Shanghai University Senior Delegation Visit
+Use this disclosure with the demo:
 
-**Delegation:** 8 senior representatives
+> Composite demonstration informed by real international education partnership workflows. Institution names, people, dates and operational records may be anonymised or fictionalised.
 
-**Strategic interests:** Artificial Intelligence, Business Analytics, Student Mobility, and Joint Programs
+### Scenario A — Earlier Study Tour / short program
 
-The supplied scenario label is a working example. Before implementation, the product owner should approve a clearly synthetic institution name so the prototype does not imply a real institutional relationship.
+**Role in relationship history:** Earlier Engagement
 
-#### Journey
+**Delivery foundation:** Preserve the accepted 24-participant primary Study Tour workflow from Sprint 01.
 
-```text
-Partner relationship
-  → Incoming enquiry
-  → Structured engagement scope
-  → Objectives and missing information
-  → Internal stakeholder coordination
-  → Objective-linked agenda
-  → Structured briefing
-  → Visit
-  → Outcomes
-  → Commitments
-  → Updated relationship memory
-```
+The current fixture name may be reframed during an authorised Sprint 02 to comply with this evidence policy. No fixture or application change is made in PRD 0.4.
 
-#### Required proof points
+#### Composite outcome and follow-up
 
-- the enquiry is more than an attached email: its intent is represented in structured fields;
-- relationship context explains prior history and existing commitments;
-- each strategic interest is converted into an objective or explicit unresolved question;
-- assigned internal stakeholders show which objective/capability they support;
-- substantive agenda items link to objectives;
-- the briefing is assembled from the same source records;
-- at least one outcome links back to an objective and activity;
-- at least one owned commitment becomes visible at relationship level; and
-- no participant-readiness language is shown.
+> Strong student and academic engagement with Business Analytics and innovation programming identified an opportunity for broader institutional collaboration.
 
-### Scenario B — Study Tour
+> Explore opportunities to extend collaboration beyond short-term student programs.
 
-**Scenario:** Shanghai Business School – Sydney Innovation Study Tour
+These statements are fictional/composite demo records. They demonstrate how a completed Study Tour can create relationship context; they are not claims about a real institution or historical project.
 
-**Participants:** 24 synthetic participant records
-
-**Engagement type:** Study Tour
-
-#### Preserved journey
+#### Preserved delivery journey
 
 ```text
 Relationship
@@ -335,22 +378,76 @@ Relationship
       → Readiness
       → Attention Items
       → Itinerary and logistics
+  → Composite outcome
+  → Relationship Memory
 ```
 
 #### Required proof points
 
-- the existing program is represented as a Study Tour engagement without losing its fixture data;
+- the existing Study Tour is represented as an Engagement without losing its 24-participant primary workflow;
 - all deterministic readiness and attention rules continue to pass;
 - lifecycle and readiness remain independent;
-- `Confirm requirement` and `Reset demo` continue to drive all affected aggregates from one source state;
+- `Confirm requirement` and `Reset demo` continue to drive affected aggregates from one source state;
 - accommodation and transport remain in itinerary/logistics context; and
-- relationship and shared engagement concepts do not make Study Tour delivery less clear.
+- the fictional/composite outcome becomes relationship context for the later engagement.
 
-## 11. Recommended next MVP
+### Scenario B — Later Senior Delegation Visit
+
+**Role in relationship history:** Later Engagement
+
+**Delegation:** 8 synthetic senior representatives
+
+**Strategic interests:** Artificial Intelligence, Business Analytics, Student Mobility, and Joint Programs
+
+The later engagement must visibly use the earlier Study Tour outcome and follow-up. For example, the prior signal about extending collaboration beyond short-term programs should inform a current objective concerning joint programs or broader institutional collaboration.
+
+#### Delegation journey
+
+```text
+Relationship Memory from Study Tour
+  → Incoming delegation enquiry
+  → Structured engagement scope
+  → Objectives informed by prior context
+  → Internal stakeholder coordination
+  → Objective-linked agenda
+  → Structured briefing
+  → Delegation visit
+  → Outcomes
+  → Commitments
+  → Updated Relationship Memory
+```
+
+#### Required proof points
+
+- the enquiry is represented in structured fields rather than only as an attached email;
+- the earlier Study Tour outcome is visible and explains at least one current objective;
+- each strategic interest becomes an objective or an explicit unresolved question;
+- assigned internal stakeholders show which objective/capability they support;
+- substantive agenda items link to objectives;
+- the briefing includes the relevant prior Study Tour outcome and open follow-up;
+- at least one new outcome links back to an objective and activity;
+- at least one owned commitment becomes visible at relationship level; and
+- no participant-readiness language is shown for the delegation.
+
+### End-to-end relationship-memory proof
+
+```text
+Study Tour
+→ Outcome
+→ Relationship Memory
+→ Senior Delegation
+→ Objectives
+→ Stakeholders / Agenda
+→ Outcomes
+→ Commitments
+→ Updated Relationship Memory
+```
+
+## 12. Approved next MVP direction
 
 ### Primary slice
 
-Build the delegation-first intent-to-memory loop while retaining Sprint 01 as a secondary Study Tour Delivery workflow.
+The approved MVP direction is a delegation-first intent-to-memory loop with Sprint 01 retained as the supporting Study Tour Delivery workflow. This direction does not authorise Sprint 02 implementation.
 
 The next MVP should include:
 
@@ -402,13 +499,31 @@ The next MVP should include:
 - opaque relationship, participant, or risk scores; and
 - AI use for deterministic due-date, readiness, or attention rules.
 
-## 12. Future AI opportunities
+### Sprint 02 migration note
 
-No AI API or AI implementation is authorised by PRD 0.4.
+When separately authorised, Sprint 02 will migrate the existing Study Tour implementation into the broader `Relationship → Engagement` architecture without discarding the accepted vertical workflow.
+
+Sprint 02 must preserve, adapting keys or scenario framing only where required:
+
+- the 24-participant primary Study Tour workflow;
+- participant readiness;
+- requirements and document metadata;
+- deterministic attention rules;
+- itinerary, accommodation, transport, and logistics context;
+- the fixed demo clock;
+- `Confirm requirement`;
+- `Reset demo`; and
+- existing tests where relevant.
+
+Application fixture names and scenario framing may be changed during Sprint 02 to comply with the approved real-world evidence policy. No migration, rename, fixture change, or code refactor occurs in this documentation-only PR.
+
+## 13. Future AI opportunities
+
+No AI API or AI implementation is authorised by PRD 0.4. Genuine AI remains deferred until the structured non-AI workflow has been implemented and reviewed.
 
 | Priority | Candidate | Product judgment |
 | ---: | --- | --- |
-| 1 | Enquiry → structured engagement scope | Recommended first: bounded input/output, visible source grounding, useful missing-information detection, and a clear human confirmation gate |
+| 1 | Enquiry → structured engagement scope | Approved first future feature: bounded input/output, visible source grounding, useful missing-information detection, and a clear human confirmation gate |
 | 2 | Structured engagement data → briefing draft | High value after relationship and engagement records are credible; requires provenance and review |
 | 3 | Meeting notes → outcomes, commitments, owners, and due dates | Valuable but more generic; nothing updates relationship memory without explicit confirmation |
 | 4 | Relationship history → engagement context summary | Useful once the fixture/history dataset is sufficiently rich and source links remain visible |
@@ -416,7 +531,7 @@ No AI API or AI implementation is authorised by PRD 0.4.
 | 6 | Objectives and constraints → proposed agenda structure | Defer until real constraints and stakeholder data exist |
 | 7 | History and commitments → follow-up priorities | Deterministic owner/due-date rules should be exhausted first |
 
-### Recommended first genuine AI feature
+### Approved first future genuine AI feature
 
 The first feature should transform a fictional incoming enquiry into a proposed structured engagement scope.
 
@@ -432,7 +547,7 @@ Required output:
 
 The officer must review and confirm the structure before it becomes product state. The AI may propose; it may not silently create commitments, invite stakeholders, or assert institutional history.
 
-## 13. User stories and acceptance criteria
+## 14. User stories and acceptance criteria
 
 ### US-01 — Relationship context
 
@@ -504,9 +619,9 @@ Acceptance criteria:
 - delegation engagements do not display Study Tour participant/readiness concepts; and
 - the current confirm/reset interaction remains available and explainable.
 
-## 14. Cross-product acceptance criteria
+## 15. Cross-product acceptance criteria
 
-The proposed pivot MVP is acceptable only when:
+The approved pivot direction is acceptable in an eventual MVP only when:
 
 - a first-time reviewer can explain the product’s relationship-to-engagement model within one minute;
 - the reviewer can trace one objective through stakeholder, agenda, outcome, and commitment records;
@@ -515,7 +630,9 @@ The proposed pivot MVP is acceptable only when:
 - a generic delegation never inherits student-readiness concepts;
 - a Study Tour retains the accepted Sprint 01 readiness workflow;
 - engagement stage, Study Tour lifecycle, and Study Tour readiness remain independent typed concepts;
-- all displayed people and organisations are clearly fictional;
+- every scenario and record is clearly classified as factual professional context, anonymised/composite, or fictional/synthetic;
+- real institution names appear only with accurate, non-confidential, supportable facts and never with invented events or outcomes;
+- no copy implies that the prototype was historically deployed or used in production;
 - aggregate values are derived from source fixtures;
 - all date-relative behaviour continues to use the fixed demo clock;
 - no user-facing claim implies live CRM, SIS, mobility, agreement, calendar, email, or travel integration;
@@ -524,16 +641,16 @@ The proposed pivot MVP is acceptable only when:
 - no external AI API, database, authentication, analytics, or Vercel deployment is added without a later approval; and
 - the current Sprint 01 test/build baseline remains green after any authorised migration.
 
-## 15. Out of scope for the pivot MVP
+## 16. Out of scope for the pivot MVP
 
-- repository or application rename during the discovery phase;
-- application refactor before PRD approval;
+- repository or application rename without a separate naming decision;
+- application refactor before separate Sprint 02 authorisation;
 - production partner/contact master-data management;
 - email or calendar synchronisation;
 - agreement authoring, approval, signatures, or compliance;
 - student application processing or mobility nomination management;
 - travel registry, live safety/risk feeds, traveller tracking, or duty-of-care operations;
-- real identity, passport, health, emergency, or institutional data;
+- real student identity, passport, health, emergency, confidential, or operational institutional data in demo records;
 - authentication, permissions, database, audit history, or collaboration;
 - automated invitations, messages, or stakeholder assignment;
 - AI API, chatbot, autonomous agent, or unreviewed generated content;
@@ -541,14 +658,14 @@ The proposed pivot MVP is acceptable only when:
 - predictive relationship, engagement, participant, or safety scoring; and
 - Vercel deployment.
 
-## 16. Risks and assumptions
+## 17. Risks and assumptions
 
 | ID | Type | Statement | Response |
 | --- | --- | --- | --- |
-| A-01 | Proposed assumption | International engagement officers experience meaningful coordination work between systems of record. | Validate the two demo journeys with practitioners or hiring reviewers before broad implementation. |
-| A-02 | Proposed assumption | Objective-to-outcome traceability is more valuable and distinctive than another relationship timeline. | Make the chain the primary prototype test, not a secondary detail. |
+| A-01 | Approved product hypothesis | International engagement officers experience meaningful coordination work between systems of record. | Validate the two demo journeys with practitioners or hiring reviewers before broad implementation. |
+| A-02 | Approved product hypothesis | Objective-to-outcome traceability is more valuable and distinctive than another relationship timeline. | Make the chain the primary prototype test, not a secondary detail. |
 | A-03 | Confirmed asset | Sprint 01 is a valid Study Tour readiness foundation. | Preserve it as Study Tour Delivery and retain its rules/tests. |
-| A-04 | Proposed assumption | A delegation-first scenario best demonstrates the broader persona and product differentiation. | Use it as the primary next MVP; keep Study Tour as the supporting vertical. |
+| A-04 | Approved MVP direction | A delegation-first scenario best demonstrates the broader persona and product differentiation. | Use it as the primary next MVP; keep Study Tour as the supporting vertical. |
 | R-01 | Strategic risk | Relationship pages, contacts, history, and commitments still overlap substantially with CRM. | Avoid system-of-record breadth and prove objective-led coordination and memory feedback. |
 | R-02 | Competitive risk | International-office platforms already manage mobility, partnerships, agreements, workflows, and reporting. | Position this as a workflow concept and acknowledge where those platforms are stronger. |
 | R-03 | Scope risk | Two scenarios can become a large enterprise prototype. | Build one delegation journey deeply and preserve, rather than expand, Study Tour Delivery. |
@@ -557,22 +674,36 @@ The proposed pivot MVP is acceptable only when:
 | R-06 | AI risk | “Copilot” naming or generated content may imply unsupported accuracy. | Keep the name provisional and AI deferred; require source grounding and confirmation when introduced. |
 | R-07 | Privacy risk | Delegation and relationship records may include sensitive professional or institutional context. | Use minimal synthetic data and define permissions/governance before persistence. |
 | R-08 | Narrative risk | Reframing Sprint 01 could make the existing Dashboard appear disconnected. | Keep it reachable as a named Study Tour Delivery workflow and document the migration story. |
+| R-09 | Evidence risk | A real institution name attached to invented demo history could imply that fictional events occurred. | Apply the approved factual/anonymised/fictional classification and use a composite Partner Relationship for the connected demo. |
 
-## 17. Decisions requiring product-owner approval
+## 18. Approved decisions and implementation gate
 
-No implementation may begin until the product owner approves or changes:
+The product owner approved the following direction on 22 August 2026:
 
-1. the international engagement operating-layer positioning;
-2. the recommendation to choose a new umbrella name and preserve TourFlow as the Study Tour module;
-3. `Relationship → Engagement` as the central model;
-4. the proposed minimal domain objects and type-specific Study Tour extension;
-5. the intent-to-action-to-memory signature workflow;
-6. the three-item global IA and contextual workspace structure;
-7. the delegation-first next MVP;
-8. the synthetic institution name for Scenario A;
-9. the proposed migration treatment for existing Sprint 01 types and routes; and
-10. Enquiry → structured engagement scope as the first future AI feature.
+1. position the broader concept as an **international engagement operating layer**;
+2. use `Relationship → Engagement` as the central product model;
+3. use `Partner Intent → Scope → Objectives → Stakeholders / Agenda → Outcomes → Commitments → Relationship Memory` as the signature workflow;
+4. use `Home / Relationships / Engagements` as the minimal global information architecture;
+5. use a delegation-first primary MVP while preserving Study Tour Delivery as the supporting vertical;
+6. preserve **TourFlow** as the future name of the Study Tour Delivery workflow/module;
+7. do not use **Copilot** as the user-facing umbrella name until genuine AI functionality exists;
+8. defer genuine AI until the structured non-AI workflow has been implemented and reviewed;
+9. use **Enquiry → Structured Engagement Scope** as the first future genuine AI feature; and
+10. require a separate instruction before Sprint 02 implementation.
 
-## 18. Supporting analysis
+The real-world evidence policy and anonymised/composite relationship-memory demo strategy are also approved.
+
+### Unresolved decisions
+
+- final umbrella product name;
+- exact public-facing name of the composite/anonymised partner;
+- Sprint 02 implementation details and authorisation;
+- genuine AI implementation and evaluation;
+- external integrations; and
+- database, authentication, and persistence.
+
+No unresolved item authorises implementation. Sprint 02 remains closed until a separate instruction.
+
+## 19. Supporting analysis
 
 Detailed competitive reasoning, implementation impact, migration mapping, IA critique, MVP options, and AI prioritisation are recorded in [`PIVOT_ANALYSIS.md`](./PIVOT_ANALYSIS.md).
