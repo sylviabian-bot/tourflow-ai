@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 import { CompositeDisclosure } from "@/components/composite-disclosure";
 import { EngagementCard } from "@/components/engagement-card";
@@ -32,6 +33,9 @@ export default function EngagementsPage() {
         meta={DEMO_SNAPSHOT_LABEL}
       />
       <CompositeDisclosure />
+      <div className="flex justify-end border-b border-[var(--divider)] pb-6">
+        <Link href="/engagements/new" className="inline-flex min-h-11 items-center rounded bg-[var(--navy)] px-4 py-2 text-sm font-semibold text-white hover:bg-[var(--brand-strong)]">Scope a new enquiry</Link>
+      </div>
       <div className="grid gap-x-10 lg:grid-cols-2">
         {engagements.map((engagement) => (
           <EngagementCard

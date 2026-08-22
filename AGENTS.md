@@ -8,12 +8,12 @@ This repository contains an independent portfolio prototype for university inter
 
 ## Current phase gate
 
-- Sprint 02C is authorised only for `Engagement Outcome → Commitment → Owner / Due Date → Follow-up State → Relationship Memory Write-back`.
+- Sprint 03 is authorised only for `Partner Enquiry → AI Structured Scope Draft → Evidence Review → Human Confirmation`.
 - Preserve the approved Relationship Memory chain, Academic Editorial visual system, and Sprint 01 Study Tour rules and resettable delivery interaction.
 - Stakeholder matching must remain deterministic, explainable, and subject to human confirmation.
 - The Executive Brief must be composed from structured source records and must not be presented as AI-generated.
 - Preserve the approved Objective → Stakeholder → Agenda → Brief workflow and keep commitments traceable to engagement outcomes rather than modelling generic tasks.
-- Do not implement genuine AI, authentication, persistence, analytics, external integrations, or Vercel deployment until separately authorised.
+- Genuine AI is permitted only inside the isolated server-side enquiry extractor. Do not add AI chat, briefing generation, stakeholder or agenda generation, meeting-note extraction, predictive risk, RAG, embeddings, authentication, persistence, analytics, external institutional integrations, or Vercel deployment.
 - Do not interpret a request to improve the PRD as approval to start implementation.
 
 ## Sources of truth

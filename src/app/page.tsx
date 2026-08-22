@@ -57,7 +57,7 @@ export default function HomePage() {
       </section>
 
       <section aria-labelledby="coordination-items-heading">
-        <SectionHeader id="coordination-items-heading" title="OPEN COORDINATION" description="Source-backed prompts requiring review before delivery progresses." />
+        <SectionHeader id="coordination-items-heading" title="OPEN COORDINATION" description="Source-backed prompts requiring review before delivery progresses." action={<Link href="/engagements/new" className="text-sm font-semibold text-[var(--navy)] hover:underline">Scope a new enquiry</Link>} />
         <ol className="divide-y divide-[var(--divider)]">
           {snapshot.openCoordinationItems.map((item, index) => <li key={item.id} className="grid gap-2 py-5 sm:grid-cols-[3rem_minmax(0,1fr)_auto] sm:gap-5"><span className="text-sm tabular-nums text-[var(--burgundy)]">{String(index + 1).padStart(2, "0")}</span><div><Link href={item.href} className="font-semibold text-[var(--ink)] hover:text-[var(--navy)] hover:underline">{item.title}</Link><p className="mt-1 text-sm text-[var(--muted)]">{item.context}</p></div><span className="text-xs text-[var(--muted)]">Review required</span></li>)}
         </ol>
