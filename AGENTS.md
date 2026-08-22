@@ -8,11 +8,11 @@ This repository contains an independent portfolio prototype for university inter
 
 ## Current phase gate
 
-- Sprint 02A is authorised only for the Relationship / Engagement core recorded in `docs/PRODUCT_REQUIREMENTS.md` and `docs/PROJECT_LOG.md`.
-- Prove the traceable loop `Previous Engagement → Outcome / Strategic Signal → Relationship Memory → Current Engagement → Objective`.
-- Preserve the Sprint 01 Study Tour rules and resettable delivery interaction through a compatibility layer.
-- Do not implement stakeholder matching, agenda building, briefing, post-engagement outcomes, or commitments until Sprint 02B is separately authorised.
-- Do not add genuine AI, authentication, persistence, analytics, external integrations, or deploy to Vercel during Sprint 02A.
+- Sprint 02B is authorised only for `Objective → Internal Stakeholder → Agenda Activity → Executive Briefing`.
+- Preserve the approved Relationship Memory chain, Academic Editorial visual system, and Sprint 01 Study Tour rules and resettable delivery interaction.
+- Stakeholder matching must remain deterministic, explainable, and subject to human confirmation.
+- The Executive Brief must be composed from structured source records and must not be presented as AI-generated.
+- Do not implement outcomes, commitments, Relationship Memory write-back, genuine AI, authentication, persistence, analytics, external integrations, or Vercel deployment until separately authorised.
 - Do not interpret a request to improve the PRD as approval to start implementation.
 
 ## Sources of truth

@@ -8,7 +8,7 @@ This repository contains an independently developed portfolio prototype informed
 
 Relationship history, engagement planning and delivery work are often distributed across CRM records, email, spreadsheets, calendars, documents and individual memory. Those systems may store information, but an officer still needs to understand what happened previously, what signal resulted and why that context matters to the next engagement.
 
-Sprint 02A demonstrates one focused chain:
+The implemented prototype now demonstrates:
 
 ```text
 Previous Study Tour
@@ -16,6 +16,9 @@ Previous Study Tour
   → Relationship Memory
   → later Senior Delegation
   → objective informed by that history
+  → explainable internal stakeholder assignments
+  → objective-linked agenda activities
+  → deterministic executive briefing
 ```
 
 It does not attempt to replace a CRM, mobility platform or institutional system of record.
@@ -29,10 +32,13 @@ It does not attempt to replace a CRM, mobility platform or institutional system 
 - an Engagements list spanning Study Tour, Senior Delegation, Partner Meeting and Short Program types;
 - a Senior Delegation Overview with proposed dates, eight synthetic representatives, strategic interests, source enquiry, open questions and objectives;
 - a visible source link from one Delegation objective to the prior Study Tour signal;
+- deterministic objective-to-capability matching with explicit rationale and officer confirmation;
+- a Senior Delegation Program linking each substantive activity to objectives and internal hosts;
+- a printable-style Executive Brief composed from structured relationship and engagement records;
 - a compatibility layer that preserves the accepted 24-participant TourFlow Study Tour Delivery workflow; and
 - deterministic `Confirm requirement` and `Reset demo` behaviour with derived readiness, attention and aggregate updates.
 
-Stakeholder matching, agenda building, briefing, outcomes capture and commitments are deliberately deferred to Sprint 02B.
+Outcomes, commitments and Relationship Memory write-back are deferred to Sprint 02C. Genuine AI remains deferred to Sprint 03.
 
 ## Demo data and evidence policy
 
@@ -97,4 +103,4 @@ pnpm build
 
 ## Current limitations
 
-State is not persisted and there is no authentication, role model, external integration or production deployment. Supporting relationships and engagement types are intentionally light. The temporary product name remains unresolved, and Sprint 02B has not started.
+Stakeholder confirmation state is local to the shared engagement layout and resets on reload. There is no authentication, role model, database, external integration or production deployment. Supporting relationships and engagement types remain intentionally light, and the temporary product name is unresolved.

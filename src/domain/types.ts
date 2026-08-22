@@ -218,6 +218,7 @@ export interface EngagementObjective {
   engagementId: string;
   title: string;
   description: string;
+  themes: string[];
   sourceRelationshipSignalId?: string;
 }
 
@@ -283,4 +284,75 @@ export interface HomeSnapshot {
   currentEngagements: Engagement[];
   latestRelationshipSignals: RelationshipSignal[];
   openCoordinationItems: CoordinationPrompt[];
+}
+
+export interface UniversityCapability {
+  id: string;
+  name: string;
+  category: "academic" | "professional" | "research" | "engagement";
+  summary: string;
+  themes: string[];
+  synthetic: true;
+}
+
+export interface InternalStakeholder {
+  id: string;
+  name: string;
+  role: string;
+  capabilityId: string;
+  synthetic: true;
+}
+
+export type StakeholderAssignmentStatus = "suggested" | "confirmed";
+
+export interface StakeholderAssignment {
+  id: string;
+  engagementId: string;
+  objectiveId: string;
+  stakeholderId: string;
+  roleInEngagement: string;
+  rationale: string;
+  matchedTheme: string;
+  status: StakeholderAssignmentStatus;
+}
+
+export type AgendaItemType =
+  | "welcome"
+  | "meeting"
+  | "presentation"
+  | "workshop"
+  | "campus_visit"
+  | "meal"
+  | "roundtable";
+
+export type AgendaItemStatus = "draft" | "proposed" | "confirmed";
+
+export interface AgendaItem {
+  id: string;
+  engagementId: string;
+  date: string;
+  startTime: string;
+  endTime: string;
+  title: string;
+  location: string;
+  type: AgendaItemType;
+  objectiveIds: string[];
+  stakeholderAssignmentIds: string[];
+  purpose: string;
+  status: AgendaItemStatus;
+}
+
+export interface ExecutiveBrief {
+  relationship: Relationship;
+  partner: PartnerOrganisation;
+  engagement: Engagement;
+  relationshipMemory: RelationshipSignal[];
+  objectives: EngagementObjective[];
+  stakeholderAssignments: StakeholderAssignment[];
+  agendaItems: AgendaItem[];
+  talkingPoints: Array<{
+    objectiveId: string;
+    prompt: string;
+  }>;
+  openQuestions: string[];
 }
