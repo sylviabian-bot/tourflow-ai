@@ -1,17 +1,17 @@
 # International Engagement Prototype — Project Log
 
-This log records how a Study Tour readiness foundation evolves into a tested international engagement portfolio prototype. Sprint 01 remains the accepted TourFlow Study Tour Delivery foundation. Sprint 02A introduced Relationship / Engagement, Sprint 02B added planning and briefing, Sprint 02C completed the structured non-AI lifecycle, and Sprint 03 introduces a bounded genuine AI enquiry-structuring workflow. The final umbrella name remains unresolved.
+This log records how a Study Tour readiness foundation evolves into a tested international engagement portfolio prototype. Sprint 01 remains the accepted TourFlow Study Tour Delivery foundation. Sprint 02A introduced Relationship / Engagement, Sprint 02B added planning and briefing, Sprint 02C completed the structured non-AI lifecycle, and Sprint 03 implemented and locally live-tested a bounded genuine AI enquiry-structuring workflow. The final umbrella name remains unresolved.
 
 ## Project status
 
 | Field | Current value |
 | --- | --- |
-| Phase | Sprint 03 — AI-Assisted Enquiry Structuring |
+| Phase | Sprint 03 — complete, product reviewed, and locally live-AI validated |
 | Current version | PRD 0.4 — product direction approved |
-| Implementation | Sprint 02C accepted on `main`; Sprint 03 authorised on its review branch |
+| Implementation | Sprint 03 accepted and merged to `main`; three fictional live-QA scenarios passed locally |
 | Data approach | Real factual context only when approved; otherwise anonymised, composite, fictional, or synthetic demo data |
-| External services | None approved |
-| Next gate | Review Sprint 03; no further AI feature is authorised |
+| External services | OpenAI Responses API approved only for enquiry structuring; no university systems connected |
+| Next gate | No Sprint 04 or additional AI feature authorised |
 
 ## Initial assumptions
 
@@ -82,13 +82,12 @@ Use this table for decisions that have been explicitly approved. Do not move a p
 
 ## Current implementation boundary
 
-Sprint 02C is authorised on `sprint-02c-outcomes-commitments-memory`. Its boundary is the existing Relationship / Engagement planning layer plus objective-linked outcomes, outcome-linked commitments, local completion/reset behaviour, and deterministic Relationship Memory retention. The accepted Study Tour Delivery workflow remains unchanged. Genuine AI, persistence, authentication, integrations, analytics, and deployment remain unauthorised.
+Sprint 03 is code complete, product reviewed, merged to `main`, and manually live-tested locally for the bounded `Partner Enquiry → AI Structured Scope Draft → Evidence Review → Human Confirmation` workflow. Three fictional live-QA scenarios passed. The AI remains a source-grounded structuring assistant, and exact partner matching is deterministic application logic. Officer confirmation remains local to the demo session and does not create canonical Engagement or Objective records. The accepted Study Tour Delivery workflow remains unchanged. No university systems are connected, no production deployment has occurred, and no later sprint or second AI feature is authorised by this closeout.
 
 ## Unresolved decisions
 
 - final umbrella product name;
-- Sprint 03 genuine AI scope and authorisation;
-- genuine AI implementation and evaluation;
+- future AI scope and evaluation beyond the completed enquiry-structuring workflow;
 - external integrations; and
 - database, authentication, and persistence.
 
@@ -610,6 +609,51 @@ Prove that a completed international engagement can create reusable relationship
 - Exact partner matching remains outside the model. It runs against the effective reviewed name and returns `ambiguous` for duplicate exact records; fuzzy matching remains deliberately excluded.
 - Unit tests remain deterministic and do not make live OpenAI calls. Live QA status is recorded only from an actual configured request.
 
+### 2026-08-25 — Sprint 03 live AI QA closeout
+
+**Scope and method**
+
+- Manually exercised the locally configured OpenAI Responses API integration using fictional enquiry data only.
+- Reviewed the returned structured draft in the product UI, including evidence, grounding status, uncertainty, proposed objectives, missing information, clarification questions, and deterministic partner resolution.
+- This closeout records completed live QA; it does not add application behaviour, make another API request, connect a university system, or claim production deployment.
+
+**LIVE QA 01 — Complete partner enquiry: PASS**
+
+- Exact partner extraction resolved deterministically to the existing fictional Relationship.
+- Engagement type extraction was explicit.
+- A partial month was preserved without invented exact dates, and the textual delegation size was structured correctly.
+- Strategic interests and proposed objectives remained source-grounded.
+- Missing information and useful clarification questions were generated.
+- Evidence and provenance were displayed correctly for officer review.
+
+**LIVE QA 02 — Incomplete / ambiguous enquiry: PASS**
+
+- The unmatched partner remained unresolved.
+- Engagement type inference was labelled `inferred / review required`.
+- `later this year` remained ambiguous without invented normalised dates.
+- `small visit` did not become an invented numeric delegation size.
+- Innovation remained grounded in source text, and the inferred objective retained evidence plus an inference explanation.
+- Missing fields and clarification questions were generated appropriately.
+
+**LIVE QA 03 — Similar partner-name false-positive test: PASS**
+
+- Source partner `Eastern Horizon Institute` was not matched to the existing fictional Relationship `Eastern Horizon University`.
+- The application displayed `No exact partner match · officer resolution required`.
+- November remained ambiguous without invented dates; delegation size remained missing.
+- Student Mobility and the proposed objective remained grounded in the source.
+
+**Closeout decision**
+
+- Genuine OpenAI API integration is now manually live-tested locally across three fictional scenarios.
+- The workflow remains human-reviewed and source-grounded. Partner matching stays deterministic in the application layer.
+- Officer confirmation does not create canonical Engagement or Objective records in the current prototype.
+- No live university systems are connected and no production deployment has occurred.
+
+**Future polish — not implemented**
+
+1. Replace internal schema labels such as `delegationSize`, `delegationDetails`, and `engagementObjectives` with human-readable UI labels.
+2. Refine the portfolio disclosure so it distinguishes live AI-assisted enquiry structuring from the absence of live university-system connections.
+
 ## Problems and solutions
 
 | ID | Date | Problem | Impact | Root cause | Solution | Verification |
@@ -652,10 +696,13 @@ Prove that a completed international engagement can create reusable relationship
 | 2026-08-22 | Sprint 02C temporal review fix | Desktop and 390 × 844 browser verification | Pass | Seven core routes had no page errors or horizontal overflow; Home, Relationship Detail and Follow-up respected their scenario dates, and commitment complete/reset remained functional. |
 | 2026-08-22 | Sprint 03 | Schema, grounding, confirmation and regression tests | Pass | Vitest: 5 files, 69 tests passed. Tests use deterministic structured fixtures, cover the strict Responses API schema plus missing-key/invalid-input boundaries, and make no live OpenAI request. |
 | 2026-08-22 | Sprint 03 | ESLint, TypeScript and production build | Pass | `pnpm lint`, `pnpm typecheck`, `pnpm test` and `pnpm build` passed; 24 pages plus the server-side enquiry route were generated. |
-| 2026-08-22 | Sprint 03 | Desktop, 390 × 844 and error-path browser verification | Pass | Home, Enquiry Scope, Relationship, Delegation and Study Tour routes had no error UI or horizontal overflow. Source/loading/missing-key states, source preservation, privacy copy and labelled focus were verified. Live success was not tested because `OPENAI_API_KEY` was unavailable. |
+| 2026-08-22 | Sprint 03 | Desktop, 390 × 844 and error-path browser verification | Pass | Home, Enquiry Scope, Relationship, Delegation and Study Tour routes had no error UI or horizontal overflow. Source/loading/missing-key states, source preservation, privacy copy and labelled focus were verified. Live success was not tested in that pass and was subsequently completed on 25 Aug 2026. |
 | 2026-08-22 | Sprint 03 grounding/provenance review fix | Evidence, provenance, invariant and regression tests | Pass | Vitest: 5 files, 77 tests passed. Deterministic tests cover exact-source evidence, immutable officer corrections, zero-objective handling, unique draft IDs and duplicate partner resolution; no live OpenAI request is made by the suite. |
 | 2026-08-22 | Sprint 03 grounding/provenance review fix | Desktop and 390 × 844 browser verification | Pass | Missing-key/source preservation, deterministic fixture-backed draft review, visible officer-edit provenance, unresolved matching, confirmed effective values and the disabled zero-objective state were checked without overflow or console errors. The temporary local QA transport was removed before validation and commit. |
-| 2026-08-22 | Sprint 03 grounding/provenance review fix | Real OpenAI request | Not run | `OPENAI_API_KEY` was not available locally. No end-to-end live-integration claim is made. |
+| 2026-08-22 | Sprint 03 grounding/provenance review fix | Real OpenAI request | Superseded | A key was unavailable during the review-fix session; live QA was subsequently completed and recorded below on 25 Aug 2026. |
+| 2026-08-25 | Sprint 03 live AI QA | Complete partner enquiry | Pass | Existing-relationship match, explicit type, non-invented partial date, textual size, grounded themes/objectives, missing information, clarification questions, and evidence/provenance were manually verified. |
+| 2026-08-25 | Sprint 03 live AI QA | Incomplete / ambiguous enquiry | Pass | Unresolved partner, labelled inference, ambiguous date, null numeric size, grounded innovation/objective, missing fields, and clarification questions were manually verified. |
+| 2026-08-25 | Sprint 03 live AI QA | Similar partner-name false-positive | Pass | `Eastern Horizon Institute` remained distinct from `Eastern Horizon University`; deterministic unresolved state, ambiguous November date, missing size, and grounded mobility/objective were manually verified. |
 
 ## Lessons learned
 
@@ -689,8 +736,9 @@ Do not treat this list as approved scope.
 | AI-assisted status summary | Reduce manual reporting | V2 | Human review, approved data boundaries, evaluation criteria |
 | Post-program feedback | Close the program lifecycle | V2 | Survey design and outcome reporting |
 | Outcomes and commitment write-back | Carry engagement results into future relationship planning | Sprint 02C, pending separate authorisation | Approved outcome, owner, due-date, and Relationship Memory update boundaries |
-| AI-assisted engagement scope | Convert an enquiry into a reviewable structured scope | Sprint 03, pending separate authorisation | Approved schema, source grounding, human confirmation, evaluation set, and AI service decision |
-| Enquiry-to-scope AI | Convert unstructured partner requests into reviewable structure | Future AI phase | Approved schema, source grounding, field confirmation, evaluation set, and AI service decision |
+| AI-assisted engagement scope | Convert an enquiry into a reviewable structured scope | Completed in Sprint 03 | Implemented with source grounding, human confirmation, deterministic partner matching, and three passed local live-QA scenarios |
+| Human-readable enquiry labels | Replace internal schema names with officer-friendly labels | Future polish | Copy mapping only; do not change the underlying schema contract without separate review |
+| Live-AI portfolio disclosure | Distinguish live AI-assisted enquiry structuring from absent university-system integrations | Future polish | Preserve evidence policy and avoid implying production deployment or institutional connectivity |
 
 ## Review checklist
 
