@@ -82,7 +82,7 @@ Use this table for decisions that have been explicitly approved. Do not move a p
 
 ## Current implementation boundary
 
-Sprint 03 is code complete, product reviewed, merged to `main`, and manually live-tested locally for the bounded `Partner Enquiry → AI Structured Scope Draft → Evidence Review → Human Confirmation` workflow. Three fictional live-QA scenarios passed. The AI remains a source-grounded structuring assistant; exact partner matching is deterministic application logic, and no canonical Engagement or Objective is created without officer confirmation. The accepted Study Tour Delivery workflow remains unchanged. No university systems are connected, no production deployment has occurred, and no later sprint or second AI feature is authorised by this closeout.
+Sprint 03 is code complete, product reviewed, merged to `main`, and manually live-tested locally for the bounded `Partner Enquiry → AI Structured Scope Draft → Evidence Review → Human Confirmation` workflow. Three fictional live-QA scenarios passed. The AI remains a source-grounded structuring assistant, and exact partner matching is deterministic application logic. Officer confirmation remains local to the demo session and does not create canonical Engagement or Objective records. The accepted Study Tour Delivery workflow remains unchanged. No university systems are connected, no production deployment has occurred, and no later sprint or second AI feature is authorised by this closeout.
 
 ## Unresolved decisions
 

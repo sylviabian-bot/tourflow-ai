@@ -72,7 +72,7 @@ Officer corrections are stored separately from the immutable AI extraction and i
 
 Readiness and attention rules, partner matching, stakeholder matching, agenda traceability, briefing composition, outcome retention and Relationship Memory remain deterministic. There is no AI chat, AI briefing, AI stakeholder matching or AI agenda generation.
 
-The OpenAI integration has been manually live-tested locally with three fictional enquiry scenarios: a complete partner enquiry, an incomplete/ambiguous enquiry, and a similar partner-name false-positive check. All three passed source-grounding, uncertainty, evidence/provenance, and application-layer partner-resolution review. Partner matching remains deterministic outside the model, and no canonical Engagement or Objective is created without explicit officer confirmation.
+The OpenAI integration has been manually live-tested locally with three fictional enquiry scenarios: a complete partner enquiry, an incomplete/ambiguous enquiry, and a similar partner-name false-positive check. All three passed source-grounding, uncertainty, evidence/provenance, and application-layer partner-resolution review. Partner matching remains deterministic outside the model. Officer confirmation remains local to the demo session and does not create canonical Engagement or Objective records.
 
 This live test validates the bounded AI-assisted enquiry workflow only. No university systems are connected, and the prototype has not been deployed to production.
 
