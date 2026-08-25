@@ -31,7 +31,7 @@ These instructions apply to the entire repository. This is an independent portfo
 ## Product, design, and data boundaries
 
 - The repository remains `tourflow-ai`. `Global Engagement` is a temporary shell label, not a final product name. Use `TourFlow` only for Study Tour Delivery, never as the umbrella product name.
-- Use realistic fictional, synthetic, anonymised, or composite product records. Never attach invented events to real organisations or copy a real person's identity.
+- Use realistic fictional, synthetic, anonymised, or composite product records that remain clearly recognisable as demo data. Never attach invented events to real organisations or copy a real person's identity.
 - Never add real student personal information, passport or health details, emergency contacts, credentials, confidential institutional data, or production operational records.
 - Never commit secrets, API keys, passwords, access tokens, private URLs, local environment files, or production values. Represent sensitive documents as metadata only; do not store or imitate scans.
 - Present risk and attention indicators as deterministic operational prompts, not legal, medical, compliance, travel-safety, or AI determinations.
