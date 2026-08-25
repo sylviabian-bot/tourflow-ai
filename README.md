@@ -72,6 +72,10 @@ Officer corrections are stored separately from the immutable AI extraction and i
 
 Readiness and attention rules, partner matching, stakeholder matching, agenda traceability, briefing composition, outcome retention and Relationship Memory remain deterministic. There is no AI chat, AI briefing, AI stakeholder matching or AI agenda generation.
 
+The OpenAI integration has been manually live-tested locally with three fictional enquiry scenarios: a complete partner enquiry, an incomplete/ambiguous enquiry, and a similar partner-name false-positive check. All three passed source-grounding, uncertainty, evidence/provenance, and application-layer partner-resolution review. Partner matching remains deterministic outside the model, and no canonical Engagement or Objective is created without explicit officer confirmation.
+
+This live test validates the bounded AI-assisted enquiry workflow only. No university systems are connected, and the prototype has not been deployed to production.
+
 ## Technology
 
 - Next.js 16 App Router
@@ -134,4 +138,4 @@ pnpm build
 
 ## Current limitations
 
-AI output quality depends on the supplied enquiry and must be reviewed by an officer. Verified source excerpts prove textual provenance, not that a model interpretation is institutionally correct. Confirmation is local to the demo session and does not write to canonical Engagement records. Stakeholder and commitment interactions also reset on reload. There is no authentication, role model, database, institutional integration or production deployment. Supporting relationships and engagement types remain intentionally light, and the temporary product name is unresolved.
+AI output quality depends on the supplied enquiry and must be reviewed by an officer. Verified source excerpts prove textual provenance, not that a model interpretation is institutionally correct. Three fictional scenarios have passed manual local live-AI QA, but this is not production validation or a connection to live university systems. Confirmation is local to the demo session and does not write to canonical Engagement records. Stakeholder and commitment interactions also reset on reload. There is no authentication, role model, database, institutional integration or production deployment. Supporting relationships and engagement types remain intentionally light, and the temporary product name is unresolved.
