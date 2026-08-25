@@ -1,98 +1,60 @@
 # tourflow-ai Repository Instructions
 
-## Scope
+## Scope and authorisation
 
-These instructions apply to the entire repository.
+These instructions apply to the entire repository. This is an independent portfolio prototype for university international engagement operations.
 
-This repository contains an independent portfolio prototype for university international engagement operations. The broader concept connects Partner Relationships with Engagements; `TourFlow` is reserved for the type-specific Study Tour Delivery workflow. The repository remains `tourflow-ai`, while the temporary shell label `Global Engagement` is not a final product name.
-
-## Current phase gate
-
-- Sprint 03 is authorised only for `Partner Enquiry → AI Structured Scope Draft → Evidence Review → Human Confirmation`.
-- Preserve the approved Relationship Memory chain, Academic Editorial visual system, and Sprint 01 Study Tour rules and resettable delivery interaction.
-- Stakeholder matching must remain deterministic, explainable, and subject to human confirmation.
-- The Executive Brief must be composed from structured source records and must not be presented as AI-generated.
-- Preserve the approved Objective → Stakeholder → Agenda → Brief workflow and keep commitments traceable to engagement outcomes rather than modelling generic tasks.
-- Genuine AI is permitted only inside the isolated server-side enquiry extractor. Do not add AI chat, briefing generation, stakeholder or agenda generation, meeting-note extraction, predictive risk, RAG, embeddings, authentication, persistence, analytics, external institutional integrations, or Vercel deployment.
-- Do not interpret a request to improve the PRD as approval to start implementation.
+- Work only on explicitly authorised tasks. Product discussion, discovery, PRD work, or review does not imply implementation approval.
+- Do not infer approval for deployment, databases, authentication, external institutional integrations, analytics, persistence, or additional AI capability.
+- Preserve accepted workflows unless the task explicitly changes them: Relationship Memory; Objective → Stakeholder → Agenda → Brief; outcome-linked commitments; and TourFlow Study Tour readiness, rules, and reset interactions.
+- Stakeholder matching, readiness, attention, briefing composition, and other structured workflow rules remain deterministic and explainable. Do not present them as AI.
+- AI is limited to explicitly approved, source-grounded, human-reviewed workflows. Do not add chat, AI briefing, stakeholder/agenda generation, meeting-note extraction, prediction, RAG, embeddings, or autonomous decisions without separate approval.
 
 ## Sources of truth
 
-Before making a material change, read:
+1. Read `AGENTS.md` first.
+2. Search `docs/PRODUCT_REQUIREMENTS.md` for task-relevant workflows, requirements, and acceptance criteria.
+3. Search `docs/PROJECT_LOG.md` for relevant decisions, sprint names, features, and domain terms.
+4. Read only the matching sections and necessary surrounding context. Read an entire large document only when the task genuinely needs whole-project history.
+5. If sources conflict, surface the conflict instead of silently choosing.
 
-1. `docs/PRODUCT_REQUIREMENTS.md` for product scope and acceptance criteria.
-2. `docs/PROJECT_LOG.md` for decisions, assumptions, and unresolved questions.
-3. This file for repository-wide delivery rules.
+## Context and token efficiency
 
-When requirements conflict, stop and record the conflict rather than silently choosing a new scope.
+- Use the minimum context required to complete the task correctly; search before reading large files.
+- Inspect task-relevant files and direct dependencies only. Do not reread unchanged files without a concrete reason.
+- Do not restate repository history or unchanged requirements.
+- Do not perform speculative refactors, cleanup, dependency upgrades, or adjacent feature work.
+- Use focused validation while iterating. Run the full required validation suite once at the final gate, and repeat it only when later changes require it.
+- Keep successful command output concise; do not paste large diffs or logs into the final response.
+- Stop when acceptance criteria are satisfied. Default the final response to at most eight concise bullets.
 
-## Product and design principles
+## Product, design, and data boundaries
 
-- Design for a professional B2B SaaS environment used by university and education operations staff.
-- Keep the interface clean, premium, calm, and minimal.
-- Use strong information hierarchy, purposeful spacing, restrained colour, and clear operational language.
-- Avoid generic AI-generated aesthetics, excessive gradients, decorative glassmorphism, oversized marketing copy, and dashboard clutter.
-- Prioritise clarity, scanability, and decision support over visual novelty.
-- Make responsive behaviour intentional for desktop, tablet, and mobile layouts.
-- Meet accessible UI expectations: semantic structure, keyboard access, visible focus, labelled controls, sufficient contrast, and status cues that do not rely on colour alone.
-- Do not add an AI chat box, sparkle icon, or “AI insight” panel unless a validated user problem requires it.
+- The repository remains `tourflow-ai`. `Global Engagement` is a temporary shell label, not a final product name. Use `TourFlow` only for Study Tour Delivery, never as the umbrella product name.
+- Use realistic fictional, synthetic, anonymised, or composite product records. Never attach invented events to real organisations or copy a real person's identity.
+- Never add real student personal information, passport or health details, emergency contacts, credentials, confidential institutional data, or production operational records.
+- Never commit secrets, API keys, passwords, access tokens, private URLs, local environment files, or production values. Represent sensitive documents as metadata only; do not store or imitate scans.
+- Present risk and attention indicators as deterministic operational prompts, not legal, medical, compliance, travel-safety, or AI determinations.
+- Preserve the Academic Editorial × Executive Briefing direction: calm, premium professional B2B software, strong hierarchy, restrained colour, clear operational language, responsive layouts, and accessible non-colour cues.
+- Avoid generic AI/SaaS styling, gradients, glassmorphism, oversized marketing copy, dashboard clutter, sparkle icons, decorative AI panels, and unvalidated AI claims.
 
-## Data, privacy, and safety
+## Architecture and code quality
 
-- Use realistic fictional, synthetic, anonymised, or composite data only in product records.
-- Never add real student personal information, passport details, health information, emergency contacts, university credentials, or operational records.
-- Fictional data must be recognisable as demo data and must not copy a real person’s identity.
-- Do not include secrets, API keys, passwords, private URLs, access tokens, or production environment values in source control.
-- Document status should be represented as metadata in V1; do not store or imitate passport scans or other sensitive documents.
-- Risk and attention indicators in the prototype must be explainable, deterministic, and clearly presented as operational prompts—not legal, medical, compliance, or travel-safety determinations.
-- Never describe deterministic rules as AI. Use `TourFlow` only for Study Tour Delivery, not as the umbrella product name.
+- Prefer simple, maintainable, typed architecture. Keep fixtures, business rules, and presentation separate; derive aggregates instead of duplicating them.
+- Keep `EngagementStage`, Study Tour `LifecycleStage`, and `ReadinessState` independent. Derive date-relative behaviour from `DEMO_TODAY = 2026-08-22`.
+- Avoid premature abstractions, microservices, speculative extensibility, unnecessary dependencies, and state libraries. Explain justified dependency or major architecture changes in `docs/PROJECT_LOG.md`.
+- Use small components and explicit contracts. Reuse only genuinely shared behaviour; keep business rules out of UI components and cover them with focused tests.
+- Handle relevant loading, empty, error, and narrow-screen states. Keep user copy concise and credible; comments should explain non-obvious intent.
 
-## Architecture and dependencies
+## Verification, documentation, and delivery
 
-- Prefer a simple, maintainable architecture that is proportionate to a portfolio prototype.
-- Do not select a framework, scaffold the app, or add dependencies until implementation is approved.
-- Once approved, keep data fixtures separate from presentation logic and derive summary counts from the fixtures rather than duplicating values.
-- Use clear domain names such as relationship, engagement, objective, relationship signal, program, participant, requirement, attention item, and itinerary entry.
-- Keep `EngagementStage` separate from Study Tour `LifecycleStage` and `ReadinessState`.
-- Keep lifecycle and readiness independent: `LifecycleStage` describes where a program is in its journey, while `ReadinessState` describes whether action is required.
-- Derive all date-relative behaviour from the fixed `DEMO_TODAY = 2026-08-22` reference date, never from the viewer's system clock.
-- Avoid premature abstractions, microservices, unnecessary state libraries, and speculative extensibility.
-- Do not add authentication, a production database, external AI APIs, analytics, storage, or other external services without first documenting the need and discussing it with the product owner.
-- Explain major architectural decisions in `docs/PROJECT_LOG.md`, including the alternatives considered and why the decision fits V1.
-
-## Code quality rules for the implementation phase
-
-- Prefer readable, typed, composable code with small components and explicit data contracts.
-- Keep business rules—especially readiness and attention logic—separate from UI components and cover them with focused tests.
-- Reuse components when their behaviour and meaning are genuinely shared; do not create generic abstractions solely to reduce line count.
-- Handle loading, empty, error, and narrow-screen states where the selected architecture makes them relevant.
-- Avoid unnecessary dependencies. Before adding one, explain what problem it solves and why existing platform capabilities are insufficient.
-- Comments should explain non-obvious intent or constraints, not restate the code.
-- Keep user-facing copy concise, specific, and credible for international education operations.
-
-## Testing and verification
-
-- After each major implementation change, run the appropriate available checks: formatting, linting, type checking, focused tests, and production build.
-- Add focused tests for derived counts, readiness rules, attention triggers, filters, and any demo-state transition.
-- Verify the primary coordinator journey end to end at desktop and mobile widths.
-- Check keyboard navigation, focus visibility, form labels, heading order, table alternatives on narrow screens, and non-colour status indicators.
-- Treat a failing check as incomplete work. Record any intentionally deferred issue and its impact in `docs/PROJECT_LOG.md`.
-- Do not claim a check passed unless it was run in the current working state.
-
-## Documentation and decision discipline
-
-- Keep the PRD focused on user problems and observable outcomes; do not turn it into a component inventory.
-- Record approved scope changes and major implementation choices in `docs/PROJECT_LOG.md`.
-- Update acceptance criteria when product behaviour changes.
-- Separate confirmed decisions from proposals and assumptions.
-- Preserve a visible phase history so a reviewer can understand how the product evolved from problem definition to prototype.
-
-## Git and delivery hygiene
-
-- Keep changes focused and reviewable.
-- Do not commit build output, local environment files, secrets, or real personal data.
-- Review the diff before committing or pushing.
-- Do not deploy or configure Vercel until the V1 prototype passes the agreed QA gate and deployment is explicitly requested.
+- Add focused tests for changed rules, derived values, filters, traceability, and demo-state transitions.
+- At the final gate run the task-required formatting/lint, type checking, focused tests, production build, and `git diff --check`; documentation-only tasks may use appropriate documentation checks instead of application tests/builds.
+- For UI changes, verify the primary journey on desktop and mobile, keyboard access, visible focus, labels, semantic headings, narrow-screen alternatives, contrast, and non-colour status cues.
+- Treat failing checks as incomplete. Do not claim checks that were not run; record intentionally deferred issues and impact in `docs/PROJECT_LOG.md`.
+- Keep PRD content outcome-focused. Record approved scope or major architecture decisions, update affected acceptance criteria, and distinguish decisions from proposals.
+- Keep diffs focused and reviewable. Review before commit/push; never commit build output, local environment files, secrets, or real personal data.
+- Deploy or configure Vercel only when explicitly authorised after the agreed QA gate.
 
 <!-- BEGIN:nextjs-agent-rules -->
 
